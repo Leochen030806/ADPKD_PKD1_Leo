@@ -1,0 +1,51 @@
+{
+  "expRef": "LC-20260624-01_PKD1_STR5",
+  "expRefPrimers": "M-Pet-2290-F1/Pig-2290-R2",
+  "aim": "To determine whether the primers can amplify/temperature titration worksheet",
+  "avgSizeRange": "~350bp",
+  "gelImage": "<path-to-gel.png>",
+  "gelBox": { "x": 3.49, "y": 1.52, "w": 4.95, "h": 2.95 },
+  "laneLabels": [
+    { "n": 1, "xFrac": 0.13 }, { "n": 2, "xFrac": 0.22 }, { "n": 3, "xFrac": 0.31 },
+    { "n": 4, "xFrac": 0.41 }, { "n": 5, "xFrac": 0.50 }, { "n": 6, "xFrac": 0.59 },
+    { "n": 7, "xFrac": 0.69 }, { "n": 8, "xFrac": 0.78 }, { "n": 9, "xFrac": 0.87 }
+  ],
+  "ladderMarks": [
+    { "label": "1000", "yFrac": 0.30 },
+    { "label": "750", "yFrac": 0.35 },
+    { "label": "500", "yFrac": 0.42 },
+    { "label": "250", "yFrac": 0.52 }
+  ],
+  "tempBlocks": [
+    { "label": "55℃", "x0Frac": 0.10, "x1Frac": 0.35 },
+    { "label": "60℃", "x0Frac": 0.38, "x1Frac": 0.63 },
+    { "label": "65℃", "x0Frac": 0.66, "x1Frac": 0.90 }
+  ],
+  "sampleTable": [
+    { "no": "1、4、7:", "name": "NA11518，5ng/μl" },
+    { "no": "2、5、8:", "name": "NA06075，5ng/μl" },
+    { "no": "3、6、9:", "name": "HPLC water" }
+  ],
+  "loadingTable": {
+    "title": "Samples",
+    "rows": [
+      { "lane": 1, "id": "NA11518-55" }, { "lane": 2, "id": "NA06075-55" }, { "lane": 4, "id": "Blank-55" },
+      { "lane": 5, "id": "NA11518-60" }, { "lane": 6, "id": "NA06075-60" }, { "lane": 8, "id": "Blank-60" },
+      { "lane": 9, "id": "NA11518-65" }, { "lane": 10, "id": "NA06075-65" }, { "lane": 12, "id": "Blank-65" }
+    ]
+  },
+  "laneInterp": [
+    { "lanes": "3、6、9", "cond": "(blank, HPLC water): ", "result": "No bands observed" },
+    { "lanes": "1、2、4、5、7、8", "cond": " (gDNA3, 10 ng): ", "result": "single, specific band" }
+  ],
+  "conclusions": [
+    { "head": "1. Amplification confirmed.", "body": " All 9 template wells yielded a single, specific band across two independent gDNAs (NA11518, NA06075), demonstrating reproducible amplification on diverse genomic backgrounds." },
+    { "head": "2. All three NTC wells are clean across all Ta points.", "body": "This is the gel's most critical signal — arguably more important than the target bands themselves. It rules out detectable primer dimers and contamination, which is essential for clearing the redesigned R4 primer for multiplex use." },
+    { "head": "3. Working Ta ≥ 55–65°C, optimum at 55–60°C.", "body": "Comparing signal intensity across the three temperatures, band intensity shows a slight increasing trend, with the 55°C lane being the brightest." }
+  ],
+  "method": [
+    "[1% Agarose/ 1X TBE/ 5.5V/cm / 45mins]",
+    " marker:1 kb DNA ladder dye",
+    "10ul product + 2ul loading dye - loading 10ul mixture"
+  ]
+}

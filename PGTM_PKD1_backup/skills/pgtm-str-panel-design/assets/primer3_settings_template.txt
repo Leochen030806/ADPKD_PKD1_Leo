@@ -1,0 +1,38 @@
+# Primer3 boulder-IO input template for an STR flanking-primer (ANCHOR only; no universal tail).
+# Fill the <...> placeholders. One record per candidate; end each record with a single '=' line.
+# Web equivalent: paste SEQUENCE_TEMPLATE into Primer3web/Primer3Plus and set the fields below.
+#
+#   <SEQ_ID>          : marker label, e.g. Chr16:1604
+#   <TEMPLATE>        : the +/-250-300 bp flank sequence from UCSC, repeat soft-masked (lowercase)
+#   <TARGET_START>    : 0-based offset of the repeat tract within TEMPLATE
+#   <TARGET_LEN>      : length of the repeat tract
+#   <EXCLUDED>        : space-separated start,len pairs for repeat + Alu/RepeatMasked + common-SNP sites
+#   <NAKED_LO>-<NAKED_HI> : naked product-size range from size_lane_planner.py (NOT the +tail size)
+
+SEQUENCE_ID=<SEQ_ID>
+SEQUENCE_TEMPLATE=<TEMPLATE>
+SEQUENCE_TARGET=<TARGET_START>,<TARGET_LEN>
+SEQUENCE_EXCLUDED_REGION=<EXCLUDED>
+PRIMER_TASK=generic
+PRIMER_PICK_LEFT_PRIMER=1
+PRIMER_PICK_RIGHT_PRIMER=1
+PRIMER_NUM_RETURN=5
+PRIMER_OPT_SIZE=20
+PRIMER_MIN_SIZE=18
+PRIMER_MAX_SIZE=24
+PRIMER_OPT_TM=60.0
+PRIMER_MIN_TM=58.0
+PRIMER_MAX_TM=62.0
+PRIMER_PAIR_MAX_DIFF_TM=1.5
+PRIMER_MIN_GC=40.0
+PRIMER_MAX_GC=60.0
+PRIMER_MAX_POLY_X=4
+PRIMER_GC_CLAMP=1
+PRIMER_LOWERCASE_MASKING=1
+PRIMER_MAX_SELF_ANY_TH=45
+PRIMER_MAX_SELF_END_TH=35
+PRIMER_PAIR_MAX_COMPL_ANY_TH=45
+PRIMER_PAIR_MAX_COMPL_END_TH=35
+PRIMER_PRODUCT_SIZE_RANGE=<NAKED_LO>-<NAKED_HI>
+PRIMER_EXPLAIN_FLAG=1
+=

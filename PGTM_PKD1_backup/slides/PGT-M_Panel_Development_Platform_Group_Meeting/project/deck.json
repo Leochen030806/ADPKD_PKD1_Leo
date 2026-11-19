@@ -1,0 +1,22 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-09-22T10:05:00Z" },
+  "title": "PGT-M Panel Development Platform — Group Meeting",
+  "order": ["cover", "problem", "idea", "structure", "ui-home", "ui-dry", "ui-wet-upload", "ui-wet-gel", "ui-wet-ce", "ui-board", "capability", "value", "science", "plan"],
+  "sections": {
+    "s1": { "description": "What the current way of working costs, and the marker-centred core idea", "start": "cover" },
+    "s2": { "description": "The three areas of the platform, with six UI mockups", "start": "structure" },
+    "s3": { "description": "What changes, value to the lab, the research output and the build plan", "start": "capability" }
+  },
+  "faces": {
+    "source-serif-4": {
+      "family": "Source Serif 4",
+      "href": "https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&display=swap"
+    },
+    "ibm-plex-sans": {
+      "family": "IBM Plex Sans",
+      "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    }
+  },
+  "designSystems": []
+}

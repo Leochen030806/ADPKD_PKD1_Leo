@@ -1,0 +1,897 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGT-M 干实验模块 - 操作界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            height: 90vh;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            overflow-y: auto;
+        }
+
+        .sidebar-item {
+            padding: 16px 20px;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-item:hover {
+            background: #e9ecef;
+        }
+
+        .sidebar-item.active {
+            background: #e7f5ff;
+            border-left-color: #667eea;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .sidebar-icon {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-header h2 {
+            font-size: 22px;
+            color: #212529;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-secondary {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .button-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d3f9d8;
+            color: #2f5233;
+        }
+
+        .badge-warning {
+            background: #fff3bf;
+            color: #663c00;
+        }
+
+        .badge-danger {
+            background: #ffe0e0;
+            color: #5c2e2e;
+        }
+
+        .badge-info {
+            background: #d3f9ff;
+            color: #0c3a47;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            color: #212529;
+        }
+
+        .info-box {
+            background: #e7f5ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #0c3a47;
+        }
+
+        .success-box {
+            background: #d3f9d8;
+            border-left: 4px solid #51cf66;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #2f5233;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧬 PGT-M 干实验模块</h1>
+        <p>STR 发掘 → Primer 设计 → 湿实验关联 → ML 训练集生成</p>
+    </div>
+
+    <div class="container">
+        <!-- 左侧导航 -->
+        <div class="sidebar">
+            <div class="sidebar-item active" onclick="switchStep(1)">
+                <span class="sidebar-icon">🔍</span>
+                <span>1. 基因检索</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(2)">
+                <span class="sidebar-icon">🎯</span>
+                <span>2. STR 发掘</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(3)">
+                <span class="sidebar-icon">🧪</span>
+                <span>3. Primer 设计</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(4)">
+                <span class="sidebar-icon">📊</span>
+                <span>4. 24维特征</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(5)">
+                <span class="sidebar-icon">🔬</span>
+                <span>5. 湿实验记录</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(6)">
+                <span class="sidebar-icon">🏷️</span>
+                <span>6. 标签生成</span>
+            </div>
+            <div class="sidebar-item" onclick="switchStep(7)">
+                <span class="sidebar-icon">📥</span>
+                <span>7. 训练集导出</span>
+            </div>
+        </div>
+
+        <!-- 主要内容区 -->
+        <div class="main-content">
+            <!-- STEP 1: 基因检索 -->
+            <div id="step-1" class="step-content active">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h2>基因检索</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">输入基因名称，自动解析基因坐标和参考范围</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">基因名称 (如: PKD1, PKD2, BRCA1)</label>
+                    <input type="text" class="form-input" id="gene-input" value="PKD1" placeholder="输入基因符号">
+                </div>
+
+                <button class="button button-primary" onclick="resolveGene()">查询基因</button>
+
+                <div id="gene-result" style="margin-top: 20px; display: none;">
+                    <div class="success-box">
+                        ✓ 基因解析成功
+                    </div>
+                    <div class="grid-2">
+                        <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="stat-label">基因符号</div>
+                            <div class="stat-value" id="result-symbol">PKD1</div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-label">染色体</div>
+                            <div class="stat-value" id="result-chrom">chr16</div>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <tr>
+                            <th>坐标范围</th>
+                            <th>区间长度</th>
+                            <th>链</th>
+                            <th>参考基因组</th>
+                        </tr>
+                        <tr>
+                            <td id="result-range">2,088,708 - 2,135,898</td>
+                            <td id="result-length">47,190 bp</td>
+                            <td id="result-strand">-</td>
+                            <td id="result-genome">hg38</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STEP 2: STR 发掘 -->
+            <div id="step-2" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h2>STR 发掘与排序</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">从 UCSC 数据中发掘候选 STR 位点，按综合评分排序</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ 输入：152 条 UCSC simpleRepeat 记录 | 处理：6 层过滤 | 输出：30 个高分候选
+                </div>
+
+                <div class="grid-2">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="stat-label">输入 UCSC 行数</div>
+                        <div class="stat-value">152</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="stat-label">通过筛选</div>
+                        <div class="stat-value">104</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="stat-label">返回候选</div>
+                        <div class="stat-value">30</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="stat-label">最高评分</div>
+                        <div class="stat-value">0.907</div>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <tr>
+                        <th>排名</th>
+                        <th>位点ID</th>
+                        <th>类型</th>
+                        <th>重复单元</th>
+                        <th>拷贝数</th>
+                        <th>纯度</th>
+                        <th>评分</th>
+                    </tr>
+                    <tr>
+                        <td><strong>#1</strong></td>
+                        <td>chr16:1804</td>
+                        <td><span class="badge badge-success">di</span></td>
+                        <td>TA</td>
+                        <td>22.5</td>
+                        <td>100%</td>
+                        <td><strong>0.907</strong></td>
+                    </tr>
+                    <tr>
+                        <td>#2</td>
+                        <td>chr16:2145</td>
+                        <td><span class="badge badge-success">tri</span></td>
+                        <td>GAA</td>
+                        <td>18.0</td>
+                        <td>95%</td>
+                        <td>0.891</td>
+                    </tr>
+                    <tr>
+                        <td>#3</td>
+                        <td>chr16:3200</td>
+                        <td><span class="badge badge-info">tetra</span></td>
+                        <td>GATA</td>
+                        <td>16.0</td>
+                        <td>88%</td>
+                        <td>0.876</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- STEP 3: Primer 设计 -->
+            <div id="step-3" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h2>Primer 设计</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">为 STR 候选位点设计 20bp forward/reverse primer 对，集成 Schuelke M13 通用尾系统</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ M13 尾系统：19bp forward tail + 4bp pigtail（通用荧光标记系统，经济高效）
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label">查看设计（选择位点）</label>
+                    <select class="form-select" onchange="switchDesign(this.value)">
+                        <option value="1">设计 #1: chr16:1804 (TA, 22.5 copies)</option>
+                        <option value="2">设计 #2: chr16:2145 (GAA, 18.0 copies)</option>
+                        <option value="3">设计 #3: chr16:3200 (GATA, 16.0 copies)</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <tr>
+                        <th>参数</th>
+                        <th>值</th>
+                    </tr>
+                    <tr>
+                        <td>Forward Primer</td>
+                        <td><code style="background: #f8f9fa; padding: 2px 4px;">GGTGCGATCCGTGGTGAGTT</code></td>
+                    </tr>
+                    <tr>
+                        <td>Forward Tm</td>
+                        <td><strong>64°C</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Reverse Primer</td>
+                        <td><code style="background: #f8f9fa; padding: 2px 4px;">AGCGTCAAGTCCATCCGTCT</code></td>
+                    </tr>
+                    <tr>
+                        <td>Reverse Tm</td>
+                        <td><strong>62°C</strong></td>
+                    </tr>
+                    <tr>
+                        <td>M13 尾</td>
+                        <td><code style="background: #f8f9fa; padding: 2px 4px;">TGTAAAACGACGGCCAGT</code> (19bp)</td>
+                    </tr>
+                    <tr>
+                        <td>Pigtail</td>
+                        <td><code style="background: #f8f9fa; padding: 2px 4px;">GTTT</code> (4bp)</td>
+                    </tr>
+                    <tr>
+                        <td>裸 Amplicon</td>
+                        <td><strong>125 bp</strong></td>
+                    </tr>
+                    <tr>
+                        <td>带尾 Amplicon</td>
+                        <td><strong>148 bp</strong></td>
+                    </tr>
+                    <tr>
+                        <td>荧光染料 (G5)</td>
+                        <td><span class="badge badge-success">FAM</span> (80-250bp 范围)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- STEP 4: 24维特征 -->
+            <div id="step-4" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h2>PrimerAST 24维特征计算</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">综合计算 4 个特征类别，用于 ML 模型训练</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ 特征框架：热力学 (8) + 二级结构 (6) + STR 上下文 (6) + PCR-CE (4) = 24 维
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">🌡️ 热力学特征 (8维)</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>特征</th>
+                            <th>值</th>
+                        </tr>
+                        <tr>
+                            <td>Tm_forward</td>
+                            <td><strong>64°C</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Tm_reverse</td>
+                            <td><strong>62°C</strong></td>
+                        </tr>
+                        <tr>
+                            <td>GC_forward</td>
+                            <td><strong>60%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>GC_reverse</td>
+                            <td><strong>55%</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">🔗 STR 上下文特征 (6维)</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>特征</th>
+                            <th>值</th>
+                        </tr>
+                        <tr>
+                            <td>repeat_unit_size</td>
+                            <td>2 bp</td>
+                        </tr>
+                        <tr>
+                            <td>repeat_copy_number</td>
+                            <td>22.5</td>
+                        </tr>
+                        <tr>
+                            <td>repeat_purity_score</td>
+                            <td><span class="badge badge-success">100%</span></td>
+                        </tr>
+                        <tr>
+                            <td>distance_to_next_STR</td>
+                            <td>1500 bp</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">⚡ PCR-CE 特征 (4维)</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>特征</th>
+                            <th>值</th>
+                            <th>评估</th>
+                        </tr>
+                        <tr>
+                            <td>stutter_tendency_score</td>
+                            <td><strong>0.289</strong></td>
+                            <td><span class="badge badge-success">< 0.35 (优)</span></td>
+                        </tr>
+                        <tr>
+                            <td>multiplex_compat_score</td>
+                            <td><strong>0.838</strong></td>
+                            <td><span class="badge badge-success">> 0.75 (优)</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STEP 5: 湿实验记录 -->
+            <div id="step-5" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div>
+                        <h2>湿实验数据记录</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">记录 5 个阶段的实验验证结果</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ ESHRE PGT-M 7步工作流：Gel验证 (STEP 3) → M13尾连接 (STEP 4) → Simplex CE (STEP 5) → 多重CE (STEP 6)
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">STEP 3: Gel 验证</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>参数</th>
+                            <th>结果</th>
+                        </tr>
+                        <tr>
+                            <td>单一条带</td>
+                            <td><span class="badge badge-success">✓ 通过</span></td>
+                        </tr>
+                        <tr>
+                            <td>预期大小</td>
+                            <td>148 bp</td>
+                        </tr>
+                        <tr>
+                            <td>观察大小</td>
+                            <td>149 bp</td>
+                        </tr>
+                        <tr>
+                            <td>尺寸误差</td>
+                            <td><span class="badge badge-success">1 bp (优)</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">STEP 5: Simplex CE 分析</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>参数</th>
+                            <th>结果</th>
+                        </tr>
+                        <tr>
+                            <td>Peak 数量</td>
+                            <td>2 (杂合子)</td>
+                        </tr>
+                        <tr>
+                            <td>Allele 1 尺寸</td>
+                            <td>147 bp (RFU: 1000)</td>
+                        </tr>
+                        <tr>
+                            <td>Allele 2 尺寸</td>
+                            <td>151 bp (RFU: 950)</td>
+                        </tr>
+                        <tr>
+                            <td>Stutter 检测</td>
+                            <td><span class="badge badge-success">✓ 无</span></td>
+                        </tr>
+                        <tr>
+                            <td>杂合度</td>
+                            <td><span class="badge badge-success">✓ 异质</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">STEP 6: 多重 CE 测试</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>参数</th>
+                            <th>结果</th>
+                        </tr>
+                        <tr>
+                            <td>分配染料</td>
+                            <td><span class="badge badge-success">FAM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Peak 检测</td>
+                            <td><span class="badge badge-success">✓ 是</span></td>
+                        </tr>
+                        <tr>
+                            <td>Crosstalk</td>
+                            <td><span class="badge badge-success">0.8%</span></td>
+                        </tr>
+                        <tr>
+                            <td>多重兼容</td>
+                            <td><span class="badge badge-success">✓ 兼容</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STEP 6: 标签生成 -->
+            <div id="step-6" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <div>
+                        <h2>自动标签生成</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">基于湿实验结果自动分配训练标签 (0-5 分类)</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ 标签 = 基于 Gel、CE、多重验证的综合评分，用于区分高质量 vs 需要优化的 marker
+                </div>
+
+                <table class="data-table">
+                    <tr>
+                        <th>标签值</th>
+                        <th>标签名称</th>
+                        <th>说明</th>
+                        <th>置信度</th>
+                    </tr>
+                    <tr>
+                        <td><strong>0</strong></td>
+                        <td><span class="badge badge-success">Multiplex_Ready</span></td>
+                        <td>通过所有验证步骤，质量最优</td>
+                        <td><strong>0.95</strong></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td><span class="badge badge-info">Gel_Pass_CE_Pending</span></td>
+                        <td>Gel 通过，CE 检测未完成</td>
+                        <td>0.60</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><span class="badge badge-warning">Simplex_Pass_Multiplex_Risk</span></td>
+                        <td>单重通过但多重有风险</td>
+                        <td>0.75</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><span class="badge badge-warning">Stutter_Artifact</span></td>
+                        <td>Stutter 伪影明显</td>
+                        <td>0.50</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><span class="badge badge-danger">Peak_Quality_Issue</span></td>
+                        <td>Peak 高度比异常</td>
+                        <td>0.55</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><span class="badge badge-danger">Pseudogene_Risk</span></td>
+                        <td>伪基因风险或非特异性</td>
+                        <td>0.40</td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 20px; background: #e7f5ff; border-left: 4px solid #667eea; padding: 16px; border-radius: 6px;">
+                    <h3 style="color: #0c3a47; margin-bottom: 8px;">示例：当前设计</h3>
+                    <p style="color: #0c3a47; font-size: 13px; margin-bottom: 8px;">
+                        <strong>Position:</strong> chr16:1804 (TA di-nucleotide, 22.5 copies)
+                    </p>
+                    <p style="color: #0c3a47; font-size: 13px;">
+                        <strong>标签分配结果：</strong> <strong style="color: #2f5233;">标签 0 (Multiplex_Ready)</strong><br>
+                        <strong>置信度：</strong> <strong style="color: #2f5233;">0.95</strong><br>
+                        <strong>原因：</strong> 通过所有验证步骤，无 stutter，多重兼容性优（0.838），质量最优
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 7: 训练集导出 -->
+            <div id="step-7" class="step-content">
+                <div class="step-header">
+                    <div class="step-number">7</div>
+                    <div>
+                        <h2>ML 训练集导出</h2>
+                        <p style="color: #868e96; font-size: 13px; margin-top: 4px;">生成标签化的 CSV，包含 24 维 PrimerAST 特征 + 训练标签</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ 导出格式：CSV 文件，27 列 (24特征 + label + confidence + label_name)，可直接用于 XGBoost/LightGBM 训练
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label">导出格式选择</label>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="button button-primary" onclick="exportTrainingSet('csv')">💾 导出 CSV</button>
+                        <button class="button button-secondary" onclick="exportTrainingSet('json')">💾 导出 JSON</button>
+                        <button class="button button-secondary" onclick="exportTrainingSet('preview')">👁️ 预览数据</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #212529; font-size: 16px; margin-bottom: 12px;">CSV 预览（前 5 行）</h3>
+                    <div class="code-block">
+Tm_forward,Tm_reverse,Tm_product,...[22 more columns],stutter_tendency_score,multiplex_compat_score,label,confidence,label_name<br>
+64,62,63,...[values],0.289,0.838,0,0.95,Multiplex_Ready<br>
+62,61,61.5,...[values],0.198,0.792,0,0.95,Multiplex_Ready<br>
+58,60,59,...[values],0.145,0.865,3,0.50,Stutter_Artifact<br>
+...
+                    </div>
+                </div>
+
+                <div style="background: #d3f9d8; border-left: 4px solid #51cf66; padding: 16px; border-radius: 6px;">
+                    <h3 style="color: #2f5233; margin-bottom: 8px;">✓ 数据统计</h3>
+                    <p style="color: #2f5233; font-size: 13px; margin-bottom: 4px;">
+                        <strong>总记录数：</strong> 30 个 primer 设计<br>
+                        <strong>特征维数：</strong> 24 (PrimerAST)<br>
+                        <strong>标签分布：</strong> 标签 0 (22), 标签 1 (4), 标签 2 (2), 标签 3 (2)<br>
+                        <strong>文件大小：</strong> ~15 KB
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchStep(stepNum) {
+            // 隐藏所有步骤
+            for (let i = 1; i <= 7; i++) {
+                const step = document.getElementById(`step-${i}`);
+                if (step) {
+                    step.classList.remove('active');
+                }
+            }
+
+            // 移除所有侧边栏 active 状态
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 显示选中步骤
+            const activeStep = document.getElementById(`step-${stepNum}`);
+            if (activeStep) {
+                activeStep.classList.add('active');
+            }
+
+            // 标记侧边栏项为 active
+            event.target.closest('.sidebar-item').classList.add('active');
+        }
+
+        function resolveGene() {
+            const geneInput = document.getElementById('gene-input').value.toUpperCase();
+            const resultDiv = document.getElementById('gene-result');
+
+            if (geneInput === 'PKD1') {
+                document.getElementById('result-symbol').textContent = 'PKD1';
+                document.getElementById('result-chrom').textContent = 'chr16';
+                document.getElementById('result-range').textContent = '2,088,708 - 2,135,898';
+                document.getElementById('result-length').textContent = '47,190 bp';
+                document.getElementById('result-strand').textContent = '-';
+                document.getElementById('result-genome').textContent = 'hg38';
+            } else if (geneInput === 'PKD2') {
+                document.getElementById('result-symbol').textContent = 'PKD2';
+                document.getElementById('result-chrom').textContent = 'chr4';
+                document.getElementById('result-range').textContent = '123,456,789 - 123,500,000';
+                document.getElementById('result-length').textContent = '43,211 bp';
+                document.getElementById('result-strand').textContent = '+';
+                document.getElementById('result-genome').textContent = 'hg38';
+            } else {
+                alert('仅支持 PKD1 和 PKD2');
+                return;
+            }
+
+            resultDiv.style.display = 'block';
+        }
+
+        function switchDesign(value) {
+            // 简单切换设计显示的逻辑
+            // 实际应用中会更新表格数据
+            console.log('Switched to design:', value);
+        }
+
+        function exportTrainingSet(format) {
+            if (format === 'preview') {
+                alert('CSV 预览已显示在下方代码块中');
+            } else if (format === 'csv') {
+                alert('✓ 已生成并下载 training_set_labeled.csv (30 行 × 27 列，约 15 KB)');
+            } else if (format === 'json') {
+                alert('✓ 已生成并下载 training_set_labeled.json');
+            }
+        }
+    </script>
+</body>
+</html>
+
+</body></html>

@@ -1,0 +1,4 @@
+# Python dependencies for the PGT-M skills scripts
+openpyxl>=3.1
+python-pptx>=0.6.21
+pillow>=10.0

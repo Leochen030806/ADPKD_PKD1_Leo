@@ -1,0 +1,444 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PKD1 Group Meeting Speech</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column; each slide shows its English script, then the Chinese script under it.
+   A sticky bar switches language (EN / EN+中 / 中), text size, and jumps to a slide. */
+:root {
+  --bg: #f4f7f8;
+  --surface: #ffffff;
+  --ink: #1b2733;
+  --muted: #5a6b78;
+  --zh-ink: #2c4351;
+  --accent: #0f766e;
+  --accent-soft: #e2f0ee;
+  --line: #d8e1e6;
+  --font-en: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --fs: 17px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11181d; --surface: #172229; --ink: #e5edf1; --muted: #92a4b0; --zh-ink: #bfd0d9;
+    --accent: #4fb8ab; --accent-soft: #163330; --line: #2a3842; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11181d; --surface: #172229; --ink: #e5edf1; --muted: #92a4b0; --zh-ink: #bfd0d9;
+  --accent: #4fb8ab; --accent-soft: #163330; --line: #2a3842; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-en); font-size: var(--fs); line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+body[data-size="s"] { --fs: 15px; }
+body[data-size="l"] { --fs: 20px; }
+
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--surface); border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center;
+}
+.bar .name { font-weight: 600; font-size: 15px; margin-right: auto; min-width: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button {
+  font: 500 13px/1 var(--font-en); padding: 8px 11px; border: 0; background: transparent; color: var(--muted); cursor: pointer;
+}
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.seg button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select {
+  font: 400 13px var(--font-en); color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 7px 8px; min-width: 0; max-width: 100%; flex: 1 1 200px;
+}
+
+main { max-width: 740px; margin: 0 auto; }
+.part { margin: 44px 0 6px; padding: 16px 18px; background: var(--accent-soft); border-radius: 10px; scroll-margin-top: 110px; }
+.part h2 { margin: 0; font-size: 1.15rem; line-height: 1.35; display: flex; flex-direction: column; gap: 2px; text-wrap: balance; }
+.part h2 .zh { font-family: var(--font-zh); font-weight: 500; font-size: .95em; color: var(--accent); }
+.part h2 .en { color: var(--ink); }
+
+.slide { padding: 22px 0 8px; border-bottom: 1px solid var(--line); scroll-margin-top: 110px; }
+.slide-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.num { font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.slide h3 { margin: 0; font-size: 1.12rem; line-height: 1.35; display: flex; flex-direction: column; gap: 2px; text-wrap: balance; }
+.slide h3 .zh { font-family: var(--font-zh); font-weight: 500; font-size: .9em; color: var(--muted); }
+h4 { margin: 18px 0 6px; font-size: .78rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.zh-block h4 { font-family: var(--font-zh); letter-spacing: .02em; text-transform: none; font-size: .85rem; }
+
+.lang p { margin: 0 0 .85em; overflow-wrap: anywhere; }
+.lang ul { margin: 0 0 .85em; padding-left: 1.2em; }
+.lang li { margin-bottom: .35em; }
+.zh-block { font-family: var(--font-zh); font-size: calc(var(--fs) - 1px); line-height: 1.8; color: var(--zh-ink);
+  border-left: 3px solid var(--accent-soft); padding-left: 14px; margin: 14px 0 12px; }
+.note { color: var(--muted); font-style: italic; }
+a { color: var(--accent); }
+
+/* language modes */
+body[data-mode="en"] .zh, body[data-mode="en"] .zh-block { display: none; }
+body[data-mode="zh"] .en, body[data-mode="zh"] .en-block { display: none; }
+body[data-mode="zh"] .zh-block { border-left: 0; padding-left: 0; font-size: var(--fs); }
+body[data-mode="zh"] .slide h3 .zh, body[data-mode="zh"] .part h2 .zh { color: var(--ink); font-size: 1em; }
+body[data-mode="en"] .slide h3 .en { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<div class="bar" id="bar">
+  <span class="name">PKD1 group meeting speech</span>
+  <div class="seg" role="group" aria-label="Language">
+    <button type="button" data-mode="en" aria-pressed="false">EN</button>
+    <button type="button" data-mode="both" aria-pressed="true">EN + 中</button>
+    <button type="button" data-mode="zh" aria-pressed="false">中</button>
+  </div>
+  <div class="seg" role="group" aria-label="Text size">
+    <button type="button" data-size="s" aria-pressed="false" aria-label="Smaller text">A−</button>
+    <button type="button" data-size="m" aria-pressed="true" aria-label="Normal text">A</button>
+    <button type="button" data-size="l" aria-pressed="false" aria-label="Larger text">A+</button>
+  </div>
+  <select id="jump" aria-label="Jump to slide">
+    <option value="">Jump to slide…</option>
+<option value="part-1">Opening · 开场</option>
+<option value="s1">1. Title · 标题页</option>
+<option value="s2">2. Work overview · 工作总览</option>
+<option value="part-3">Part 1 · Improving STR discovery · 第一部分　STR 发现流程的优化</option>
+<option value="s3">3. Part title · 部分标题页</option>
+<option value="s4">4. Main points of the paper · 文章主要内容</option>
+<option value="s5">5. How it links to our script · 与我们脚本的关系</option>
+<option value="s6">6. Where the database comes from · 数据库的来源</option>
+<option value="s7">7. Key idea: variation cluster (VC) · 变异簇（VC）的定义</option>
+<option value="s8">8. Why variation clusters matter · 变异簇的作用</option>
+<option value="s9">9. Key idea: mappability · 重要概念：可比对性（mappability）</option>
+<option value="s10">10. How the current script differs from the old SOP · 现有脚本与原 SOP 的区别</option>
+<option value="s11">11. Improvement 1: add population diversity · 改进一：加入人群多态性</option>
+<option value="s12">12. Predicted diversity matches the 16-sample CE results fairly well · 预测多态性与 16 样本实测</option>
+<option value="s13">13. Improvement 2: use variation clusters · 改进二：考虑变异簇</option>
+<option value="s14">14. Improvement 3: automatic flank screening · 改进三：侧翼自动筛查</option>
+<option value="s15">15. Summary and next steps · 小结与下一步</option>
+<option value="part-16">Part 2 · How we design primers now · 第二部分　目前进行 Primer 设计的方法</option>
+<option value="s16">16. Part title · 部分标题页</option>
+<option value="s17">17. What this part did and what it gives · 本部分做了什么、得到什么</option>
+<option value="s18">18. Why change the primer design · 为什么要改引物设计</option>
+<option value="s19">19. How the goals become measurable rules · 目标如何落到指标和方法上</option>
+<option value="s20">20. Workflow overview · 现有流程总览</option>
+<option value="s21">21. Key step 1: Primer3 design settings · 关键步骤一：设计与标记</option>
+<option value="s22">22. Key step 2: three hard filters · 关键步骤二：三项硬性过滤</option>
+<option value="s23">23. How it is built (1): from input to candidate primers · 实现方法（一）：从输入到候选引物</option>
+<option value="s24">24. How it is built (2): from filters to the order list · 实现方法（二）：从过滤到订购表</option>
+<option value="s25">25. Tools we checked: function, what we took, and trade-offs · 评估过的工具：功能、借鉴点和取舍</option>
+<option value="s26">26. Checking the engine: independent tests · 引擎验证：独立复核</option>
+<option value="s27">27. Where the rules come from and their limits · 规则的依据与局限</option>
+<option value="s28">28. Primer design funnel (PKD1) · 引物设计漏斗（PKD1）</option>
+<option value="s29">29. Funnel results: sites kept and removed · 漏斗的结果：留下与被排除的位点</option>
+<option value="s30">30. Design results · 设计结果</option>
+<option value="s31">31. Old vs new primers (STRs done before) · 新旧引物对照（已做过的 STR）</option>
+<option value="s32">32. Summary and limits · 小结与局限</option>
+<option value="part-33">Part 3 · Near-term plan · 第三部分　近期计划</option>
+<option value="s33">33. Part title · 部分标题页</option>
+<option value="s34">34. What we will test · 验证对象</option>
+<option value="s35">35. Four experiments for each STR · 每个 STR 的四步实验</option>
+<option value="s36">36. How we judge new sites · ****新****位点****的****判定与比较方式</option>
+<option value="s37">37. Redesigned sites: old vs new · 重新设计位点的新旧对比</option>
+<option value="s38">38. Progress and next steps · 进度与后续</option>
+<option value="closing">Closing · 结束语</option>
+  </select>
+</div>
+
+<main>
+<header class="part" id="part-1"><h2><span class="en">Opening</span><span class="zh">开场</span></h2></header>
+<section class="slide" id="s1"><div class="slide-head"><span class="num">Slide 1</span><h3><span class="en">Title</span><span class="zh">标题页</span></h3></div><div class="lang en-block" lang="en"><p>Good afternoon, everyone. The dry-lab improvements and the platform building are done for now. I am back in the wet lab, and I want to build the PKD1 and PKD2 panels as soon as possible.</p></div><div class="lang zh-block" lang="zh-Hans"><p>大家中午好。干实验的改进和平台搭建先告一段落，我已经回到湿实验，尽快建成 PKD1 和 PKD2 的 panel。</p></div></section>
+<section class="slide" id="s2"><div class="slide-head"><span class="num">Slide 2</span><h3><span class="en">Work overview</span><span class="zh">工作总览</span></h3></div><div class="lang en-block" lang="en"><p>Today I will share three parts. First, how I improved the SOP for finding STRs. Second, which filters I added at the primer design step to raise the success rate. Third, my plan for the near term.</p>
+<p>Part 1, improving STR discovery, is done. Last time I talked about BaitSTR. Building on that, I found a newer and more useful paper this year. I used its population allele frequencies and variation clusters in my screening script. For PKD1, the script gave 2,812 candidates. After ranking them by diversity, 87 were in tier A and B. In the end I selected 18 for primer design, and they are ready for wet-lab testing.</p>
+<p>Part 2 is primer design, and it is also done. Primer3 makes the candidates, then I use three filters: SNP, tailed primer-dimer, and genome-wide specificity. For specificity, I use a Python k-mer engine that I wrote myself. It scans the whole hg38 genome, including the PKD1 pseudogenes. The product is an order list that I can order from directly. In the PKD1 1.0 Mb region, besides the sites that already worked from PGD-C, I designed primers for 11 new sites. For PKD2, there are 25.</p>
+<p>Part 3 is the near-term plan, and it is in progress. We will test 18 STRs in the PKD1 1.0 Mb region: 11 new sites and 7 redesigned old sites. All primers use one FAM tail, so we can compare them. The 11 new sites follow the normal workflow. For the 7 redesigned sites, I will compare the new results with the old ones, to see if the new design process works.</p>
+<p>Now, Part 1.</p></div><div class="lang zh-block" lang="zh-Hans"><p>今天分享三部分：一是我如何改进 STR 发现的 SOP，二是在引物设计阶段增加了哪些筛选条件来提高成功率，三是近期的工作计划。</p>
+<p>第一部分，STR 发现流程的优化，已经完成。在上一次组会汇报的BaitSTR的基础上，我找到了一篇今年发表的更新更有效的文章，把它的人群等位基因频率和变异簇信息用进了筛选脚本。PKD1 这一侧，脚本给出 2,812 个候选，按多态性分级后 A 级和 B 级一共 87 个，最后入选设计18个，准备进行湿实验验证。</p>
+<p>第二部分是引物设计，目前也已完成。流程是先用 Primer3 出候选，再做 SNP、带尾二聚体和全基因组特异性三项过滤。特异性检查用的是我自己写的 Python k-mer 引擎，对 hg38 全基因组扫描，包括 PKD1 的假基因。</p>
+<p>产物是可以直接订购的订购表。PKD1 在 1.0 Mb 范围内，除了从 PGD-C 获得的成功位点外，新设计出 11 个位点的引物；PKD2 是 25 个。</p>
+<p>第三部分是近期计划，正在进行。验证对象是 PKD1 的 1.0 Mb 范围内设计出的 18 个 STR，包括 11 个新位点和 7 个重新设计的已做位点。所有引物统一用 FAM 尾便于比较。</p>
+<p>11 个新位点按常规流程做；7 个重新设计的位点，把新结果和原来的结果对比，判断现在这套优化流程是否起效。</p>
+<p>下面进入第一部分。</p></div></section>
+<header class="part" id="part-3"><h2><span class="en">Part 1 · Improving STR discovery</span><span class="zh">第一部分　STR 发现流程的优化</span></h2></header>
+<section class="slide" id="s3"><div class="slide-head"><span class="num">Slide 3</span><h3><span class="en">Part title</span><span class="zh">部分标题页</span></h3></div><div class="lang en-block" lang="en"><h4>The problem this part solves</h4>
+<p>The problem for Part 1 is this. The old SOP used TRF to find STRs. It only tells us “there is a repeat here”. It does not tell us how diverse the repeat is in the population. It also cannot spot sites inside highly variable regions, which are hard to genotype. So the question is: how can we choose STRs that are diverse and easy to genotype, with better evidence?</p>
+<h4>Link</h4>
+<p>This is the start of the whole work. The primer design and the wet lab later all depend on the STRs we choose here. My main source is a paper published this year in the American Journal of Human Genetics. It made me think more about three ideas: population allele frequency, variation cluster, and mappability. I will explain them soon.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分要解决的问题</h4>
+<p>第一部分要解决的问题是：原来的 SOP 用 TRF 找 STR，只知道“这里有一段重复”，不知道它在人群里多态性高不高，也不识别嵌在高度变异区域里、难以准确分型的位点。所以要回答：怎样更有依据地挑出多态性高、又容易分型的 STR？</p>
+<h4>衔接</h4>
+<p>这是整个工作的起点，后面的引物设计和湿实验都建立在这里选出的 STR 上。我的主要依据是今年发表在American journal of human genetics的文章，让我更多的考虑到人群等位基因频率、变异簇、可比对性三个概念，稍后我会展开介绍</p></div></section>
+<section class="slide" id="s4"><div class="slide-head"><span class="num">Slide 4</span><h3><span class="en">Main points of the paper</span><span class="zh">文章主要内容</span></h3></div><div class="lang en-block" lang="en"><p>First, a short introduction to the paper. It is by Weisburd and colleagues, published this year in AJHG. The title is “Defining a tandem repeat catalog and variation clusters for genome-wide analyses and population databases”.</p>
+<p>The problem they found is this. To study tandem repeats (TRs) across the whole genome, you first need a catalog of sites: where the repeats are and where their edges are. But the existing catalogs use different definitions and different standards, and they may miss polymorphic STRs. The paper did three things, shown by the three numbers on the slide.</p>
+<p>First, they compared more than 10 existing catalogs.</p>
+<p>Second, because of these differences, they merged four sources into one new catalog with 4.86 million sites, covering 2.1% of the reference genome. They also built the TRExplorer portal (https://trexplorer.broadinstitute.org/). On the web, you can look up information for each site, and you can filter and export it. (You can click the link to show it live.)</p>
+<p>Third, they defined the idea of a “variation cluster”: a TR may not be isolated. It may sit inside a region of polymorphic sequence.</p>
+<p>For me, three ideas in this paper are very useful: population allele frequency, variation cluster, and mappability. So I added all three to my screening script. On the next slide I will show where each one is used. Then I will show, in order: where the database comes from, variation clusters, and mappability.</p></div><div class="lang zh-block" lang="zh-Hans"><p>先简单介绍一下这篇文章。它是 Weisburd 等人今年 5 月发表在 AJHG 上的，题目是《Defining a tandem repeat catalog and variation clusters for genome-wide analyses and population databases》。</p>
+<p>它发现的问题是：做串联重复序列（TR）的全基因组分析，要先有一份“位点目录”，说明哪些位置是重复、边界在哪里。但现有的目录定义不同、标准不一致，也可能漏掉多态 STR。文章针对这个问题做了三件事，对应页面上的三个数字。</p>
+<p>第一，比较了现有的 10 多个目录。</p>
+<p>第二，针对这些差异，把四个来源合并成一个新目录，并做成了 <a href="https://trexplorer.broadinstitute.org/" target="_blank" rel="noopener">TRExplorer 门户</a>，可以直接在网页上查到每个位点的信息，也能筛选导出。（现场可以点开链接展示一下。）</p>
+<p>第三，提出了“变异簇”的概念：一个 TR 可能不是孤立的，而是嵌在一片多态序列里。</p>
+<p>对我来说，这里面有三个概念非常有用：人群等位基因频率、变异簇和可比对性，所以我把它们都加入了筛选脚本。下一页先看它们分别用在脚本的哪里，然后依次展示：数据库的来源、变异簇，以及可比对性。</p></div></section>
+<section class="slide" id="s5"><div class="slide-head"><span class="num">Slide 5</span><h3><span class="en">How it links to our script</span><span class="zh">与我们脚本的关系</span></h3></div><div class="lang en-block" lang="en"><p>This slide answers one question: how does the content of the paper get into my script? Each of the three ideas has one use in the script. Population allele frequency is used to calculate He and Ho and to rank sites into tiers. Variation cluster is used to flag VC and reject-VC, and to set the primer no-go zone, which is 25 bp on each side of the cluster. For mappability, sites below 0.5 get the flag “needs BLAST”, and we handle them at the primer design step.</p>
+<p>One reminder: the numbers in the paper are for catalog version 1.0. The script reads the newer version 2, which has about 5.6 million sites.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页回答“文章的内容怎样进入我的脚本”，三个概念各对应脚本里的一个用法：人群等位基因频率，用来算 He、Ho 并分级；变异簇，用来标 VC 和拒绝-VC，并划定引物禁区，即簇区间两侧各 25 bp；可比对性低于 0.5 的位点，标“需 BLAST”，留到引物设计阶段处理。</p>
+<p>提醒一点：文章里的数字对应目录 v1.0，脚本实际读的是更新的 v2，大约 560 万个位点。</p></div></section>
+<section class="slide" id="s6"><div class="slide-head"><span class="num">Slide 6</span><h3><span class="en">Where the database comes from</span><span class="zh">数据库的来源</span></h3></div><div class="lang en-block" lang="en"><p>This slide shows the four sources of the catalog and their priority. I will only mention it briefly. The key point is this: every site comes with allele distributions from 256 HPRC people and 1,027 AoU people, and with its variation cluster and its mappability. These three kinds of information are exactly what we want to use.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页是目录的四个来源和优先级，只简单带过，不逐项展开。要强调的是：每个位点都带有 HPRC 256 人和 AoU 1,027 人的等位基因分布，以及变异簇和可比对性，这三类信息正是我们要用的。</p></div></section>
+<section class="slide" id="s7"><div class="slide-head"><span class="num">Slide 7</span><h3><span class="en">Key idea: variation cluster (VC)</span><span class="zh">变异簇（VC）的定义</span></h3></div><div class="lang en-block" lang="en"><p>This slide is about the definition of a variation cluster. A TR, together with the nearby sequence that is also highly variable in the population, is treated as one unit. Look at the picture. The top is an isolated TR: its flanks match the reference genome. The bottom is a variation cluster: the TR sits inside a region of polymorphic sequence, and the TRs and indels in the cluster change together. This whole interval is one variation cluster.</p>
+<p>How is it decided? They use 100 HPRC HiFi samples and calculate, base by base, the chance of being part of a variation cluster. Starting from the TR, they extend 1 bp at a time on both sides, and stop when the chance falls below 0.5. It counts as a variation cluster only if the edge extends more than 5 bp. Overlapping clusters are merged. A cluster with 5 or more TRs is called a complex variation cluster, and there are 24,867 of them. The tiers in my script are based on these numbers.</p></div><div class="lang zh-block" lang="zh-Hans"><p>变异簇的定义，对应这一页：一个 TR 连同它周围同样在人群中高度变异的序列，作为一个整体。看图，上面是孤立的 TR，两侧序列和参考基因组一致；下面是变异簇，TR 嵌在一片多态序列里，簇内相邻的 TR 和插入缺失会一起变化，这片区间就是一个变异簇。</p>
+<p>判定方法：用 100 个 HPRC HiFi 样本，逐个碱基计算“属于变异簇的概率”；从 TR 往两侧每次延伸 1 bp，概率降到 0.5 以下就停止。边界外扩超过 5 bp 才记为变异簇，重叠的合并。含 5 个或以上 TR 的称为复杂变异簇，一共 24,867 个。后面脚本的分档，就以这些指标为基础。</p></div></section>
+<section class="slide" id="s8"><div class="slide-head"><span class="num">Slide 8</span><h3><span class="en">Why variation clusters matter</span><span class="zh">变异簇的作用</span></h3></div><div class="lang en-block" lang="en"><p>This slide shows why we should care about variation clusters. In HG002, the share of alleles that agree with the assembly is 96.21% for isolated TRs. For TRs inside a cluster that are called one by one, it is only 79.43%. If the whole cluster is called together, it is 90.58%. So sites inside a cluster are the main source of genotyping errors. This is also true for our markers that we genotype by CE. I will explain how the script handles this on slide 13.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页说明为什么要关注 VC：在 HG002 上，孤立 TR 和组装一致的等位基因比例是 96.21%，簇内 TR 逐个分型只有 79.43%，整簇一起分型是 90.58%。所以簇内位点是分型出错的主要来源，对我们用 CE 做分型的标记也一样。第 13 页会讲脚本怎样处理。</p></div></section>
+<section class="slide" id="s9"><div class="slide-head"><span class="num">Slide 9</span><h3><span class="en">Key idea: mappability</span><span class="zh">重要概念：可比对性（mappability）</span></h3></div><div class="lang en-block" lang="en"><p>The last idea is mappability. I have not talked about it on its own yet. It is an annotation that the catalog gives to every site, and it is calculated for the site and its two flanks. The lower the value, the harder it is to place the sequence reliably with short reads, so the harder it is to genotype. The portal notes say the same thing. The exact method is in Table S3 of the paper, and I will not go into it here.</p>
+<p>The paper has a related finding: TRs inside clusters have lower mappability, and TRs with high mappability are almost all isolated TRs. So mappability and variation clusters are two connected views of the same problem.</p>
+<p>In my script I use it like this. If mappability is below 0.5, the site gets the flag “needs BLAST”. This threshold is provisional. It is only a flag, not a removal. Tier A needs mappability of at least 0.5, so a site below 0.5 can only reach tier B. In the primer design priority, it also counts as 1 problem. Most important: for flagged sites, we must check specificity carefully at the primer design step. I will talk about that in Part 2.</p>
+<p>Two PKD1 examples. Site 1756, an AC repeat, has a mappability of only 0.23, and I could not design primers for it in Part 2. Site 2960, an AACC repeat, is even lower, at 0.15, but it still passed the design, and it is now one of the 18 sites to test. So low mappability is a warning sign. It does not always mean that the design will fail.</p>
+<p>Now that we have the three ideas, let’s look at how they changed the script, and how it differs from the old SOP.</p></div><div class="lang zh-block" lang="zh-Hans"><p>最后一个概念是可比对性，前面还没有单独讲过。它是目录给每个位点附带的一项注释，针对位点及其两侧侧翼序列计算。数值越低，说明这段序列越难被短读长可靠地定位，也就越难准确分型，门户的说明里也是这样提醒的。具体的计算方法在文章的补充表 Table S3 里，我这里不展开。</p>
+<p>文章里有一个相关的发现：簇内的 TR 可比对性偏低，而可比对性高的 TR 几乎都是孤立 TR。所以它和变异簇是两个相互关联的角度。</p>
+<p>在我的脚本里是这样用的：可比对性低于 0.5，就标“需 BLAST”，这个阈值是暂定的。它只标记、不单独剔除；A 级要求可比对性不低于 0.5，低于 0.5 的位点最高只能是 B 级；在引物设计的优先序里，它也算 1 个问题。更重要的是，带这个标记的位点，到引物设计阶段要重点核对特异性，这一点在第二部分会讲。</p>
+<p>举两个 PKD1 的例子：1756（AC 重复）可比对性只有 0.23，在第二部分没能设计出引物；2960（AACC 重复）可比对性更低，是 0.15，但仍然通过了设计，现在在 18 个验证位点里。所以可比对性低是风险提示，不等于一定设计不出引物。</p>
+<p>三个概念讲完，下面看它们怎样改变了脚本，和原来的 SOP 相比有什么不同。</p></div></section>
+<section class="slide" id="s10"><div class="slide-head"><span class="num">Slide 10</span><h3><span class="en">How the current script differs from the old SOP</span><span class="zh">现有脚本与原 SOP 的区别</span></h3></div><div class="lang en-block" lang="en"><p>From this slide on, this is the part I did myself. On the left is the old SOP: TRF plus UCSC. On the right is the current script: TRExplorer plus UCSC. For PKD1, the candidates grew from 97 to 2,812, and 87 of them are in tier A and B. The new functions are: population diversity and tiers; variation cluster detection and primer no-go zones; automatic flank screening; the primer design priority P1 to P4; and a run record, which saves the input hash, thresholds and version number for every run. The next three slides talk about three improvements.</p></div><div class="lang zh-block" lang="zh-Hans"><p>从这一页开始是我自己做的部分。左边原 SOP，TRF 加 UCSC；右边现有脚本，TRExplorer 加 UCSC。PKD1 候选数从 97 个变成 2,812 个，其中 A 和 B 级共 87 个。新增的功能包括：人群多态性及分级、变异簇识别和引物禁区、侧翼自动筛查、引物设计优先序 P1–P4，以及每次运行记录输入哈希、阈值和版本号。接下来三页依次讲三个改进。</p></div></section>
+<section class="slide" id="s11"><div class="slide-head"><span class="num">Slide 11</span><h3><span class="en">Improvement 1: add population diversity</span><span class="zh">改进一：加入人群多态性</span></h3></div><div class="lang en-block" lang="en"><p>I use the HPRC256 allele distribution to calculate He, which is 1 minus the sum of p squared. Then I put the sites into tiers by He. Tier A means He of at least 0.70, no VC, and mappability of at least 0.5; there are 6. Tier B has 81. Tier C means He below 0.60; there are 2,507. Excluded sites are 218: these are reject-VC or known disease sites. All these rules are provisional.</p>
+<p>The chart on the right puts the 97 markers of the old SOP into the new tiers: A 5, B 28, C 59, excluded 5. So 64 markers, which is 66%, would be moved down or removed, mainly because their population diversity is low.</p>
+<p>This is a kind of confidence game. Before, I could only test diversity by CE, with 16 samples. Now I can predict it, and remove STRs with low diversity at the very start.</p>
+<p>One limit, or one direction to improve: the He now comes from multi-population data of 256 people. But the website lets me go further. For example, I can pick the 43 samples from East Asia. If we know that the patient is from East Asia, we could use that. The sample is small, though, so it may not be a reliable reference.</p></div><div class="lang zh-block" lang="zh-Hans"><p>用 HPRC256 的等位基因分布算 He = 1 − Σp²，按 He 分级：A 级 He ≥ 0.70，无 VC，可比对性 ≥ 0.5，6 个；B 级 81 个；C 级 He &lt; 0.60，2,507 个；排除 218 个，即拒绝-VC 或已知疾病位点。条件都是暂定。</p>
+<p>右边的图是把原 SOP 的 97 个标记按新分级重新归类：A 5、B 28、C 59、排除 5。也就是 64 个，占 66%，会被降级或剔除，主要是因为人群多态性低。</p>
+<p>这是一个confidence game，相比与我之前只能在CE中从16个样本里面验证，这一笔可以让我起到预测的作用，将多态性差的str在开始阶段就排除了</p>
+<p>一个当前的局限或者说改进方向：当前是 He 来自 256 人的多族群数据，但是这个网站支持我继续细分，比如我可以筛选出来自东亚的43个数据，当我们确定患者是东亚人群时，只是样本太小，也许无法作为可靠参考。</p></div></section>
+<section class="slide" id="s12"><div class="slide-head"><span class="num">Slide 12</span><h3><span class="en">Predicted diversity matches the 16-sample CE results fairly well</span><span class="zh">预测多态性与 16 样本实测</span></h3></div><div class="lang en-block" lang="en"><p>Is the prediction reliable? In the experiments I did before, 7 markers overlap with the platform picks. I put the predicted Ho next to the heterozygosity (HET) that we measured by CE in 16 samples. For all 7 markers, the difference is within about 1 standard error. The rank correlation between predicted He and measured HET is 0.89. Also, two sites that I excluded, 2769 and 1202, had no polymorphism in the lab, and they are predicted as almost monomorphic too. The sample is small, but it gives early proof that the idea can work. I will keep checking it with the results of the coming wet-lab work.</p></div><div class="lang zh-block" lang="zh-Hans"><p>关于预测是否靠谱？在我之前做过的实验中里有 7 个标记和平台推荐的位点重合，把预测 Ho 和 16 个样本的 CE 实测 HET 放在一起：7 个标记的差异都在大约 1 个标准误内，按 He 和按 HET 排序的相关性 ρ = 0.89；另外，被我排除的两个位点2769 和 1202 （多态性为0）在预测中也近单态。虽然样本数小，但可以初步验证可行性，我会通过这次的湿实验结果继续验证。</p></div></section>
+<section class="slide" id="s13"><div class="slide-head"><span class="num">Slide 13</span><h3><span class="en">Improvement 2: use variation clusters</span><span class="zh">改进二：考虑变异簇</span></h3></div><div class="lang en-block" lang="en"><p>This links back to slide 8. The script puts variation clusters into two levels. For me, a VC is something to consider, not a screen. There are two cases: one is direct rejection, the other is a VC warning. “Reject-VC” means 5 or more TRs in the cluster, or the cluster extends 50 bp or more beyond the site. These sites are excluded directly. For the “VC” warning, the other sites with a variation cluster are kept, but they drop from tier A to tier B, so their priority goes down.</p></div><div class="lang zh-block" lang="zh-Hans"><p>呼应第 8 页，脚本把变异簇分两档。VC目前对我来说是一个考虑因素而不是筛选，分两种情况一种是直接拒绝，一种是提示vc；“拒绝-VC”：簇内 ≥ 5 个 TR，或簇比位点外扩 ≥ 50 bp，直接排除。“提示有VC”：其余带变异簇的位点，保留，但从 A 降到 B，优先级下降。</p></div></section>
+<section class="slide" id="s14"><div class="slide-head"><span class="num">Slide 14</span><h3><span class="en">Improvement 3: automatic flank screening</span><span class="zh">改进三：侧翼自动筛查</span></h3></div><div class="lang en-block" lang="en"><p>The range is 200 bp on each side of the no-go zone. The script only flags; it does not change the tiers. We counted the hits among the 87 PKD1 sites in tier A and B. Segmental duplications (UCSC genomicSuperDups, overlap of 20 bp or more) hit 8 sites. Common SNPs (snp151Common, 4 or more on either side) hit 21 sites. Usable flank sequence (the longest unmasked stretch after soft masking is below 25 bp) hit 62 sites.</p>
+<p>Segmental duplications and common SNPs count in the priority P1 to P4. Usable sequence is only a hint, because most A and B sites are in repeat-rich regions. BLAST and in-silico PCR are not done at this stage. They are left for Part 2.</p></div><div class="lang zh-block" lang="zh-Hans"><p>范围是引物禁区两侧各 200 bp，只标记、不改分级。对 PKD1 的 87 个 A+B 位点：片段重复（UCSC genomicSuperDups，重叠 ≥ 20 bp）命中 8 个；常见 SNP（snp151Common，任一侧 ≥ 4 个）命中 21 个；侧翼可用序列（软掩码后最长未掩码片段 &lt; 25 bp）命中 62 个。</p>
+<p>片段重复和常见 SNP 计入优先序 P1–P4；可用序列只作提示，因为大部分 A、B 位点都在重复丰富的区域。BLAST 和 in-silico PCR 不在这一阶段做，留给第二部分。</p></div></section>
+<section class="slide" id="s15"><div class="slide-head"><span class="num">Slide 15</span><h3><span class="en">Summary and next steps</span><span class="zh">小结与下一步</span></h3></div><div class="lang en-block" lang="en"><h4>Summary of Part 1</h4>
+<p>In Part 1, the script now ranks sites by population diversity, and it can spot sites that are hard to genotype. It also checks segmental duplications, common SNPs and usable sequence in the flanks automatically. On the 7 overlapping markers, the prediction agrees with the 16-sample results fairly well. The main limit is this: the A, B and C thresholds are only my own design for now, and they need more CE data to calibrate.</p>
+<h4>Link to Part 2</h4>
+<p>The selected STRs are only sites that are “worth doing”. They are not usable markers yet. We still need primers that amplify stably. The pseudogenes, SNPs and repeats in the flanks are exactly what primer design must deal with. This is Part 2.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分小结</h4>
+<p>第一部分：脚本得到了人群多态性分级，能识别难分型的位点，侧翼的片段重复、常见 SNP 和可用序列可以自动筛查；在 7 个重叠标记上，预测与 16 样本实测基本一致。局限主要在：分级的A、B、C 阈值目前只是我自己的设计，要用更多 CE 数据校准</p>
+<h4>引向第二部分</h4>
+<p>选出来的 STR 只是“值得做”的位点，还不是能用的标记，还要设计出能稳定扩增的引物。侧翼里的假基因、SNP 和重复序列，正是引物设计要处理的问题，这就是第二部分。</p></div></section>
+<header class="part" id="part-16"><h2><span class="en">Part 2 · How we design primers now</span><span class="zh">第二部分　目前进行 Primer 设计的方法</span></h2></header>
+<section class="slide" id="s16"><div class="slide-head"><span class="num">Slide 16</span><h3><span class="en">Part title</span><span class="zh">部分标题页</span></h3></div><div class="lang en-block" lang="en"><h4>The problem this part solves</h4>
+<p>The problem for Part 2 is: how do we turn the selected STRs into a primer list that we can order from directly, and that is more likely to give one clear band at 60 ℃?</p>
+<p>Before, we designed primers with only Primer3. Of the 11 pairs in batch 2, only 2 gave one clear band at 60 ℃. So this time the goal is not just to “design again”. It is to add rules that we can calculate on top of Primer3, and to write the order list at the end.</p>
+<h4>Link</h4>
+<p>At the end of Part 1 I left a gap: the flanks of the selected STRs have segmental duplications, common SNPs and repeats, and we must deal with them at primer design. 31 PKD1 sites went into primer design, and 8 of them were done before. 37 PKD2 sites went into design. This part is about these sites.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分要解决的问题</h4>
+<p>第二部分要解决的问题是：怎样把入选的 STR，变成一张可以直接订购、而且更有把握在 60 ℃ 扩出单一清晰条带的引物表。</p>
+<p>之前我们设计引物只用 Primer3，批次 2 的 11 对引物里，只有 2 对在 60 ℃ 是单一清晰条带。所以这次的目标不只是“再设计一遍”，而是在 Primer3 之外加上能算出来的筛选依据，并且最后直接输出订购表。</p>
+<h4>衔接</h4>
+<p>第一部分最后留了一个口子：入选的 STR 侧翼里有片段重复、常见 SNP 和重复序列，这些要在引物设计阶段处理。PKD1 有 31 个位点进入引物设计，其中 8 个是已经做过的；PKD2 有 37 个位点进入设计。这一部分就是围绕这些位点做的。</p></div></section>
+<section class="slide" id="s17"><div class="slide-head"><span class="num">Slide 17</span><h3><span class="en">What this part did and what it gives</span><span class="zh">本部分做了什么、得到什么</span></h3></div><div class="lang en-block" lang="en"><p>This slide puts the problem, the method and the products together. The details come on the next slides.</p>
+<p>The problem is the result of batch 2 that I just mentioned, and four goals: a high success rate, one band at 60 ℃, clean CE peaks, and no interference in multiplex.</p>
+<p>The method has three points. First, Primer3 makes candidates, then five rules filter them step by step: product length, common SNP, tailed primer-dimer, many genome copies, and a unique target product. This is the “funnel” that I will show later. Second, for specificity I use a Python k-mer engine that I wrote. It scans the whole hg38 genome, including the PKD1 pseudogenes. It follows the 3′ seed idea of MFEprimer, but I did not use MFEprimer directly. Third, all primers in this batch use one FAM tail, so later we can compare primer strength in the same color. How it is built is on pages 23 and 24, and the tools I checked are on page 25.</p>
+<p>There are three products: the order lists v2 for PKD1 and PKD2; the old vs new comparison for the 8 sites done before; and an independent check with the MFEprimer web server. (One small point: to let an AI run the whole workflow, I would need to open domain access on my computer and have a staff account. I cannot do this, so I could only copy their logic and write my own scripts.)</p>
+<p>There is one more result: the funnel. Of the 31 PKD1 sites, 18 are kept. The 13 removed sites and the reasons are on pages 28 and 29.</p>
+<p>I must stress this: these primers are not tested in the wet lab yet. The test is in Part 3.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页先把问题、做法和产物放在一起，后面各页是展开。</p>
+<p>问题就是刚才说的批次 2 的结果和四个目标：成功率高、60 ℃ 单一条带、CE 峰干净、multiplex 不互扰。</p>
+<p>做法有三点。第一，Primer3 出候选，再经五条规则逐级过滤：产物长度、常见 SNP、带尾二聚体、引物高拷贝、目标产物唯一，这就是后面要讲的“漏斗”。第二，特异性检查是我自己写的 Python k-mer 引擎，对 hg38 全基因组扫描，包含 PKD1 的假基因；它借鉴了 MFEprimer 的 3′端种子思路，但没有直接用 MFEprimer。第三，这一批全部统一用 FAM 尾，目的是以后在同一个荧光下直接比较引物强弱。实现方法在第 23–24 页，评估过的工具在第 25 页。</p>
+<p>产物有三样：PKD1 和 PKD2 的订购表 v2；8 个已做位点的新旧引物对照；用 MFEprimer 网页版做的独立复核（这里有一个小点。因为如果要让ai跑通全流程需要开放电脑domain权限，需要stuff账号，这点我无法做到，所以只能模仿它们的逻辑自己编脚本）。</p>
+<p>另外还有一项结果：漏斗。PKD1 的 31 个位点里留下 18 个，被排除的 13 个和原因，在第 28–29 页。</p>
+<p>需要强调：这批引物还没有做湿实验，验证在第三部分。</p></div></section>
+<section class="slide" id="s18"><div class="slide-head"><span class="num">Slide 18</span><h3><span class="en">Why change the primer design</span><span class="zh">为什么要改引物设计</span></h3></div><div class="lang en-block" lang="en"><p>This is the reason for the change. Here is the gradient PCR of the 11 pairs in batch 2. Two pairs gave one clear band at 60 ℃ (3428 and 3473). One pair gave one band only at 65 ℃ (3245). Four pairs were non-specific, smeared or dimer only (3207, 3325, 3353 and 3359). One was weak and unstable (3558). Two failed and need a repeat (3393 and 3576). One is still to be read (3616).</p>
+<p>Only 2 pairs meet the need of PGT-M. So the design needs more evidence, not only the Primer3 score.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这是起因。批次 2 的 11 对梯度 PCR：60 ℃ 单一清晰条带 2 对（3428、3473）；只在 65 ℃ 有单一条带 1 对（3245）；非特异、拖尾或只有二聚体 4 对（3207、3325、3353、3359）；弱而不稳 1 对（3558）；运行失败待重做 2 对（3393、3576）；还有 1 对待判读（3616）。</p>
+<p>只有 2 对符合 PGT-M 的要求，所以设计要有更多依据，而不是只靠 Primer3 的评分。</p></div></section>
+<section class="slide" id="s19"><div class="slide-head"><span class="num">Slide 19</span><h3><span class="en">How the goals become measurable rules</span><span class="zh">目标如何落到指标和方法上</span></h3></div><div class="lang en-block" lang="en"><p>This slide shows the logic of the whole design: every goal needs a number that we can calculate, and then a method.</p>
+<p>High success rate, including single-cell WGA: no common SNP in the primer, a short product, Tm 62–64 ℃ and GC 40–60%. I use UCSC snp151Common and Primer3.</p>
+<p>One clear band at 60 ℃: the primer must not have many near-perfect copies in the genome, the target product must be unique, and there must be no pseudogene product. Primer3 cannot do this alone, so I wrote the k-mer engine to scan the whole hg38.</p>
+<p>Clear CE peaks: the same +A at the 3′ end, using the pigtail; few self-products from one primer; and one dye.</p>
+<p>No interference in multiplex: the ΔG of tailed primer-dimers, and cross products between sites. I use primer3-py thermodynamics and a panel check.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页是整个设计的逻辑：每个目标都要对应一个可以计算的指标，再对应具体方法。</p>
+<p>成功率高，包括单细胞 WGA：引物内不能有常见 SNP，产物要短，Tm 62–64 ℃、GC 40–60%，用 UCSC snp151Common 和 Primer3。</p>
+<p>60 ℃ 单一清晰条带：引物在基因组里不能有高拷贝的近完全匹配，目标产物要唯一，不能有假基因产物。这一项 Primer3 自己做不了，所以我写了 k-mer 引擎对 hg38 全基因组扫描。</p>
+<p>CE 峰清晰：3′端 +A 一致，用 pigtail；同一条引物自身产物要少；统一荧光。</p>
+<p>multiplex 互不干扰：带尾二聚体的 ΔG，以及跨位点的交叉产物，用 primer3-py 的热力学计算和面板检查。</p></div></section>
+<section class="slide" id="s20"><div class="slide-head"><span class="num">Slide 20</span><h3><span class="en">Workflow overview</span><span class="zh">现有流程总览</span></h3></div><div class="lang en-block" lang="en"><p>This is the full workflow, with ten steps. Every step records its settings and its reasons, so it can be repeated.</p>
+<p>Step 1 reads the selected STR list from the platform. Step 2 picks out the sites that were done before, for comparison. Step 3 looks up common SNPs. Step 4 makes candidate pairs with primer3-py. Step 5 adds the FAM tail and the pigtail. Step 6 applies the hard filters: dimer, specificity and SNP. Step 7 scores and ranks, and keeps the top 5 for each site. Step 8 is the panel check, for cross-site dimers and cross products. Step 9 writes the order list. Step 10 is the wet lab: a gradient gel first, then CE.</p>
+<p>Steps 1 to 9 are done. Step 10 is Part 3.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这是完整流程，一共十步，每一步都记录参数和依据，可以复现。</p>
+<p>第 1 步读入平台导出的已筛选 STR 清单；第 2 步把已经做过的位点挑出来作对照；第 3 步查常见 SNP；第 4 步用 primer3-py 出候选引物对；第 5 步加 FAM 尾和 pigtail；第 6 步做硬性过滤，包括二聚体、特异性和 SNP；第 7 步打分排序，每个位点保留前 5 对；第 8 步做面板级检查，看跨位点二聚体和交叉产物；第 9 步输出订购表；第 10 步是湿实验，梯度胶之后做 CE。</p>
+<p>前 9 步已经做完，第 10 步是第三部分的内容。</p></div></section>
+<section class="slide" id="s21"><div class="slide-head"><span class="num">Slide 21</span><h3><span class="en">Key step 1: Primer3 design settings</span><span class="zh">关键步骤一：设计与标记</span></h3></div><div class="lang en-block" lang="en"><p>This slide is about the Primer3 settings, which means the settings for the gene-specific part of the primer (the anchor), and why I set them this way.</p>
+<p>First, Tm. Our annealing temperature in the lab is 60 ℃, but here I set the anchor Tm to 62–64 ℃, best 63 ℃. The reason is a rule of thumb: the annealing temperature is usually a few degrees below the primer Tm. IDT suggests 2 to 5 ℃ lower. This way the primer binds firmly, but does not bind too easily to wrong places. So to anneal at 60 ℃, I put the primer Tm in the window of 62 to 64 ℃. I must say, this is a rule of thumb, not something we have tested. The Tm value also depends on the calculation method and the buffer. I use the SantaLucia nearest-neighbor method, with 50 mM sodium, 1.5 mM magnesium, 0.6 mM dNTP and 50 nM primer. Later, the gradient gel from 55 to 65 ℃ will show if this window is good.</p>
+<p>Second, length: 19 to 28 nt, best 24. Length is tied to Tm and GC. With this salt condition, I calculated with random sequences. To reach Tm 62–64 ℃, a sequence with 40% GC needs about 28 to 29 nt, 50% GC needs about 23 to 25 nt, and 60% GC needs about 20 to 21 nt. This is the small table on the right. So the lower limit of 19 nt fits high-GC sequences. The upper limit of 28 nt lets us reach the Tm in AT-rich flanks with 40% GC. Longer primers form more secondary structure, bind more to wrong places, and cost more. So I stop at 28. I must say, these limits are my own choice, not a fixed value from a paper.</p>
+<p>Third, GC is 40–60%, which is a normal range, and I want a G or C at the 3′ end, so the extending end binds more firmly. The product is 100 to 250 bp, because single-cell WGA gives short template fragments, and short products amplify more easily. The product of the largest allele must be no more than 330 bp. If no candidate is found, there are four levels that relax Tm, product size and GC step by step, and they are marked in the order list.</p>
+<p>All primers in this batch use one FAM tail, to remove the dye effect. Thermo says FAM signal is stronger than VIC, NED and PET. If we did not use one tail, we could not tell if a primer is bad or just the dye is weak.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页讲 Primer3 的设计条件，也就是引物基因特异部分（锚点）的参数，以及为什么这样设。</p>
+<p>先说 Tm。我们实验的退火温度是 60 ℃，而这里把锚点的 Tm 设成 62–64 ℃，最适 63 ℃。原因是一个经验规则：退火温度一般比引物的 Tm 低几度，IDT 的建议是低 2 到 5 ℃，这样引物既能稳定结合，又不至于太容易非特异结合。所以要在 60 ℃ 退火，引物的 Tm 就放在 62 到 64 ℃ 这个窗口。要说明，这是经验规则，不是我们实验验证过的；Tm 的数值还依赖计算方法和缓冲液条件，我用的是 SantaLucia 最近邻，50 mM 钠离子、1.5 mM 镁离子、0.6 mM dNTP、50 nM 引物。后面做 55 到 65 ℃ 的梯度胶，会用结果检验这个窗口是否合适。</p>
+<p>再说长度 19 到 28 nt，最适 24。长度和 Tm、GC 是绑在一起的。在这个盐条件下，我用随机序列算过：要让 Tm 到 62–64 ℃，GC 40% 的序列需要约 28 到 29 nt，GC 50% 约 23 到 25 nt，GC 60% 约 20 到 21 nt，就是页面右边这张小表。所以下限 19 nt 对应 GC 偏高的序列，上限 28 nt 是为了够得着 GC 40% 的 AT 富集侧翼。再长的引物更容易形成二级结构和非特异结合，合成也更贵，所以我把上限卡在 28。要说明，这个上下限是我的取舍，不是文献里的固定值。</p>
+<p>GC 设 40–60%，是常规范围，3′端要有 G 或 C，让延伸端结合更稳。产物 100 到 250 bp，因为单细胞 WGA 的模板片段短，产物短更容易扩增；含最大等位基因不超过 330 bp。找不到候选时，会分四级逐级放宽 Tm、产物和 GC，并在订购表里标注。</p>
+<p>这一批全部统一用 FAM 尾，原因是排除染料差异：Thermo 的资料给出 FAM 信号强于 VIC、NED 和 PET，不统一的话，没法区分是引物差还是染料弱。</p></div></section>
+<section class="slide" id="s22"><div class="slide-head"><span class="num">Slide 22</span><h3><span class="en">Key step 2: three hard filters</span><span class="zh">关键步骤二：三项硬性过滤</span></h3></div><div class="lang en-block" lang="en"><p>This slide is the core of the new work in this part: three hard filters. First, why these three and not others?</p>
+<p>In our use, a primer pair can fail in three main ways. First, the template has variation. For PGT-M with single cells, a common SNP at the primer site can make one allele not amplify. This is allele dropout, and it directly causes mistakes in the linkage analysis. Second, primers bind each other and form dimers. This uses up primers, and in multiplex they also disturb each other. Third, the primer can also bind to other places in the genome and amplify other bands. PKD1 itself has 6 pseudogene copies, and this was the main suspect for the non-specific results in batch 2.</p>
+<p>These three are exactly what Primer3 cannot cover alone. Primer3 can check Tm, GC, hairpins, and dimers inside a primer or between a pair. But it does not know where the SNPs are on the template. It does not search the whole genome to see where else the primer can bind. And we ask it to design the anchors without tails, so it cannot see the dimers after the tails are added. So these three filters fill these gaps. If a candidate pair fails any one of them, it is removed.</p>
+<p>Filter 1: common SNP. The data come from UCSC snp151Common, with a population frequency of at least 1%. The rule is: no SNP within 5 bases of the 3′ end, because a 3′ end mismatch is the easiest way to stop the extension; and at most 1 SNP in the whole primer. This filter is mainly for a reason of principle: PGT-M uses single cells, and dropout costs a lot. The back-test of 24 pairs is not enough to test this one alone.</p>
+<p>Filter 2: tailed primer-dimer. I use the thermodynamics of primer3-py. I add the FAM tail and the pigtail and calculate the whole sequence, because the primers in the real reaction have tails. There are two rules. If the heterodimer ΔG is −7 kcal/mol or lower, or the 3′ end stability is −4 kcal/mol or lower, the pair is removed. ΔG is free energy; the more negative, the more stable the binding. I look only at the 3′ end, because only dimers that can be extended at the 3′ end really affect amplification. This idea comes from PrimerROC. These two thresholds are provisional. They come from the back-test of 24 old pairs, which I explain below.</p>
+<p>Filter 3: genome-wide specificity. I use my own k-mer engine. It takes the 3′ end of the primer as a seed and looks for the places where the primer may bind in the whole hg38. A “near-perfect copy” is defined like this: the 3′ end 12 nt match exactly, and the whole primer has at most 3 mismatches. There are three rules. If there are more than 20 other near-perfect copies, the pair is removed. The target product must be unique, which means there must be no other product made by any forward and reverse primers, besides the designed one. And if one primer makes more than 200 self-products with itself, it is also removed. The last two rules were added in v2, after the check.</p>
+<p>Last, what does “24-pair back-test” mean? A back-test means that we use old primers with known lab results to test the new rules, looking backwards. These 24 pairs are primers that we really used before: 13 pairs from batch 1, all usable in CE, and 11 pairs from batch 2, tested by gradient gel, some good and some bad. I put these 24 pairs into the new engine and calculated, for each pair, the dimer values, the number of other near-perfect copies, and so on. Then I compared them with the lab results of that time, to see which number can separate the good from the bad.</p>
+<p>The dimer thresholds were set this way. With −7 and −4 as limits, only two pairs, 3325 and 3353, are flagged, and both were non-specific in the lab. Among the usable primers, the worst values were only −6.5 and −3.4, so they are all outside the thresholds. The threshold for other near-perfect copies is set in the same way: usable primers have at most 14, and the bad primers have at least one primer with 63 or more. So I put the line at 20.</p>
+<p>I must stress: 24 pairs is a small sample and there are exceptions, so all thresholds are only provisional. The details are on slide 27. The wet-lab results in Part 3 will be used to calibrate them.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页是这一部分新增的核心：三项硬性过滤。先说为什么是这三项，而不是别的。</p>
+<p>一个引物对，在我们这个用途里，最主要的失败方式有三种。第一，模板本身有变异：单细胞 WGA 做 PGT-M，引物位点上的常见 SNP 会让某个等位基因扩不出来，也就是等位基因脱扣，会直接导致连锁分析出错。第二，引物之间互相结合：形成二聚体，既消耗引物，也会在 multiplex 里互相干扰。第三，引物在基因组的其他位置也能结合：会扩出别的条带，PKD1 本身还有 6 个假基因拷贝，这是批次 2 里非特异的主要嫌疑。</p>
+<p>这三项正好是 Primer3 自己覆盖不了的部分：Primer3 能检查 Tm、GC、发夹以及引物自身和一对引物之间的二聚体，但它不知道模板上哪里有 SNP，也不会在整个基因组里查引物还能结合到哪里，而且我们让它设计的是不带尾的锚点，所以带尾后的二聚体它也看不到。所以我补的就是这三个缺口。每个候选引物对，任何一项不通过就被剔除。</p>
+<p>第一项，常见 SNP。数据来自 UCSC 的 snp151Common，人群频率不低于 1% 的位点。规则是：引物 3′端 5 个碱基内不允许有，因为 3′端错配最容易让延伸失败；整条引物内最多 1 个。这一项主要是出于原理：PGT-M 是单细胞，脱扣的代价很大。回测的 24 对引物不足以单独检验这一项。</p>
+<p>第二项，带尾二聚体。用 primer3-py 的热力学计算，把 FAM 尾和 pigtail 都加上，整条序列一起算，因为实际反应里存在的就是带尾的引物。判据有两个：异源二聚体 ΔG 不高于 −7 kcal/mol，或者 3′端稳定性不高于 −4 kcal/mol，就剔除。ΔG 是自由能，越负代表结合越稳定。只看 3′端，是因为只有 3′端能被延伸的二聚体才真正影响扩增，这个原则来自 PrimerROC。这两个阈值是暂定的，来自 24 对旧引物的回测，下面解释。</p>
+<p>第三项，全基因组特异性。用我自己写的 k-mer 引擎，把引物 3′端当种子，在整个 hg38 里找它可能结合的位置。其中“近完全拷贝”定义为：3′端 12 nt 完全匹配，并且全长错配不超过 3 个。判据有三条：其他近完全拷贝超过 20 个就剔除；目标产物必须唯一，也就是除了设计的那个产物，不能再有别的正反引物配成的产物；同一条引物自己和自己形成的产物超过 200 个也剔除，这两条是 v2 在复核之后新增的。</p>
+<p>最后解释“24 对回测”是什么意思。回测，就是用已经有实验结果的旧引物，反过来检验新规则。这 24 对是我们之前实际做过的引物：批次 1 的 13 对，CE 都能用；批次 2 的 11 对，做了梯度胶，有好有坏。我把这 24 对放进新引擎，算出每一对的二聚体、其他近完全拷贝数等指标，再和它们当时的实验结果对照，看哪个指标能把好的和差的分开。</p>
+<p>二聚体的阈值就是这样定的：用 −7 和 −4 作为界限，只有 3325 和 3353 两对被标出来，而这两对在实验里都是非特异；可用的引物里，最差也只有 −6.5 和 −3.4，都在阈值之外。其他近完全拷贝数的阈值也是这样：可用的引物不超过 14 个，差的引物至少有一条在 63 个以上，所以把线放在 20。</p>
+<p>要强调的是：24 对样本很小，而且有例外，所以所有阈值都只是暂定，细节在后面第 27 页。第三部分的湿实验结果，就是用来校准它们的。</p></div></section>
+<section class="slide" id="s23"><div class="slide-head"><span class="num">Slide 23</span><h3><span class="en">How it is built (1): from input to candidate primers</span><span class="zh">实现方法（一）：从输入到候选引物</span></h3></div><div class="lang en-block" lang="en"><p>This slide and the next one answer the question: how is each step built? I go along the steps of the current workflow. For each one I say the purpose, the tool, and how it is done. There are four ways of building: use a ready program directly, write my own script, scrape data from a web page, or write my own code based on the idea of another tool.</p>
+<p>Step 1, the input list. The purpose is to read the STRs picked in Part 1: position, repeat unit, primary or backup, and flank sequence. I use openpyxl to read the Excel file from the platform. This is my own script. There are 31 PKD1 sites and 37 PKD2 sites. Step 2, sites done before. Sites done before do not go into the new batch. They are listed separately for the old vs new comparison. This is also my own script. It matches the sites against the old order lists and the PGD-C primer table, by position and repeat unit. It works only for chr16.</p>
+<p>Step 3, common SNP lookup. The purpose is to find the places where primers must not sit. This step scrapes web data. I call the public UCSC interface and get the snp151Common SNPs within 500 bp of each site. I keep only those with a population frequency of at least 1%. The basis is dbSNP and UCSC.</p>
+<p>Step 4, Primer3 candidates. The purpose is to make candidate pairs in the flanks. This is direct use: primer3-py 2.3, anchor Tm 62–64 ℃, length 19–28 nt, GC 40–60%, product 100–250 bp, and up to 200 pairs at each level. If there is no candidate, four levels, L0 to L3, relax the settings step by step.</p>
+<p>Step 5, add tails. The purpose is to add the sequences needed for labeling: the M41 FAM tail at the 5′ end, and the pigtail gttt on the untailed primer. This is my own script.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这两页回答“每一步是怎么做出来的”。按现有流程的步骤，依次说目的、用什么工具、怎么实现，实现方式分四种：直接使用现成的程序、自己编脚本、抓取网页上的数据、参考某个工具的原理自己编。</p>
+<p>第一步，输入清单。目的是读入第一部分选出的 STR，包括坐标、重复单元、主选还是备选，以及侧翼序列。用 openpyxl 读平台导出的 Excel，是自编脚本。PKD1 是 31 个位点，PKD2 是 37 个。第二步，已做位点对照。已经做过的位点不进新批次，而是单列出来做新旧对照。这一步也是自编脚本，把位点和历史订购清单、PGD-C 的引物总表按位置和重复单元匹配，只对 chr16 生效。</p>
+<p>第三步，查常见 SNP。目的是找出引物不能落的位置。这一步是抓取网页数据：调用 UCSC 的公开接口，取每个位点侧翼 500 bp 内的 snp151Common，只保留人群频率不低于 1% 的。依据是 dbSNP 和 UCSC。</p>
+<p>第四步，用 Primer3 出候选。目的是在侧翼里生成候选引物对。这一步是直接使用：primer3-py 2.3，锚点 Tm 62–64 ℃，长度 19–28 nt，GC 40–60%，产物 100–250 bp，每一级最多取 200 对；没有候选时分 L0 到 L3 四级逐步放宽。</p>
+<p>第五步，加尾。目的是加上标记需要的序列：5′端加 FAM 的 M41 尾，无尾的一条加 pigtail gttt。这一步是自编脚本。</p></div></section>
+<section class="slide" id="s24"><div class="slide-head"><span class="num">Slide 24</span><h3><span class="en">How it is built (2): from filters to the order list</span><span class="zh">实现方法（二）：从过滤到订购表</span></h3></div><div class="lang en-block" lang="en"><p>Step 6, hard filters. The purpose is to remove candidates that would fail. There are two tools. The thermodynamics of primer3-py is used for tailed primer-dimers; this is direct use. And my own k-mer engine is used for genome-wide specificity; this one is based on the idea of MFEprimer, and I wrote it myself. The engine is built with numpy. The hg38 index is about 14 GB. The seed is the 11 bases at the 3′ end of the primer, and up to 2 substitutions are allowed. The rules are the three filters on slide 22.</p>
+<p>Step 7, score and rank. The purpose is to pick the best from the candidates that pass the filters, and keep 5 pairs per site. This is my own script. It adds up, with weights, the Primer3 penalty, the fraction of the primer in repeat-masked sequence, the number of near-perfect copies, the number of self-products, the number of SNPs, and the deviation of product size. The lower the score, the better. For repeats I use the soft masking of RepeatMasker.</p>
+<p>Step 8, panel check. The purpose is to make primers of different sites not disturb each other. This is based on the idea of SADDLE, and I wrote it myself. It uses simulated annealing. From the candidates of each site, it picks 1 pair, so that the cross-site dimers are the smallest. It also checks that primers of different sites cannot make products. Step 9, write the order list. The purpose is to be ready to order. It is my own script. It writes the full order sheet, the supplier format, the optional backups, the old vs new comparison, the design reasons and the flowchart.</p>
+<p>Last, there is one more step, an independent check, to test my own engine. I use the MFEprimer web server, with hg38 as the reference, and I submit only the anchor sequences, without tails. How it is done is on slide 26. Step 10 is the wet lab, and it is in Part 3.</p></div><div class="lang zh-block" lang="zh-Hans"><p>第六步，硬性过滤，目的是剔除会失败的候选。工具有两个：primer3-py 的热力学计算，用于带尾二聚体，这是直接使用；以及我自写的 k-mer 引擎，用于全基因组特异性，这是参考 MFEprimer 的原理自己编的。引擎用 numpy 实现，hg38 的索引大约 14 GB；种子取引物 3′端 11 个碱基，最多允许 2 个替换。具体判据就是第 22 页的三项。</p>
+<p>第七步，打分排序。目的是在通过过滤的候选里选优，每个位点保留 5 对。这是自编脚本，把 Primer3 自己的罚分、引物落在重复屏蔽序列里的比例、近完全拷贝数、自身产物数、SNP 数和产物大小的偏离加权求和，分数越低越好。重复序列用 RepeatMasker 的软掩码来判断。</p>
+<p>第八步，面板级检查。目的是让不同位点的引物互不干扰。这是参考 SADDLE 的思路自己编的：用模拟退火，从每个位点的候选里各选 1 对，让跨位点的二聚体最小，同时检查不同位点的引物之间不能形成产物。第九步，输出订购表，目的是可以直接下单。自编脚本，输出完整下单表、供应商格式、可选备用、新旧对照、设计依据和流程图。</p>
+<p>最后还有一步独立复核，目的是检验我自写的引擎。用的是 MFEprimer 网页版，参考库选 hg38，只提交引物的锚点序列，不含尾。这一步的做法在第 26 页详细说。第十步是湿实验，放在第三部分。</p></div></section>
+<section class="slide" id="s25"><div class="slide-head"><span class="num">Slide 25</span><h3><span class="en">Tools we checked: function, what we took, and trade-offs</span><span class="zh">评估过的工具：功能、借鉴点和取舍</span></h3></div><div class="lang en-block" lang="en"><p>This slide answers three questions: what is each tool for, what did I take from it, and why did I not use it directly.</p>
+<p>MFEprimer is a tool for checking the quality of primers. It uses a k-mer index to find all the places where a primer may bind in the genome. It predicts which products will be made, including off-target products, and it calculates the binding energy, dimers and hairpins. It is the main reference for my specificity check. I did not use its program version, because the security software on my computer blocks it, and I did not try to get around that. Only the web server is possible, but it is limited to 500 primers, and I cannot connect it to my workflow to run by itself. So I took its idea of the 3′ seed and wrote my own engine, and I used the web server for an independent check. After the final primers are designed, I also plan to keep using the web server to check them.</p>
+<p>AutoDimer is a program from NIST. It screens a multiplex primer set for primer-dimers and hairpins. It was first made for forensic STR multiplex systems. This is exactly the function we need later for the multiplex panel, so I want to use it. NIST now recommends the web version. I have checked that the web version opens, and it is on the NIST DNA Analysis Tools site. The limit is that I must upload a sequence file by hand, with up to 100 sequences and up to 50 nucleotides each. Our tailed primers are a little over 40 nt, so it is fine, but it cannot join my workflow automatically. The Visual Basic program version is no longer supported.</p>
+<p>PrimerROC predicts primer-dimers and sets the threshold with ROC analysis. It gave me one principle: only dimers that can be extended at the 3′ end really affect amplification. But its threshold of −4.43 fits its own score and its own lab conditions, so I cannot copy it to our system. That is why I set my thresholds with the back-test of 24 old pairs. SADDLE uses simulated annealing to pick, from many candidates, a multiplex primer set with the fewest dimers. I used this idea in my panel step. But its method needs a non-disclosure agreement and is patent pending, so I only took the idea and wrote the program myself.</p>
+<p>openPrimeR checks if a multiplex primer set can amplify each template. Array Melt measures DNA hairpin thermodynamics at high throughput and gives more accurate ΔG parameters. I did not use these two. openPrimeR is made for IGHV, Taq and gels. It has not been tested on STR or single-cell WGA, and it does not predict peak height. The lab conditions of Array Melt are 25 mM NaCl without magnesium, and its dimer ΔG has not been validated. LUS is a factor for choosing STRs, not a way to adjust primer design. I will think about it later in STR screening.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页回答三件事：这些工具各自是做什么的，我借鉴了什么，为什么没有直接用。</p>
+<p>MFEprimer 的功能是引物质量检查：用 k-mer 索引在基因组里找出引物可能结合的所有位置，预测会扩出哪些产物，包括非目标产物，并计算结合的热力学、二聚体和发夹。它是我这套特异性检查的主要参考。我没有直接用它的程序版，因为程序版在本机被安全软件拦截，我没有去绕过；能用的只有网页版，但网页版限 500 条引物，也没法接到我的流程里自动运行。所以我借鉴它的 3′端种子思路自己写了引擎，再用网页版做独立复核。后面设计出最终引物之后，我也打算继续用网页版复核。</p>
+<p>AutoDimer 是 NIST 做的程序，专门筛查多重引物组里的引物二聚体和发夹，原本是为法医 STR 多重体系设计的。这正好是我们后面做多重面板需要的功能，所以我想采用。NIST 现在推荐用网页版，我已经确认网页版可以打开，入口在 NIST 的 DNA Analysis Tools 网站。它的限制是要手动上传序列文件，最多 100 条序列，每条最多 50 个核苷酸；我们带尾的引物长度 40 多 nt，没有超限，但不能自动接到我的流程里。Visual Basic 的程序版已经不再维护。</p>
+<p>PrimerROC 的功能是预测引物二聚体，并用 ROC 分析来校准判定阈值，它给了我一个原则：只有 3′端能被延伸的二聚体才真正影响扩增。但它的阈值 −4.43 是针对它自己的评分和实验条件的，不能直接搬到我们的体系，所以阈值我用 24 对旧引物回测来定。SADDLE 的功能是用模拟退火，从大量候选里选出二聚体最少的多重 PCR 引物组，这个思路用在了我的面板步骤；但它的算法需要保密协议、已申请专利，所以只借用思路，程序自己写。</p>
+<p>openPrimeR 评估多重引物组能否扩增各个模板，Array Melt 是高通量测量 DNA 发夹热力学、给出更准确的 ΔG 参数。这两个评估后没有采用：openPrimeR 针对的是 IGHV、Taq 和凝胶，没有在 STR 或单细胞 WGA 上验证，也不预测峰高；Array Melt 的实验条件是 25 mM NaCl、不含镁离子，它的二聚体 ΔG 没有被验证过。LUS 是 STR 选择的因素，不是引物设计的手段，留到后续的 STR 筛选里考虑。</p></div></section>
+<section class="slide" id="s26"><div class="slide-head"><span class="num">Slide 26</span><h3><span class="en">Checking the engine: independent tests</span><span class="zh">引擎验证：独立复核</span></h3></div><div class="lang en-block" lang="en"><p>I wrote the engine myself, so I must show that its output can be trusted. I will explain this step in detail. I did three checks, from simple to complex. First I check the logic on artificial data. Then I check the real hard case, the PKD1 pseudogenes, to see if the engine can find them. Last, I check with an outside tool.</p>
+<p>Check 1, nine unit tests. I build a small artificial genome and put in sites where I already know the answer. Then I check if the output of the engine is right. Can it find exact matches? Can it find sites with mismatches and record where the mismatches are? Does it treat a mismatch at the 3′ end correctly? Can it find sites on the reverse strand? Is the binding energy weaker when there are more mismatches? Can it pair the forward and reverse sites into a product correctly? All nine tests passed. This check only shows that the code logic is not wrong. It does not show that the engine works well in the real genome.</p>
+<p>Check 2, the PKD1 pseudogene control. This is for the hard case that we care about most. The 5′ part of PKD1 has a repeat region, at about 2.10 to 2.12 Mb on chr16. On chr16 it has 6 pseudogene copies with very similar sequence. In this repeat region I picked 40 random primer pairs. Each primer is 22 nt, with 40–60% GC and a G or C at the 3′ end, and the product is 150 to 450 bp. These primers bind PKD1, and they should also have matching binding sites in the 6 pseudogene copies. I let the engine scan the whole hg38, to see if it can find, in each copy, one forward site and one reverse site that make a product. The product must be within 3 kb of the copy region, and its size must be within 300 bp of the target. We cannot ask for exactly the same size, because the tandem repeats have different lengths in each copy. There are 40 pairs times 6 copies, which is 240 cases in total, and the engine found 194. For the 46 that it did not find, I compared them with the reference by hand, one by one. 40 are truly not there: the copy has no similar sequence in this region, or the best match has many mismatches, or the 3′ end does not match. The other 6 are probably real misses, which means the engine can miss some sites in rare cases.</p>
+<p>Check 3, an independent check with the MFEprimer web server. I took the anchor sequences of 21 old pairs and 45 new pairs, 66 pairs in total. These are the gene-specific parts without the tail. I submitted them to the web server, with hg38 as the reference, and compared the target product size that it listed with my engine and with the design. All 66 pairs agreed. I must say, this only checks the target product. For off-target products, the two tools disagree on a few primers. For the old pairs 3325 and 3353, my engine flagged off-target binding, but the web server did not list any. The sample is too small to say who is right.</p>
+<p>The check also found that the pairs 1876 and 1275 in v1 had a multi-product problem. So I added two rules, “target product must be unique” and “self-product limit”, and made v2 again. This is the change from v1 to v2.</p></div><div class="lang zh-block" lang="zh-Hans"><p>自己写的引擎，需要证明它的输出可信。这一步我详细说一下，做了三项检查，思路是由简到繁：先在人造数据上验证逻辑，再在真实的难点——PKD1 假基因上看能不能找出来，最后用外部工具独立核对。</p>
+<p>第一项，9 项单元测试。做法是在人工合成的小基因组里，埋入我已经知道答案的位点，然后检查引擎的输出对不对：能不能找到完全匹配的位点，能不能找到有错配的位点并记下错配位置，3′末端错配该不该排除，反向链上的位点能不能找到，错配越多结合的热力学是不是越弱，找到的正反位点能不能正确配成扩增产物。9 项全部通过。这一项只能说明代码逻辑没写错，不能说明在真实基因组里好用。</p>
+<p>第二项，PKD1 假基因对照，这是针对我们最关心的难点。PKD1 的 5′部分有一段重复区，大约在 chr16 的 2.10 到 2.12 Mb，在 chr16 上有 6 个假基因拷贝，序列非常相似。我在这个重复区里随机取了 40 对引物，每条 22 nt，GC 在 40–60%，3′端是 G 或 C，产物在 150 到 450 bp。这些引物在 PKD1 上有，在 6 个假基因拷贝上也应该有对应的结合位置。我让引擎对整个 hg38 扫描，看它能不能在每个拷贝上，找到一个正向位点加一个反向位点配成的产物，产物落在拷贝区域前后 3 kb 内，大小和目标相差不超过 300 bp——因为各个拷贝的串联重复长度不一样，所以不能要求大小完全相等。40 对引物乘 6 个拷贝，一共 240 个组合，引擎找到了 194 个。没找到的 46 个，我逐个和参考序列直接比对：40 个是真的没有——那个拷贝在这个区域没有同源序列，或者最佳比对错配很多、3′端不匹配；剩下 6 个是疑似真漏检，说明引擎在个别情况下会漏掉一些位点。</p>
+<p>第三项，用 MFEprimer 网页版独立复核。做法是把旧引物 21 对、新设计 45 对，共 66 对的锚点序列，也就是不含尾的基因特异部分，提交到网页版，参考库选 hg38，比较它列出的目标产物大小，和我的引擎、和设计值是否一致。结果 66 对全部一致。要说明，这只是核对了目标产物；对非目标产物，两个工具在个别引物上有分歧：旧引物 3325 和 3353，我的引擎标出了非目标结合，网页版没有列出，样本太小，没法判断谁对。</p>
+<p>复核还发现 v1 中的 1876 和 1275 两对有多产物问题，所以我加了“目标产物必须唯一”和“自身产物上限”两条规则，重新生成了 v2。这是 v1 到 v2 的变化。</p></div></section>
+<section class="slide" id="s27"><div class="slide-head"><span class="num">Slide 27</span><h3><span class="en">Where the rules come from and their limits</span><span class="zh">规则的依据与局限</span></h3></div><div class="lang en-block" lang="en"><p>How did the thresholds come? I used the 24 old pairs for a back-test. I looked at the number of other near-perfect copies in the whole genome, and compared it with the lab results.</p>
+<p>In batch 1, the 13 pairs that were usable in CE all have at most 14 other near-perfect copies, and no self-products. In batch 2, the 4 pairs that were non-specific or failed each have at least one primer with 63 copies or more. Pair 3245 was usable only at 65 ℃, and it has 13,663 copies.</p>
+<p>But there are exceptions. 3428 has 239 copies and 3473 has 2,882, and in the lab they were clean. Also, 3558 was weak and unstable but has only 17 copies, so this number cannot explain it.</p>
+<p>So many copies is a warning sign, not a rule. The threshold, “other near-perfect copies at most 20”, is provisional, and it must wait for the wet-lab results to calibrate. This is also what Part 3 will do.</p></div><div class="lang zh-block" lang="zh-Hans"><p>阈值是怎么来的？用 24 对旧引物回测，看它们在全基因组里的其他近完全拷贝数，和实验结果对应。</p>
+<p>批次 1 里 CE 可用的 13 对，其他近完全拷贝均不超过 14，自身产物是 0。批次 2 里非特异或失败的 4 对，每对至少有一条引物的拷贝数 ≥ 63。3245 只在 65 ℃ 可用，拷贝数 13,663。</p>
+<p>但有例外：3428 的拷贝数 239，3473 是 2,882，实验上反而是干净的；另外 3558 弱而不稳，拷贝数只有 17，这个指标解释不了。</p>
+<p>所以高拷贝是风险信号，不是铁律；“其他近完全拷贝 ≤ 20”暂定，要等湿实验结果来校准。这也是第三部分要做的事。</p></div></section>
+<section class="slide" id="s28"><div class="slide-head"><span class="num">Slide 28</span><h3><span class="en">Primer design funnel (PKD1)</span><span class="zh">引物设计漏斗（PKD1）</span></h3></div><div class="lang en-block" lang="en"><p>This is the core result of Part 2. The funnel puts together the rules I talked about. Take PKD1: 31 sites, which are 23 new sites and 8 old sites. After Primer3 relaxed the settings step by step, I evaluated about 7,787 candidate pairs.</p>
+<p>I go in the order that the rules run. First, the product of the largest allele. Those over 330 bp are removed: 1,101 pairs, and 6,686 are left. Then common SNPs: 805 are removed, and 5,881 are left. Then tailed primer-dimers: 1,650 are removed, and 4,231 are left. Next is many genome copies, from the genome-wide specificity. This step removes the most: 3,837 pairs, and only 394 are left. The last one is off-target products, which is the rule “the target product must be unique” that I added in v2. 307 are removed, and 87 are left. Each site keeps at most 5 pairs.</p>
+<p>So far the funnel counts primer pairs. The 87 pairs that are left are not 87 sites. They sit in 18 sites. Each site keeps at most 5 pairs, ranked by score, so one site can have several pairs. Now look at the sites. Of the 31 sites, 13 sites lost all their candidates, and not one pair is left. So the number of sites goes from 31 to 18. Last, the order: for each site I order only 1 pair, the primary pair. For the new sites, the primary pair is chosen in the panel step, which looks at both the score and the cross-site dimers. So it is not always the pair with the highest score. The other candidates go to the “optional backup” sheet of the order list, and are not ordered. For the old sites, I also ordered the “old anchors with FAM tail” primers for the old vs new comparison in Part 3. So the number of new designs that I ordered is 18 pairs, for 18 sites.</p>
+<p>Two points. Each candidate is counted at the first rule that it fails, so the later rules see only the candidates that passed the earlier rules. And the bar widths on the figure are only a sketch, not to scale. PKD2 is similar: about 7,700 pairs were evaluated, and 114 are kept.</p>
+<p>This figure shows one thing: in the flanks of these sites, many genome copies is the biggest reason for removal. Primer3 cannot do this check alone, and this is the value of my own k-mer engine.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这是第二部分的核心结果，用一个漏斗把前面说的规则串起来。以 PKD1 为例，31 个位点，也就是 23 个新位点加 8 个已做位点，Primer3 逐级放宽后，实际评估了约 7,787 对候选引物。</p>
+<p>按规则执行的顺序看。先看最大等位基因的产物，超过 330 bp 的剔除 1,101 对，剩 6,686 对。再看常见 SNP，剔除 805 对，剩 5,881 对。然后是带尾二聚体，剔除 1,650 对，剩 4,231 对。接下来是全基因组特异性里的引物高拷贝，这一步淘汰最多，剔除 3,837 对，只剩 394 对。最后是非目标产物，也就是 v2 新增的“目标产物必须唯一”，剔除 307 对，剩 87 对，每个位点最多保留 5 对。</p>
+<p>漏斗到这里是按候选引物对算的。剩下的 87 对不是 87 个位点，它们分布在 18 个位点上，每个位点最多保留 5 对，按评分排序，所以一个位点可能对应多对引物。再按位点来看，31 个位点里有 13 个位点的候选被全部剔除，一对都没有留下，所以位点数就从 31 变成 18。最后到下单：每个位点只下单 1 对，也就是主选的那一对。新位点的主选由面板步骤选出，兼顾评分和跨位点二聚体，所以不一定是得分最高的一对；其余的候选放在订购表的“可选备用”里，没有下单。已做位点则另外还订了“旧锚点加 FAM 尾”的对照引物，用于第三部分的新旧对比。所以最后下单的新设计是 18 对，对应 18 个位点。</p>
+<p>要说明两点：每个候选只计它第一条没通过的规则，所以后面的规则看到的已经是通过前面规则的候选；图里的条形宽度只是示意，不按比例。PKD2 的情况类似，评估约 7,700 对，保留 114 对。</p>
+<p>这张图说明一件事：这批位点的侧翼里，引物高拷贝是最大的淘汰原因。这一项 Primer3 自己做不到，这也是我自写 k-mer 引擎的价值。</p></div></section>
+<section class="slide" id="s29"><div class="slide-head"><span class="num">Slide 29</span><h3><span class="en">Funnel results: sites kept and removed</span><span class="zh">漏斗的结果：留下与被排除的位点</span></h3></div><div class="lang en-block" lang="en"><p>Now the funnel results go down to the sites. Of the 31 PKD1 sites, 18 are kept. There are 11 new sites: 3043, 2983, 2960, 2855, 2795, 2710, 2688, 2407, 2397, 2038 and 1507. And there are 7 old sites that I redesigned: 3067, 2517, 2343, 2289, 1830, 1725 and 1604.</p>
+<p>The 13 removed sites are grouped by the rule that rejected most of their candidates. For 11 sites, it is many genome copies. This means the flanks are mostly repeats, and the primers have a lot of near-perfect copies in the genome. For 1 site, it is a target product that is not unique, and that is 2164. For 1 site, it is tailed primer-dimer, and that is 1275. Among them, 1275 and 1876 had a design in v1. Only after the check with the MFEprimer web server found multiple products did v2 remove them. These two sites have been taken out of the test list.</p>
+<p>Also, for each of these 13 sites, the candidates were rejected by many genome copies and by tailed dimers. 12 sites also had candidates rejected because the product was too long, and 9 sites because of common SNPs. So it is not one single reason. For PKD2, 25 of 37 sites have candidates, and 12 are removed. The main reasons are many genome copies for 7, product too long for 4, and tailed dimer for 1.</p>
+<p>Slides 30 and 31 show more about these results.</p></div><div class="lang zh-block" lang="zh-Hans"><p>漏斗的结果落到位点上。PKD1 的 31 个位点里留下 18 个：11 个新位点，分别是 3043、2983、2960、2855、2795、2710、2688、2407、2397、2038、1507；加上 7 个已做位点的重新设计，3067、2517、2343、2289、1830、1725、1604。</p>
+<p>被排除的 13 个位点，我按“拒绝候选最多的规则”归类：11 个是引物高拷贝，也就是侧翼多为重复序列，引物在基因组里有大量近完全拷贝；1 个是目标产物不唯一，即 2164；1 个是带尾二聚体，即 1275。其中 1275 和 1876 在 v1 里本来有设计，是 MFEprimer 网页版复核发现多产物之后，v2 才把它们排除；这两个位点已经从验证清单里去掉了。</p>
+<p>还要说明，这 13 个位点里，每个位点的候选都被高拷贝和带尾二聚体拒绝过，12 个有产物过长，9 个有常见 SNP，所以不是单一原因。PKD2 是 25/37 个位点有候选，12 个被排除，首要原因是高拷贝 7 个、产物过长 4 个、带尾二聚体 1 个。</p>
+<p>下面第 30 页的设计结果和第 31 页的新旧对照，是这些结果的进一步展开。</p></div></section>
+<section class="slide" id="s30"><div class="slide-head"><span class="num">Slide 30</span><h3><span class="en">Design results</span><span class="zh">设计结果</span></h3></div><div class="lang en-block" lang="en"><p>Under the v2 rules, these are the sites that passed the filters. For PKD1 there are 11 new sites: 6 primary and 5 backup. For the 8 old PKD1 sites, 7 passed, and only 1876 has no candidate that passed. For PKD2 there are 25 sites: 13 primary and 12 backup.</p>
+<p>The main reasons for no design are: the flanks are mostly repeats, so the primers have many near-perfect copies; common SNPs sit on the primers; the tailed dimer risk is high; the product of the largest allele is too long; and, new in v2, the target product is not unique.</p></div><div class="lang zh-block" lang="zh-Hans"><p>在 v2 规则下，通过过滤的位点数：PKD1 新位点 11 个，其中主选 6 个、备选 5 个；PKD1 已做位点 7 个，一共 8 个里只有 1876 没有候选通过；PKD2 25 个，其中主选 13 个、备选 12 个。</p>
+<p>未能设计的主要原因：侧翼多为重复序列，引物有大量近完全拷贝；常见 SNP 落在引物上；带尾二聚体风险高；含最大等位基因的产物过长；以及 v2 新增的目标产物不唯一。</p></div></section>
+<section class="slide" id="s31"><div class="slide-head"><span class="num">Slide 31</span><h3><span class="en">Old vs new primers (STRs done before)</span><span class="zh">新旧引物对照（已做过的 STR）</span></h3></div><div class="lang en-block" lang="en"><p>This slide is the old vs new comparison for the 8 sites done before. The old primers were judged with the same rules.</p>
+<p>Site 3067: the old F primer sits on a common SNP, and the R primer has 1 mismatch to hg38. The product goes from 177 to 233 bp. Site 2517: the old product is 405 bp, which is too long, and the new one is 152. Site 1830: 333 changes to 157, also because the old product is too long. Site 2290, which is now called 2289: 348 changes to 281, and the old signal was weak. Sites 1604 and 1725: the old primers pass all the rules, and the new products are 225 and 202 bp. Site 2343: old and new are almost the same, so it is on hold. Site 1876: no new design passed, because of multiple products.</p>
+<p>“Product too long” means that the product with the largest allele is more than 330 bp.</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页是 8 个已做位点的新旧对照，既有引物按同一套规则评估。</p>
+<p>3067：既有 F 引物落在常见 SNP 上，R 与 hg38 有 1 个错配，产物 177 变为 233 bp。2517：既有产物 405，过长，新设计 152。1830：333 变 157，同样是产物过长。2290（新位点编号 2289）：348 变 281，原来信号弱。1604 和 1725：既有引物通过全部规则，新设计产物 225 和 202 bp。2343：新旧几乎相同，暂缓。1876：新设计无候选通过，因为多产物。</p>
+<p>“产物过长”的标准是含最大等位基因超过 330 bp。</p></div></section>
+<section class="slide" id="s32"><div class="slide-head"><span class="num">Slide 32</span><h3><span class="en">Summary and limits</span><span class="zh">小结与局限</span></h3></div><div class="lang en-block" lang="en"><h4>Summary of Part 2</h4>
+<p>In Part 2, I built a full workflow from the selected STRs to an order list, and it now includes a genome-wide specificity check. 11 of 23 new PKD1 sites and 25 of 37 PKD2 sites passed the filters. The 8 old sites have an old vs new comparison. The MFEprimer web server gave an independent check, and I fixed the rules from it, which gave v2. This batch uses one FAM tail, so we can compare primer strength.</p>
+<p>The limits: the thresholds are provisional. They come from the back-test of 24 old pairs, which is a small sample. The primers have not been tested in the wet lab. And my engine and MFEprimer disagree on primers with medium repeat content.</p>
+<h4>Link to Part 3</h4>
+<p>These limits all have the same answer: the wet lab. Next, Part 3 is the near-term plan for testing. We will test these primers with agarose gel and CE, and use the results to calibrate the provisional thresholds.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分小结</h4>
+<p>第二部分建立了从入选 STR 到可订购引物表的完整流程，其中新增了全基因组特异性检查。PKD1 新位点 11/23、PKD2 25/37 通过过滤；8 个已做位点有新旧对照。MFEprimer 网页版做了独立复核，并据此修正规则，得到 v2。这一批统一用 FAM 尾，便于比较引物强弱。</p>
+<p>局限：阈值是暂定的，来自 24 对旧引物的回测，样本小；引物还没有做过湿实验；自写引擎和 MFEprimer 在中等重复的引物上有分歧。</p>
+<h4>引向第三部分</h4>
+<p>这几个局限都有同一个答案，就是湿实验。下面第三部分讲近期的验证计划：用琼脂糖胶和 CE 检验这些引物，同时用实验结果回头校准暂定阈值。</p></div></section>
+<header class="part" id="part-33"><h2><span class="en">Part 3 · Near-term plan</span><span class="zh">第三部分　近期计划</span></h2></header>
+<section class="slide" id="s33"><div class="slide-head"><span class="num">Slide 33</span><h3><span class="en">Part title</span><span class="zh">部分标题页</span></h3></div><div class="lang en-block" lang="en"><h4>The problem this part solves</h4>
+<p>The problem for Part 3 is: are the primers that we designed in Part 2 good to use? Also, these results should be used to check the provisional thresholds that we set in Part 2.</p>
+<h4>Link</h4>
+<p>At the end of Part 2, I said that the primers are not tested in the wet lab, and that the thresholds are provisional. This part puts these two things into experiments. I will go in this order: what we test, the experiments, how we judge, old vs new, and progress.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分要解决的问题</h4>
+<p>第三部分要解决的问题是：第二部分设计出来的引物，到底好不好用？同时，这些实验结果还要能反过来检验我们在第二部分里定的暂定阈值。</p></div></section>
+<section class="slide" id="s34"><div class="slide-head"><span class="num">Slide 34</span><h3><span class="en">What we will test</span><span class="zh">验证对象</span></h3></div><div class="lang en-block" lang="en"><p>The test list has 18 STRs: 11 new sites and 7 redesigned old sites.</p>
+<p>The 11 new sites are 3043, 2983, 2960, 2855, 2795, 2710, 2688, 2407, 2397, 2038 and 1507. The 7 redesigned old sites are 3067, 2517, 2343, 2289 (which was 2290), 1830, 1725 and 1604.</p>
+<p>All primers use one FAM (M41) tail, and we test them in simplex, one pair in one tube.</p></div><div class="lang zh-block" lang="zh-Hans"><p>当前保留的验证对象是 18 个 STR：11 个新位点，加 7 个重新设计的已做位点。</p>
+<p>11 个新位点是 3043、2983、2960、2855、2795、2710、2688、2407、2397、2038、1507。7 个重新设计的已做位点是 3067、2517、2343、2289（原 2290）、1830、1725、1604。</p>
+<p>全部引物统一用 FAM（M41）尾，按单管 simplex 做。</p></div></section>
+<section class="slide" id="s35"><div class="slide-head"><span class="num">Slide 35</span><h3><span class="en">Four experiments for each STR</span><span class="zh">每个 STR 的四步实验</span></h3></div><div class="lang en-block" lang="en"><p>Each STR goes through the same four steps.</p>
+<p>Step one, 1st PCR, to amplify the target. Step two, agarose gel, with a gradient from 55 to 65 ℃. The goal is one band at 60 ℃. Step three, labeling PCR, with the three-primer method, and the FAM universal primer labels the product. Step four, simplex CE, with 16 Coriell samples, to look at the polymorphism and the simplex peak shape.</p>
+<p>With one FAM tail, the amplification efficiency and the CE peak height of different primer pairs can be compared directly. This is why we used one tail in Part 2.</p></div><div class="lang zh-block" lang="zh-Hans"><p>每个 STR 都走同样的四步。</p>
+<p>第一步，1st PCR，扩增目标片段。第二步，琼脂糖胶，做 55 到 65 ℃ 的梯度，目标是 60 ℃ 单一条带。第三步，Labeling PCR，三引物法，用 FAM 通用引物标记产物。第四步，simplex CE，用 16 个 Coriell 样本，看多态性和 simplex 峰型。</p>
+<p>统一 FAM 尾之后，各引物对的扩增效率和 CE 峰高就可以直接比较。这也就是第二部分统一尾的原因。</p></div></section>
+<section class="slide" id="s36"><div class="slide-head"><span class="num">Slide 36</span><h3><span class="en">How we judge new sites</span><span class="zh">****新****位点****的****判定与比较方式</span></h3></div><div class="lang en-block" lang="en"><p>This slide is about how we judge the new sites: what we look at in each step, and what question it answers.</p>
+<p>The agarose gel: we look at the number, size and clarity of bands from 55 to 65 ℃, to answer “can it give one clear band at 60 ℃?”. CE simplex: we look at the number of alleles, the heterozygosity (HET), the peak shape and extra peaks, to answer “is the polymorphism as predicted, and are the peaks clean?”. The peak height under the same FAM tail is used to compare the amplification strength between primers.</p>
+<p>Also, I want to mix primers with different product sizes in one tube and run a multiplex. I want to see if the dimer check that I did at the design step can predict how primers affect each other.</p>
+<p class="note">(Note: I did not give a pass line here, because we do not have a fixed standard yet. I hope to hear your opinion.)</p></div><div class="lang zh-block" lang="zh-Hans"><p>这一页是新位点的判定方式：每一步看什么、回答什么问题。</p>
+<p>琼脂糖胶看 55 到 65 ℃ 梯度下的条带数量、大小和清晰度，回答“能否在 60 ℃ 稳定扩增单一清晰条带”。CE simplex 看等位基因数、杂合度 HET、峰型和杂峰，回答“多态性是否符合预测，峰型是否干净”。同一 FAM 尾下的峰高，用来比较引物之间扩增的强弱。</p>
+<p>另外，我还想把片段大小不同的引物直接合管做 multiplex，看看设计阶段的二聚体评估，能不能预测引物之间的相互影响。</p></div></section>
+<section class="slide" id="s37"><div class="slide-head"><span class="num">Slide 37</span><h3><span class="en">Redesigned sites: old vs new</span><span class="zh">重新设计位点的新旧对比</span></h3></div><div class="lang en-block" lang="en"><p>For the 7 redesigned sites, to see if the optimization worked, looking at the new design alone is not enough. We must compare with the old primers directly. There are two cases. If the old design used FAM, we can compare directly. If the old design used another color, this time I also ordered primers with the “old design plus FAM tail”, for the comparison.</p>
+<p>Site 3067: the old F primer sits on a common SNP, and the R primer has 1 mismatch to hg38. The product goes from 177 to 233 bp. We look at amplification efficiency, peak height and heterozygosity. Sites 2517, 2289 and 1830: the old products are long, 333 to 405 bp, and 2289 had a weak signal. The new products are 152 to 281 bp. We look at whether the signal gets stronger with a shorter product. Sites 1604 and 1725: the old primers pass all the rules, and the new products are 225 and 202 bp. We look at whether there is a difference between old and new. Site 2343 is on hold.</p>
+<p>For each site there are up to three rows: the new design, the old anchors with the FAM tail, and the old result for reference. The row “old anchors with FAM tail” is very important. It removes the effect of the tail, so we compare only the primers themselves. The gel and CE results are used to judge if the optimization worked.</p>
+<p>As a next step, for the primers that work well, I will give them new colors. I will think about product size, dye strength and the strength of the primer itself, and I will order them again. First I run simplex, to see the effect without interference. Then I run multiplex, to see how they affect each other. Then I optimize further, for example by redesign, or by adjusting the concentration.</p></div><div class="lang zh-block" lang="zh-Hans"><p>7 个重新设计的位点，要判断优化是否成功，只看新设计的结果是不够的，要和旧引物直接对比。对比分两种情况：如果原设计用的就是 FAM，可以直接对比；如果原设计用的是其他颜色，这次我也订购了“原有设计加 FAM 尾”的引物，用来对比。</p>
+<p>3067：旧 F 落在常见 SNP，R 与 hg38 错配 1 个，产物 177 变 233 bp，看扩增效率、峰高和杂合度。2517、2289、1830：旧产物偏长，333 到 405 bp，2289 原信号弱，新产物 152 到 281 bp，看产物变短后信号是否变强。1604、1725：旧引物通过全部规则，新产物 225 和 202 bp，看新旧是否有差别。2343 暂缓。</p>
+<p>每个位点最多三行：新设计、旧锚点加 FAM 尾、原引物的既有结果作参考。其中“旧锚点加 FAM 尾”这一行很重要，它把尾的因素去掉，只比较引物本身。用梯度胶和 CE 的结果对比，判断优化是否成功。</p>
+<p>再下一步，对表现好的引物，我会重新分配颜色，综合考虑片段大小、荧光强度和引物本身的强度，重新订购。先做 simplex，了解没有干扰时的效果；再做 multiplex，看引物之间的相互影响；然后进一步优化，比如 redesign 或者调整浓度。</p></div></section>
+<section class="slide" id="s38"><div class="slide-head"><span class="num">Slide 38</span><h3><span class="en">Progress and next steps</span><span class="zh">进度与后续</span></h3></div><div class="lang en-block" lang="en"><h4>Summary of Part 3</h4>
+<p>Progress: the primers were ordered on 22 October, and the check list is made. On 26 October, I made the first gradient PCR sheet for 3 STRs, at 55, 60 and 65 ℃. The other sites will follow the same steps.</p>
+<p>Next, there are several things. First, put the lab results into the platform training set, to calibrate the provisional thresholds of Part 2. Second, for the good primers, give them new colors and re-order them. Do simplex first, then multiplex, then redesign or adjust the concentration, as I said on slide 37. Third, add LUS to STR screening. Fourth, compare with the MFEprimer program on a local computer.</p>
+<p class="note">(Note: this slide says “the sheet is made”. Do not say “the experiment is done”. There are no wet-lab results yet.)</p>
+<h4>Link to the closing</h4>
+<p>Now the chain from discovery, to design, to testing is complete. Let me close with a few words.</p></div><div class="lang zh-block" lang="zh-Hans"><h4>本部分小结</h4>
+<p>进度方面：引物已于 10 月 22 日下单，验证清单已经建立。10 月 26 日，已建立 3 个 STR 的第一次梯度 PCR 工作单，55、60、65 ℃ 三个温度，其余位点按同样流程继续。</p>
+<p>后续有几件事。第一，实验结果回填平台训练集，校准第二部分的暂定阈值。第二，对表现好的引物重新分配颜色并重新订购，先 simplex、再 multiplex，然后 redesign 或调整浓度，这一点在第 37 页说过。第三，把 LUS 并入 STR 筛选。第四，用 MFEprimer 程序版在本地做对照。</p>
+<p class="note">（提示：这一页说“已建立工作单”，不要说成“已完成实验”；没有湿实验结果。）</p>
+<h4>引向结束语</h4>
+<p>至此，从发现、到设计、到验证的链条已经串起来。最后用几句话收一下。</p></div></section>
+<header class="part" id="closing"><h2><span class="en">Closing</span><span class="zh">结束语</span></h2></header>
+<section class="slide" id="end"><div class="lang en-block" lang="en"><p>Let me put the three parts together.</p>
+<p>In Part 1, I used the population allele frequencies and the variation clusters of TRExplorer in my screening script, and I got candidate STRs with evidence. In Part 2, I added three filters to Primer3: SNP, tailed primer-dimer and genome-wide specificity. I got the order list v2, which I can order from directly. In Part 3, I test the primers with gradient gel and CE, and I use the results to calibrate the provisional thresholds in the first two parts.</p>
+<p>There are three limits. The He comes from multi-population data without Chinese samples. The primer thresholds come from 24 old pairs, which is a small sample, and they are provisional. And these primers have no wet-lab results yet.</p>
+<h4>Questions I would like your advice on</h4>
+<ul><li>For Part 3: what pass line should we set for the agarose gel and for CE?</li><li>Are the order and the batches of the 18 STRs reasonable?</li><li>Besides this batch of experiments, what other data do we need to calibrate the thresholds?</li></ul>
+<p>Thank you, everyone.</p></div><div class="lang zh-block" lang="zh-Hans"><p>最后把三部分串起来。</p>
+<p>第一部分，我们把 TRExplorer 的人群等位基因频率和变异簇用进筛选脚本，得到有依据的候选 STR。第二部分，在 Primer3 之外加了 SNP、带尾二聚体和全基因组特异性三项过滤，得到可直接订购的引物表 v2。第三部分，用梯度胶和 CE 验证引物，并用结果回头校准前两部分里的暂定阈值。</p>
+<p>需要说明的局限有三条：He 来自多族群数据且不含中国人群；引物阈值来自 24 对旧引物，样本小且暂定；本批引物还没有湿实验结果。</p></div></section>
+</main>
+
+<script>
+(function () {
+  var body = document.body;
+  function get(k, d) { try { return localStorage.getItem(k) || d; } catch (e) { return d; } }
+  function put(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function apply(attr, val) {
+    body.setAttribute("data-" + attr, val);
+    document.querySelectorAll(".seg button[data-" + attr + "]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-" + attr) === val ? "true" : "false");
+    });
+  }
+  apply("mode", get("spk-mode", "both"));
+  apply("size", get("spk-size", "m"));
+  document.querySelectorAll(".seg button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var attr = b.hasAttribute("data-mode") ? "mode" : "size";
+      var val = b.getAttribute("data-" + attr);
+      apply(attr, val); put("spk-" + attr, val);
+    });
+  });
+  var jump = document.getElementById("jump");
+  jump.addEventListener("change", function () {
+    var el = jump.value && document.getElementById(jump.value);
+    if (el) el.scrollIntoView({ block: "start" });
+    jump.value = "";
+  });
+})();
+</script>
+
+</body></html>

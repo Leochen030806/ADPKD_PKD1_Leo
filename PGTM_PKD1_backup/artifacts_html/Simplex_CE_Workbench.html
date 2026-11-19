@@ -1,0 +1,1421 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Simplex CE Workbench</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: Panel Studio chrome (bar → tabs → page) so this drops into the
+   Wet lab › Simplex CE slot unchanged. Tokens copied from Panel Studio;
+   dye tokens added for traces. */
+:root{
+  --bg:#F1EEE8; --panel:#FAF8F4; --sheet:#FFFFFF;
+  --text:#16233A; --muted:#59616F; --faint:#8A92A0;
+  --line:#DDD7CC; --line-soft:#EAE5DC;
+  --bar:#16233A; --bar-text:#F3F5F8; --bar-dim:#9BA7B8;
+  --teal:#2E6F63; --teal-soft:#E3EDE9; --teal-line:#9CC4B9;
+  --amber:#A96A1E; --amber-soft:#FAEEDC;
+  --blue:#2F5597; --blue-soft:#E8EEF8; --blue-line:#9FB6DC;
+  --field:#FFFFFF; --focus:#2E6F63; --danger:#A4442F;
+  --dye-pet:#C0392B; --dye-liz:#E08A1E; --dye-fam:#2F5DB8; --dye-vic:#2E8B57; --dye-ned:#B59A12;
+  --r-allele:#2E6F63; --r-stutter:#A96A1E; --r-noise:#8A92A0; --r-nonspec:#2F5597; --r-none:#59616F;
+  --grid:#EAE5DC;
+  --f-sans:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --f-serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11151C; --panel:#171C25; --sheet:#1B212B;
+  --text:#E4E8EE; --muted:#A3ACB9; --faint:#78828F;
+  --line:#2C3441; --line-soft:#232A35;
+  --bar:#0C1016; --bar-text:#E4E8EE; --bar-dim:#7A8494;
+  --teal:#6FBFAC; --teal-soft:#14302A; --teal-line:#2F6357;
+  --amber:#DBA05B; --amber-soft:#2C2317;
+  --blue:#89ACEA; --blue-soft:#18233A; --blue-line:#39507E;
+  --field:#121821; --focus:#6FBFAC; --danger:#E08B76;
+  --dye-pet:#F0715F; --dye-liz:#F2A74B; --dye-fam:#7FA4F0; --dye-vic:#5FC48A; --dye-ned:#E3C64A;
+  --r-allele:#6FBFAC; --r-stutter:#DBA05B; --r-noise:#78828F; --r-nonspec:#89ACEA; --r-none:#A3ACB9;
+  --grid:#232A35; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#11151C; --panel:#171C25; --sheet:#1B212B;
+  --text:#E4E8EE; --muted:#A3ACB9; --faint:#78828F;
+  --line:#2C3441; --line-soft:#232A35;
+  --bar:#0C1016; --bar-text:#E4E8EE; --bar-dim:#7A8494;
+  --teal:#6FBFAC; --teal-soft:#14302A; --teal-line:#2F6357;
+  --amber:#DBA05B; --amber-soft:#2C2317;
+  --blue:#89ACEA; --blue-soft:#18233A; --blue-line:#39507E;
+  --field:#121821; --focus:#6FBFAC; --danger:#E08B76;
+  --dye-pet:#F0715F; --dye-liz:#F2A74B; --dye-fam:#7FA4F0; --dye-vic:#5FC48A; --dye-ned:#E3C64A;
+  --r-allele:#6FBFAC; --r-stutter:#DBA05B; --r-noise:#78828F; --r-nonspec:#89ACEA; --r-none:#A3ACB9;
+  --grid:#232A35; color-scheme:dark; }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;text-wrap:balance} p{margin:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+button{font:inherit}
+
+.bar{background:var(--bar);color:var(--bar-text);display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 20px}
+.brand{font-weight:700;font-size:16px}
+.ctx{color:var(--bar-dim);font-size:13.5px}
+.spacer{flex:1}
+.chip{font-family:var(--f-mono);font-size:12px;color:var(--bar-dim);border:1px solid rgba(255,255,255,.18);padding:3px 9px;border-radius:99px;white-space:nowrap}
+.demoflag{background:var(--amber-soft);color:var(--amber);border:1px solid currentColor;font-size:11.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.tabs{background:var(--panel);border-bottom:1px solid var(--line);display:flex;gap:2px;padding:0 12px;overflow-x:auto;scrollbar-width:none}
+.tab{appearance:none;border:0;background:none;cursor:pointer;white-space:nowrap;font-size:14px;color:var(--faint);padding:12px 16px;border-bottom:2px solid transparent}
+.tab[aria-current="page"]{color:var(--text);font-weight:600;border-bottom-color:var(--teal)}
+.tab .n{font-family:var(--f-mono);font-size:11px;margin-left:5px;background:var(--amber);color:var(--bg);border-radius:99px;padding:1px 6px}
+
+main{padding-block:22px 64px;padding-inline:16px;display:flex;justify-content:center}
+.page{width:100%;max-width:1240px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.head{display:flex;flex-direction:column;gap:4px}
+.head h1{font-family:var(--f-serif);font-size:24px;font-weight:600}
+.head p{color:var(--muted);font-size:13.5px;max-width:80ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.card>h2{font-size:11.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.readout{font-size:13px;color:var(--muted);line-height:1.55}
+.readout b{color:var(--text)}
+.mono{font-family:var(--f-mono)}
+.warn{font-size:12.5px;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber);border-radius:8px;padding:8px 12px}
+.ok{font-size:12.5px;color:var(--teal);background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:8px;padding:8px 12px}
+
+.btn{appearance:none;cursor:pointer;font-weight:600;font-size:14px;border:1px solid var(--teal);background:var(--teal);color:var(--bg);border-radius:9px;padding:9px 16px}
+.btn.ghost{background:none;color:var(--teal);border-color:var(--teal-line)}
+.btn.ghost:hover{background:var(--teal-soft)}
+.btn.sm{font-size:12.5px;padding:5px 11px;border-radius:7px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.drop{border:2px dashed var(--line);border-radius:12px;background:var(--bg);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;position:relative}
+.drop:hover,.drop.over{border-color:var(--teal);background:var(--teal-soft)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.drop strong{display:block;font-size:14.5px}
+.drop span{font-size:12.5px;color:var(--muted)}
+
+.cols2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:12px;font-weight:600}
+.f .hint{font-size:11.5px;color:var(--faint);line-height:1.35}
+.f input,.f select{font:inherit;font-size:13.5px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--text);width:100%}
+.f input.mono{font-family:var(--f-mono)}
+
+.tablewrap{overflow-x:auto}
+table.dt{border-collapse:collapse;width:100%;font-size:12.5px}
+table.dt th{text-align:left;font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--faint);font-weight:600;padding:0 8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.dt td{padding:6px 8px;border-bottom:1px solid var(--line-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.dt td.m{font-family:var(--f-mono)}
+table.dt tr.sel td{background:var(--teal-soft)}
+table.dt tr.click{cursor:pointer}
+table.dt tr.click:hover td{background:var(--line-soft)}
+
+.pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.3px;border-radius:99px;padding:1px 8px;border:1px solid var(--line);color:var(--muted);background:var(--bg);white-space:nowrap}
+.pill.prefill{color:var(--teal);border-color:var(--teal-line);background:var(--teal-soft)}
+.pill.confirmed{color:var(--bg);border-color:var(--teal);background:var(--teal)}
+.pill.edited{color:var(--blue);border-color:var(--blue-line);background:var(--blue-soft)}
+.pill.needs,.pill.offset{color:var(--amber);border-color:var(--amber);background:var(--amber-soft)}
+.pill.nosig{color:var(--faint)}
+.pill.src{font-family:var(--f-mono);font-weight:500;font-size:10.5px}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 13px;min-width:0}
+.tile b{display:block;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.25}
+.tile span{font-size:11.5px;color:var(--muted)}
+.tile.wide{grid-column:span 2}
+.tile.wide b{font-size:14px;font-family:var(--f-mono);font-weight:500}
+.tile.hi b{color:var(--teal)} .tile.warnt b{color:var(--amber)}
+
+.wellgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:8px}
+.well{appearance:none;text-align:left;cursor:pointer;color:var(--text);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:9px;padding:7px 9px 6px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.well:hover{border-color:var(--teal-line)}
+.well.on{outline:2px solid var(--teal);outline-offset:1px}
+.well.s-prefill{border-left-color:var(--teal)} .well.s-confirmed{border-left-color:var(--teal)}
+.well.s-needs,.well.s-offset{border-left-color:var(--amber)} .well.s-edited{border-left-color:var(--blue)}
+.well.s-nosig{border-left-color:var(--faint);opacity:.85}
+.well .t{display:flex;align-items:baseline;gap:6px;font-size:12px}
+.well .t b{font-family:var(--f-mono);font-size:12px}
+.well .t em{font-style:normal;color:var(--faint);font-family:var(--f-mono);font-size:11px}
+.well .g{display:flex;justify-content:space-between;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12.5px;font-weight:600}
+.well canvas{width:100%;height:46px;display:block}
+
+.detail{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.dhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.dhead h2{font-family:var(--f-serif);font-size:20px;font-weight:600}
+.dhead em{font-style:normal;color:var(--faint);font-family:var(--f-mono);font-size:12.5px}
+.canvaswrap{position:relative;border:1px solid var(--line-soft);border-radius:8px;background:var(--sheet)}
+.canvaswrap canvas{display:block;width:100%}
+#zoomCv{cursor:crosshair}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.rolebar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.rolebar .lab{font-size:12.5px;margin-right:4px}
+.rbtn{appearance:none;cursor:pointer;font-size:12.5px;border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:7px;padding:4px 10px}
+.rbtn:hover{border-color:var(--teal)}
+.rbtn.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.rbtn kbd{font-family:var(--f-mono);font-size:10.5px;color:var(--faint);margin-left:4px}
+.rbtn.on kbd{color:var(--bg)}
+ul.why{margin:0;padding-left:18px;font-size:12.5px;color:var(--muted)}
+
+/* report pages: portrait sheets like the existing deck */
+.rpage{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:26px 28px;display:flex;flex-direction:column;gap:14px;max-width:880px;width:100%;margin-inline:auto}
+.rkick{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--blue);font-weight:600}
+.rtitle{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.rtitle h2{font-family:var(--f-serif);font-size:34px;font-weight:600;line-height:1.1}
+.rtitle h2 span{color:var(--blue)}
+.rtitle .ru{margin-left:auto;background:var(--bar);color:var(--bar-text);border-radius:10px;padding:8px 16px;font-size:13px}
+.rtitle .ru b{font-family:var(--f-serif);font-style:italic;font-size:18px}
+.rstats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.rstat{background:var(--bg);border:1px solid var(--line-soft);border-radius:8px;padding:9px 8px;text-align:center;min-width:0}
+.rstat b{display:block;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.rstat.wide{grid-column:span 2} .rstat.wide b{font-size:13.5px;font-family:var(--f-mono)}
+.rstat span{font-size:10.5px;color:var(--muted)}
+.rrows{display:flex;flex-direction:column}
+.rhdr,.rrow{display:grid;grid-template-columns:128px minmax(0,1.9fr) minmax(0,1fr);gap:10px;align-items:center}
+.rhdr{font-size:10.5px;color:var(--faint);font-weight:600;padding-bottom:4px}
+.rrow{padding:6px 0;border-top:1px solid var(--line-soft)}
+.rrow .sm b{display:block;font-family:var(--f-mono);font-size:12.5px}
+.rrow .sm .gt{font-family:var(--f-mono);font-size:15px;font-weight:700}
+.rrow .sm .gt.het{color:var(--blue)}
+.rrow .sm small{display:block;font-size:10.5px;color:var(--muted);font-family:var(--f-mono)}
+.rrow canvas{width:100%;height:58px;display:block;border:1px solid var(--line-soft);border-radius:4px}
+.rfoot{font-size:10.5px;color:var(--faint);border-top:1px solid var(--line-soft);padding-top:8px}
+.draft{color:var(--amber);font-weight:600}
+
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(22px + env(safe-area-inset-bottom,0px));background:var(--bar);color:var(--bar-text);font-size:13.5px;padding:10px 16px;border-radius:10px;max-width:min(90vw,480px);z-index:20}
+
+@media (max-width:860px){
+  .cols2{grid-template-columns:1fr}
+  .tile.wide{grid-column:span 1}
+  .rstats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhdr{display:none}
+  .rrow{grid-template-columns:1fr}
+  .rtitle h2{font-size:26px}
+}
+</style>
+
+<div class="bar">
+  <span class="brand">Simplex CE Workbench</span>
+  <span class="ctx" id="ctx">PGT-M Panel Studio · Wet lab · Simplex CE</span>
+  <span class="spacer"></span>
+  <span class="chip" id="ruleChip"></span>
+  <span class="demoflag" id="demoFlag" hidden>STR3 demo data</span>
+</div>
+<nav class="tabs" aria-label="Steps">
+  <button class="tab" id="tImport" type="button">1 · Import</button>
+  <button class="tab" id="tAnnot" type="button">2 · Annotate<span class="n" id="nNeeds" hidden></span></button>
+  <button class="tab" id="tReport" type="button">3 · Report</button>
+  <button class="tab" id="tExport" type="button">4 · Export</button>
+</nav>
+<main><div class="page" id="view"></div></main>
+<div id="toast" hidden role="status"></div>
+
+<script>
+/* ==========================================================================
+   simplex_ce_core.js  —  Simplex CE core for PGT-M Panel Studio
+   --------------------------------------------------------------------------
+   Pure functions, no DOM. Works in the browser (window.SimplexCE) and in
+   Node (module.exports). Agreed design: see HANDOFF.md.
+
+     input   per well: SeqStudio peak-table CSV  (numbers — sizes, heights)
+                       + the matching .fsa       (raw trace — drawing only)
+     identity          well read from inside the .fsa (TUBE1) -> worksheet
+     marker            worksheet -> marker -> order list/design -> dye + window
+     calibration       LIZ peaks in the CSV (Data Point <-> Size), Local
+                       Southern; reproduces SeqStudio sizes to <0.08 bp
+     calling           rule v0: greedy allele pick + stutter explanation,
+                       confidence-gated pre-fill, marker-wide bin grid,
+                       size-shifted alleles flagged "offset" for review
+     provenance        every peak role / call records its source
+
+   Validated on STR3 / marker 2517, 16 Coriell samples: 15/15 genotypes match
+   the hand-made report, NA16243 = no signal, NA50194 = offset allele.
+   ========================================================================== */
+(function (root) {
+  "use strict";
+
+  var RULE_VERSION = "ce-rule-v0.2";
+  var SATURATION_RFU = 30000;   /* SeqStudio clips near 32k RFU */
+
+  /* ------------------------------------------------------------------ dyes
+     SeqStudio G5 dye set. CSV "Dye" column uses colour names; the .fsa uses
+     DATA channels. Analyzed (baseline-corrected) channels are DATA9-12 and
+     DATA205; raw are DATA1-4 and DATA105. CSV heights == analyzed channel. */
+  var DYE_TO_COLOR = { "6-FAM": "Blue", FAM: "Blue", VIC: "Green", HEX: "Green",
+                       NED: "Yellow", PET: "Red", LIZ: "Orange" };
+  var COLOR_TO_DATA = { Blue: ["DATA9", "DATA1"], Green: ["DATA10", "DATA2"],
+                        Yellow: ["DATA11", "DATA3"], Red: ["DATA12", "DATA4"],
+                        Orange: ["DATA205", "DATA105"] };
+  /* universal tails (order list "Tails & Notes"); M20 is always VIC/green */
+  var TAILS = { M41: { dye: "FAM", len: 18 }, M20: { dye: "VIC", len: 18 },
+                MCM: { dye: "NED", len: 21 }, "M-Pet": { dye: "PET", len: 20 } };
+  var PIGTAIL_LEN = 4; /* "gttt" on the non-fluorescent primer, incl. 1299 */
+
+  /* LIZ-500 fragments; 250 is never used for sizing (anomalous mobility) */
+  var LIZ500 = [35, 50, 75, 100, 139, 150, 160, 200, 250, 300, 340, 350, 400, 450, 490, 500];
+
+  /* ================================================================ ABIF */
+  function parseAbif(buf) {
+    var dv = new DataView(buf instanceof ArrayBuffer ? buf : buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
+    function str(o, n) { var s = ""; for (var i = 0; i < n; i++) s += String.fromCharCode(dv.getUint8(o + i)); return s; }
+    if (str(0, 4) !== "ABIF") throw new Error("not an ABIF (.fsa) file");
+    var nEl = dv.getInt32(18), dOff = dv.getInt32(26);
+    var tags = {};
+    for (var i = 0; i < nEl; i++) {
+      var o = dOff + i * 28;
+      var name = str(o, 4), num = dv.getInt32(o + 4), et = dv.getInt16(o + 8);
+      var ne = dv.getInt32(o + 12), ds = dv.getInt32(o + 16);
+      var p = ds <= 4 ? o + 20 : dv.getInt32(o + 20), key = name + num, v, k;
+      if (et === 4) { v = new Array(ne); for (k = 0; k < ne; k++) v[k] = dv.getInt16(p + 2 * k); }
+      else if (et === 5) { v = new Array(ne); for (k = 0; k < ne; k++) v[k] = dv.getInt32(p + 4 * k); }
+      else if (et === 7) { v = new Array(ne); for (k = 0; k < ne; k++) v[k] = dv.getFloat32(p + 4 * k); }
+      else if (et === 18) { v = str(p + 1, dv.getUint8(p)); }
+      else if (et === 19 || et === 2) { v = str(p, ds).replace(/\0+$/, ""); }
+      else { v = null; }
+      if (v !== null) tags[key] = v;
+    }
+    var dyes = [];
+    for (var d = 1; d <= 5; d++) if (tags["DyeN" + d]) dyes.push(tags["DyeN" + d]);
+    return {
+      tags: tags,
+      well: tags.TUBE1 || null,                /* authoritative well id      */
+      sampleField: tags.SMPL1 || null,         /* "Sample" on SeqStudio — not used */
+      instrument: tags.MCHN1 || null,
+      dyeSet: tags.DySN1 || null,
+      dyes: dyes,
+      channel: function (color) {
+        var c = COLOR_TO_DATA[color]; if (!c) return null;
+        return tags[c[0]] || tags[c[1]] || null;
+      }
+    };
+  }
+
+  /* ========================================================= peak CSV */
+  function parseCsvLine(line) {
+    var out = [], cur = "", q = false;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line[i];
+      if (q) { if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true; else if (ch === ",") { out.push(cur); cur = ""; } else cur += ch;
+    }
+    out.push(cur); return out;
+  }
+  function parsePeakCsv(text) {
+    var lines = String(text).replace(/\r/g, "").split("\n").filter(function (l) { return l.trim(); });
+    var head = parseCsvLine(lines[0]).map(function (h) { return h.trim(); });
+    var need = ["Dye", "Size", "Height", "Data Point"];
+    need.forEach(function (n) { if (head.indexOf(n) < 0) throw new Error("peak CSV lacks column " + n); });
+    var num = { "Size": 1, "Height": 1, "Area in Point": 1, "Area in BP": 1, "Data Point": 1, "Begin Point": 1,
+                "Begin BP": 1, "End Point": 1, "End BP": 1, "Width in Point": 1, "Width in BP": 1 };
+    var rows = [];
+    for (var r = 1; r < lines.length; r++) {
+      var f = parseCsvLine(lines[r]), o = {};
+      head.forEach(function (h, i) { o[h] = num[h] ? parseFloat(f[i]) : f[i]; });
+      /* peaks before the first LIZ fragment are exported with an empty Size and
+         Begin/End BP = -1: they cannot be sized, so they are kept but flagged */
+      if (!isFinite(o["Size"])) { rows.push({ dye: o["Dye"], file: o["Sample File Name"], size: NaN, height: o["Height"], dataPoint: o["Data Point"], unsized: true, source: "csv" }); continue; }
+      rows.push({ dye: o["Dye"], file: o["Sample File Name"], size: o["Size"], height: o["Height"],
+                  area: o["Area in BP"], dataPoint: o["Data Point"], width: o["Width in BP"],
+                  beginBp: o["Begin BP"], endBp: o["End BP"], source: "csv" });
+    }
+    return rows;
+  }
+
+  /* ======================================================= calibration */
+  function lizPoints(peaks) {
+    var pts = peaks.filter(function (p) {
+      return p.dye === "Orange" && p.size >= 34.5 && Math.abs(p.size - 250) > 5;
+    }).sort(function (a, b) { return a.dataPoint - b.dataPoint; });
+    return { dp: pts.map(function (p) { return p.dataPoint; }), bp: pts.map(function (p) { return p.size; }) };
+  }
+  function quadAt(xs, ys, x) { /* exact quadratic through 3 points (Lagrange) */
+    var r = 0;
+    for (var i = 0; i < 3; i++) {
+      var t = ys[i];
+      for (var j = 0; j < 3; j++) if (j !== i) t *= (x - xs[j]) / (xs[i] - xs[j]);
+      r += t;
+    }
+    return r;
+  }
+  /* Local Southern (GeneMapper default): mean of the two 3-point fits that
+     bracket x. Linear interpolation is ~0.33 bp off — do not use it.     */
+  function makeCalibration(peaks) {
+    var L = lizPoints(peaks), dp = L.dp, bp = L.bp, n = dp.length;
+    if (n < 5) return { ok: false, reason: "only " + n + " usable LIZ peaks" };
+    function toBp(x) {
+      var i = 0; while (i < n && dp[i] < x) i++;
+      i = Math.min(Math.max(i, 2), n - 2);
+      var a = quadAt(dp.slice(i - 2, i + 1), bp.slice(i - 2, i + 1), x);
+      var b = quadAt(dp.slice(i - 1, i + 2), bp.slice(i - 1, i + 2), x);
+      return (a + b) / 2;
+    }
+    var missing = LIZ500.filter(function (s) { return s !== 250 && bp.indexOf(s) < 0; });
+    return { ok: true, method: "local-southern", n: n, missing: missing,
+             range: [bp[0], bp[n - 1]], dpRange: [dp[0], dp[n - 1]], toBp: toBp };
+  }
+  /* raw trace of one colour, re-expressed in bp, cut to [lo, hi] */
+  function traceInBp(abif, color, cal, lo, hi) {
+    var y = abif.channel(color); if (!y || !cal.ok) return null;
+    var x0 = Math.max(0, Math.floor(cal.dpRange[0] - 80)), x1 = Math.min(y.length - 1, Math.ceil(cal.dpRange[1] + 60));
+    var X = [], Y = [];
+    for (var i = x0; i <= x1; i++) {
+      var b = cal.toBp(i);
+      if (b >= lo && b <= hi) { X.push(b); Y.push(y[i]); }
+    }
+    return { bp: X, rfu: Y };
+  }
+
+  /* ============================================ marker, dye and window */
+  /* design: { marker, dye, period, ampliconTailed, ampliconTailedSource }  */
+  function analysisWindow(design, halfWidth) {
+    var hw = halfWidth == null ? 15 : halfWidth;
+    if (!design || !design.ampliconTailed) return null;
+    return { lo: design.ampliconTailed - hw, hi: design.ampliconTailed + hw,
+             centre: design.ampliconTailed, source: design.ampliconTailedSource || "unknown" };
+  }
+  /* Fallback when the design has no expected size: the window is centred on
+     the size region where most wells carry their tallest product (>= 80 bp,
+     so dimers and the dye front cannot win). Labelled as inferred.        */
+  function inferWindow(colourPeaks, halfWidth) {
+    var hw = halfWidth == null ? 15 : halfWidth, all = [];
+    colourPeaks.forEach(function (pk) { pk.forEach(function (p) { if (p.size >= 80) all.push(p.size); }); });
+    if (!all.length) return null;
+    var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all), best = null;
+    for (var c = lo; c <= hi; c += 0.5) {
+      var sc = 0;
+      colourPeaks.forEach(function (pk) {
+        var m = 0; pk.forEach(function (p) { if (p.size >= 80 && Math.abs(p.size - c) <= hw && p.height > m) m = p.height; });
+        sc += Math.sqrt(m);
+      });
+      if (!best || sc > best.sc) best = { c: c, sc: sc };
+    }
+    /* tallest product per well, searched over twice the half-width so a
+       long-allele cluster at the edge is not cut off; the window is then
+       widened to cover every well's tallest peak plus a 6 bp margin */
+    var tops = [];
+    colourPeaks.forEach(function (pk) {
+      var t = null; pk.forEach(function (p) { if (p.size >= 80 && Math.abs(p.size - best.c) <= 2 * hw && (!t || p.height > t.height)) t = p; });
+      if (t && t.height >= 150) tops.push(t.size);
+    });
+    tops.sort(function (a, b) { return a - b; });
+    var centre = Math.round(tops[Math.floor(tops.length / 2)]);
+    var lo = Math.min(centre - hw, Math.floor(tops[0] - 6)), hi = Math.max(centre + hw, Math.ceil(tops[tops.length - 1] + 6));
+    return { lo: lo, hi: hi, centre: centre, inferred: true,
+             source: "inferred from this run's peaks (no size-planner value) — replace when available" };
+  }
+
+  function tailedFromNaked(naked, dye) {
+    var t = null; for (var k in TAILS) if (TAILS[k].dye === dye || (dye === "HEX" && k === "M20")) t = TAILS[k];
+    return t ? naked + t.len + PIGTAIL_LEN : null;
+  }
+
+  /* ========================================================= roles
+     allele | stutter_minus1 | stutter_minus2 | stutter_plus1 | noise
+     | nonspecific (outside window, >= 80 bp) | dimer_front (< 80 bp)     */
+  function near(a, b, tol) { return Math.abs(a - b) <= tol; }
+
+  /* rule v0 for one well. peaks: CSV peaks of the marker colour. */
+  function callWell(peaks, win, period, opt) {
+    opt = opt || {};
+    var tol = opt.tol || 0.6;
+    var r1 = opt.stutterRatio != null ? opt.stutterRatio : 0.45;   /* marker -1 stutter ratio */
+    var thrStut = r1 + 0.15, thrAllele = r1 + 0.35;                  /* -1 position decision band */
+    var minRfu = opt.minRfu || 150, lowRfu = opt.lowRfu || 1000;
+    var P = peaks.map(function (p) { return Object.assign({}, p); });
+    P.forEach(function (p) {
+      if (p.size < win.lo || p.size > win.hi) {
+        p.role = p.size < 80 ? "dimer_front" : "nonspecific"; p.parent = null;
+      }
+    });
+    var inW = P.filter(function (p) { return !p.role; }).sort(function (a, b) { return b.height - a.height; });
+    var res = { peaks: P, alleles: [], conf: "high", reasons: [], status: "called" };
+    if (!inW.length || inW[0].height < minRfu) {
+      inW.forEach(function (p) { p.role = "noise"; });
+      res.status = "no_signal"; res.conf = "n/a"; res.reasons.push("no peak >= " + minRfu + " RFU in window");
+      return res;
+    }
+    var A = [];
+    function explain(p) { /* returns {role,parent,q} if p is stutter of an accepted allele */
+      var best = null;
+      /* once two alleles are fixed (diploid), a -1 peak up to the allele
+         threshold can only be stutter; before that it must stay below thrStut */
+      var lim1 = A.length >= 2 ? thrAllele : thrStut, lim2 = A.length >= 2 ? 0.45 : 0.30;
+      A.forEach(function (a) {
+        var q = p.height / a.height, d = p.size - a.size;
+        if (period !== 1 && near(d, -1, 0.35) && q < 0.6) best = best || { role: "minus_a", parent: a, q: q };
+        else if (near(d, -period, tol) && q < lim1) best = best || { role: "stutter_minus1", parent: a, q: q };
+        else if (near(d, -2 * period, tol) && q < lim2) best = best || { role: "stutter_minus2", parent: a, q: q };
+        else if (near(d, period, tol) && q < 0.15) best = best || { role: "stutter_plus1", parent: a, q: q };
+      });
+      return best;
+    }
+    inW.forEach(function (p) {
+      if (!A.length) { p.role = "allele"; A.push(p); return; }
+      var e = explain(p);
+      if (e) { p.role = e.role; p.parent = e.parent.size; p.q = e.q; return; }
+      var hMax = A[0].height;
+      if (A.length < 2 && p.height >= 0.10 * hMax) {
+        var adj = near(p.size - A[0].size, -period, tol);
+        var q = p.height / A[0].height;
+        if (adj && q < thrAllele) { /* ambiguous band: -1 position, too tall for stutter, too low for allele */
+          p.role = "stutter_minus1"; p.parent = A[0].size; p.q = q;
+          res.conf = "low"; res.reasons.push("peak at " + p.size.toFixed(1) + " is " + Math.round(q * 100) +
+            "% of the main peak — between stutter and allele");
+          return;
+        }
+        p.role = "allele"; A.push(p);
+        if (adj) { res.conf = "low"; res.reasons.push("second allele sits on the stutter position of the first; its height includes stutter"); }
+        return;
+      }
+      if (A.length >= 2 && p.height >= 0.30 * Math.min(A[0].height, A[1].height)) {
+        p.role = "noise"; res.conf = "low";
+        res.reasons.push("unexplained third peak at " + p.size.toFixed(1) + " (" + Math.round(p.height) + " RFU)");
+        return;
+      }
+      p.role = "noise";
+    });
+    A.sort(function (a, b) { return a.size - b.size; });
+    res.alleles = A;
+    if (P.some(function (p) { return p.size >= win.lo && p.size <= win.hi && p.height >= SATURATION_RFU; })) {
+      res.saturated = true;
+      res.reasons.push("off-scale peak (>= " + SATURATION_RFU + " RFU): heights are clipped, stutter and height ratios are unreliable — consider less product");
+    }
+    if (A[0] && Math.max.apply(null, A.map(function (a) { return a.height; })) < lowRfu) {
+      res.conf = "low"; res.reasons.push("tallest allele below " + lowRfu + " RFU");
+    }
+    /* metrics */
+    res.metrics = wellMetrics(P, A, period, tol, r1);
+    if (res.saturated) res.metrics.saturated = true;
+    return res;
+  }
+
+  function wellMetrics(P, A, period, tol, r1) {
+    var m = { stutterRatio: null, heightRatio: null, heightRatioNote: null };
+    if (!A.length) return m;
+    var main = A.slice().sort(function (a, b) { return b.height - a.height; })[0];
+    var s = P.filter(function (p) { return near(p.size - main.size, -period, tol); })[0];
+    var other = A.length === 2 ? (A[0] === main ? A[1] : A[0]) : null;
+    if (s && !(other && s === other)) m.stutterRatio = s.height / main.height;
+    if (A.length === 2) {
+      var hi = A[0].height >= A[1].height ? A[0] : A[1], lo = hi === A[0] ? A[1] : A[0];
+      var hHi = hi.height, hLo = lo.height;
+      if (near(lo.size - hi.size, period, tol)) {        /* shorter allele carries the longer one's stutter */
+        hHi = Math.max(hi.height - r1 * lo.height, 1); m.heightRatioNote = "corrected for overlapping stutter";
+      } else if (near(lo.size - hi.size, -period, tol)) {
+        hLo = Math.max(lo.height - r1 * hi.height, 1); m.heightRatioNote = "corrected for overlapping stutter";
+      }
+      m.heightRatio = Math.min(hLo, hHi) / Math.max(hLo, hHi);
+    }
+    return m;
+  }
+
+  /* marker-wide -1 stutter ratio: median over wells of (-1 peak / tallest) */
+  function estimateStutter(wellsPeaks, win, period) {
+    var qs = [];
+    wellsPeaks.forEach(function (pk) {
+      var w = pk.filter(function (p) { return p.size >= win.lo && p.size <= win.hi; });
+      if (!w.length) return;
+      var top = w.reduce(function (a, b) { return b.height > a.height ? b : a; });
+      var s = w.filter(function (p) { return near(p.size - top.size, -period, 0.6); })[0];
+      if (s && top.height < SATURATION_RFU && s.height / top.height < 0.8) qs.push(s.height / top.height);
+    });
+    if (qs.length < 3) return { ratio: 0.45, n: qs.length, source: "default" };
+    qs.sort(function (a, b) { return a - b; });
+    var mid = Math.floor(qs.length / 2);
+    return { ratio: qs.length % 2 ? qs[mid] : (qs[mid - 1] + qs[mid]) / 2, n: qs.length, source: "panel median" };
+  }
+
+  /* ======================================================= bin grid
+     Names follow the CE-summary sheet: integer ladder phase 0..period-1 by
+     least squares, ROUND half away from zero. A separate continuous grid
+     (circular mean of size mod period) flags alleles > 0.5 bp off-grid —
+     those become "offset" and are NOT auto-binned (agreed: review first). */
+  function roundAway(x) { return x < 0 ? -Math.round(-x) : Math.round(x); }
+  function nameFor(size, phase, period) { return phase + period * roundAway((size - phase) / period); }
+  function buildGrid(sizes, period, offsetTol) {
+    var tolOff = offsetTol == null ? 0.5 : offsetTol;
+    var best = null;
+    for (var ph = 0; ph < period; ph++) {
+      var ss = 0; sizes.forEach(function (s) { var d = s - nameFor(s, ph, period); ss += d * d; });
+      if (!best || ss < best.ss) best = { phase: ph, ss: ss };
+    }
+    var sx = 0, sy = 0;
+    sizes.forEach(function (s) { var a = 2 * Math.PI * (s % period) / period; sx += Math.cos(a); sy += Math.sin(a); });
+    var c = (Math.atan2(sy, sx) / (2 * Math.PI)) * period; if (c < 0) c += period;
+    function residual(s) { var d = (s - c) % period; if (d > period / 2) d -= period; if (d < -period / 2) d += period; return d; }
+    return { phase: best.phase, centre: c, period: period, offsetTol: tolOff,
+             name: function (s) { return nameFor(s, best.phase, period); },
+             residual: residual,
+             isOffset: function (s) { return Math.abs(residual(s)) > tolOff; } };
+  }
+
+  /* ================================================= whole marker run
+     wells: [{ well, sample, peaks (all dyes, from CSV), abif? }]
+     design: { marker, dye, period, ampliconTailed, ampliconTailedSource } */
+  function analyseMarker(wells, design, opt) {
+    opt = opt || {};
+    var color = DYE_TO_COLOR[design.dye];
+    var period = design.period;
+    var colourPeaks = wells.map(function (w) { return w.peaks.filter(function (p) { return p.dye === color && !p.unsized; }); });
+    var win = analysisWindow(design, opt.halfWidth);
+    if (!win && opt.inferWindow !== false) win = inferWindow(colourPeaks, opt.halfWidth);
+    if (!win) throw new Error("no expected product size for marker " + design.marker);
+    var st = estimateStutter(colourPeaks, win, period);
+    var calls = wells.map(function (w, i) {
+      var c = callWell(colourPeaks[i], win, period, { stutterRatio: st.ratio, minRfu: opt.minRfu, lowRfu: opt.lowRfu });
+      c.well = w.well; c.sample = w.sample;
+      c.calibration = makeCalibration(w.peaks);
+      return c;
+    });
+    var sizes = [];
+    calls.forEach(function (c) { c.alleles.forEach(function (a) { sizes.push(a.size); }); });
+    var grid = buildGrid(sizes, period, opt.offsetTol);
+    calls.forEach(function (c) {
+      c.alleles.forEach(function (a) {
+        a.residual = grid.residual(a.size);
+        a.offset = grid.isOffset(a.size);
+        a.bin = a.offset ? null : grid.name(a.size);
+        a.nearestBin = grid.name(a.size);
+      });
+      if (c.alleles.some(function (a) { return a.offset; })) {
+        c.conf = "low"; c.status = "offset_review";
+        c.reasons.push("allele(s) " + c.alleles.filter(function (a) { return a.offset; })
+          .map(function (a) { return a.size.toFixed(2) + " (" + (a.residual > 0 ? "+" : "") + a.residual.toFixed(2) + " bp off grid)"; })
+          .join(", ") + " — 偏移等位基因, review before binning");
+      }
+      c.genotype = c.status === "no_signal" ? null : c.alleles.map(function (a) { return a.offset ? "~" + a.size.toFixed(1) : a.bin; });
+      c.zygosity = c.status === "no_signal" ? null : (c.alleles.length === 2 ? "het" : "hom");
+      c.prefill = c.conf === "high";
+      /* provenance for every role; ruleRole keeps the rule's answer even when hidden */
+      c.peaks.forEach(function (p) { p.ruleRole = p.role || null; if (p.role) { p.roleSource = "rule"; p.ruleVersion = RULE_VERSION; p.suggestionShown = true; } });
+      c.ruleCall = { genotype: c.genotype ? c.genotype.slice() : null, status: c.status, conf: c.conf };
+      /* agreed: an uncertain call is NOT pre-filled — in-window roles are hidden
+         and the human marks the alleles from scratch (offset wells keep the
+         allele pick, because the open question there is the bin, not the peak) */
+      if (c.status === "called" && c.conf === "low") {
+        c.peaks.forEach(function (p) {
+          if (p.size >= win.lo && p.size <= win.hi) { p.role = null; p.roleSource = null; p.suggestionShown = false; }
+        });
+        c.alleles = []; c.genotype = null; c.zygosity = null; c.status = "needs_annotation";
+      }
+    });
+    var summary = markerSummary(calls, design, win, st, grid);
+    return { design: design, color: color, window: win, stutter: st, grid: grid, calls: calls, summary: summary, ruleVersion: RULE_VERSION };
+  }
+
+  /* after a human edit: rebuild alleles, bins, genotype, metrics, summary.
+     The bin grid is kept from the first analysis so names never drift.   */
+  function refresh(result) {
+    var g = result.grid, period = result.design.period;
+    result.calls.forEach(function (c) {
+      c.alleles = c.peaks.filter(function (p) { return p.role === "allele"; }).sort(function (a, b) { return a.size - b.size; });
+      c.alleles.forEach(function (a) {
+        a.residual = g.residual(a.size);
+        if (a.offsetResolution) return;            /* human decided this one */
+        a.offset = g.isOffset(a.size);
+        a.bin = a.offset ? null : g.name(a.size);
+      });
+      if (!c.alleles.length) { if (c.status !== "needs_annotation") c.status = "no_signal"; }
+      else c.status = c.alleles.some(function (a) { return a.offset; }) ? "offset_review" : "called";
+      c.genotype = c.alleles.length ? c.alleles.map(function (a) { return a.offset ? "~" + a.size.toFixed(1) : a.bin; }) : null;
+      c.zygosity = c.alleles.length ? (c.alleles.length >= 2 ? "het" : "hom") : null;
+      c.metrics = wellMetrics(c.peaks, c.alleles, period, 0.6, result.stutter.ratio);
+    });
+    result.summary = markerSummary(result.calls, result.design, result.window, result.stutter, g);
+    return result;
+  }
+
+  /* stats exclude no-signal wells and wells awaiting offset review */
+  function markerSummary(calls, design, win, st, grid) {
+    var typed = calls.filter(function (c) { return c.status === "called"; });
+    var bins = {}, het = 0, sr = [], hr = [];
+    typed.forEach(function (c) {
+      c.alleles.forEach(function (a) { bins[a.bin] = (bins[a.bin] || 0) + 1; });
+      if (c.zygosity === "het") het++;
+      if (c.metrics && c.metrics.saturated) return;
+      if (c.metrics && c.metrics.stutterRatio != null) sr.push(c.metrics.stutterRatio);
+      if (c.metrics && c.metrics.heightRatio != null) hr.push(c.metrics.heightRatio);
+    });
+    function med(a) { if (!a.length) return null; a = a.slice().sort(function (x, y) { return x - y; }); var m = Math.floor(a.length / 2); return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; }
+    var allSizes = []; calls.forEach(function (c) { c.alleles.forEach(function (a) { allSizes.push(a.size); }); });
+    var meanObs = allSizes.length ? allSizes.reduce(function (s, x) { return s + x; }, 0) / allSizes.length : null;
+    var nonspec = 0; calls.forEach(function (c) { c.peaks.forEach(function (p) { if (p.role === "nonspecific") nonspec++; }); });
+    return {
+      marker: design.marker, dye: design.dye, period: period(design),
+      samples: calls.length, typed: typed.length,
+      noSignal: calls.filter(function (c) { return c.status === "no_signal"; }).map(function (c) { return c.sample; }),
+      pendingReview: calls.filter(function (c) { return c.status === "offset_review"; }).map(function (c) { return c.sample; }),
+      needsAnnotation: calls.filter(function (c) { return c.status === "needs_annotation"; }).map(function (c) { return c.sample; }),
+      alleles: Object.keys(bins).map(Number).sort(function (a, b) { return a - b; }),
+      alleleCounts: bins,
+      het: typed.length ? het / typed.length : null,
+      stutterRatioMedian: med(sr), heightRatioMedian: med(hr),
+      stutterRatioUsed: st,
+      expected: win.centre, expectedSource: win.source,
+      observedMean: meanObs, offsetFromExpected: meanObs != null ? meanObs - win.centre : null,
+      nonspecificPeaks: nonspec,
+      saturatedWells: calls.filter(function (c) { return c.metrics && c.metrics.saturated; }).map(function (c) { return c.sample; }),
+      duplicateSamples: (function () { var seen = {}, d = []; calls.forEach(function (c) { if (seen[c.sample]) d.push(c.sample + " (" + seen[c.sample] + ", " + c.well + ")"); else seen[c.sample] = c.well; }); return d; })(),
+      missingReference: CORIELL16.filter(function (s) { return !calls.some(function (c) { return c.sample === s; }); }),
+      gridPhase: grid.phase, gridCentre: grid.centre
+    };
+    function period(d) { return d.period; }
+  }
+
+  /* human marks the alleles; every other in-window peak is then explained
+     relative to those alleles (diploid: anything left is stutter or noise) */
+  function rolesFromAlleles(result, call, sizes, who) {
+    var per = result.design.period, tol = 0.6, win = result.window;
+    var A = call.peaks.filter(function (p) { return sizes.some(function (s) { return Math.abs(p.size - s) < 0.05; }); });
+    call.peaks.forEach(function (p) {
+      if (p.size < win.lo || p.size > win.hi) return;
+      if (A.indexOf(p) >= 0) { p.role = "allele"; p.parent = null; p.roleSource = "human_edited"; return; }
+      var best = null;
+      A.forEach(function (a) {
+        var d = p.size - a.size, q = p.height / a.height;
+        if (per !== 1 && near(d, -1, 0.35)) best = best || { r: "minus_a", a: a, q: q };
+        else if (near(d, -per, tol)) best = best || { r: "stutter_minus1", a: a, q: q };
+        else if (near(d, -2 * per, tol)) best = best || { r: "stutter_minus2", a: a, q: q };
+        else if (near(d, per, tol)) best = best || { r: "stutter_plus1", a: a, q: q };
+      });
+      p.role = best ? best.r : "noise"; p.parent = best ? best.a.size : null; p.q = best ? best.q : null;
+      p.roleSource = "rule_from_human_alleles";
+    });
+    call.log = call.log || [];
+    call.log.push({ at: new Date().toISOString(), by: who, edit: { type: "setAlleles", sizes: sizes } });
+    if (call.status === "needs_annotation") call.status = "called";
+    return refresh(result);
+  }
+
+  /* ============================================ human edits (provenance) */
+  function applyEdit(call, edit, who) {
+    /* edit: {type:"setRole", size, role, parent?} | {type:"addPeak", peak} |
+             {type:"resolveOffset", size, bin}  | {type:"confirm"}           */
+    var at = new Date().toISOString();
+    call.log = call.log || [];
+    if (edit.type === "confirm") {
+      call.peaks.forEach(function (p) { if (p.roleSource === "rule") p.roleSource = "human_confirmed"; });
+      call.confirmedBy = who; call.confirmedAt = at;
+    } else if (edit.type === "setRole") {
+      var p = call.peaks.filter(function (x) { return Math.abs(x.size - edit.size) < 0.05; })[0];
+      if (!p) throw new Error("no peak at " + edit.size);
+      p.prevRole = p.role; p.role = edit.role; p.parent = edit.parent || null; p.roleSource = "human_edited";
+    } else if (edit.type === "addPeak") {
+      var q = Object.assign({ source: "trace", roleSource: "human_added" }, edit.peak);
+      call.peaks.push(q);
+    } else if (edit.type === "resolveOffset") {
+      call.alleles.forEach(function (a) { if (Math.abs(a.size - edit.size) < 0.05) { a.bin = edit.bin; a.offset = false; a.offsetResolvedBy = who; a.offsetResolution = edit.newMicrovariant ? "new microvariant bin" : "merged into existing bin"; } });
+      if (!call.alleles.some(function (a) { return a.offset; })) call.status = "called";
+    }
+    call.alleles = call.peaks.filter(function (x) { return x.role === "allele"; }).sort(function (a, b) { return a.size - b.size; });
+    call.log.push({ at: at, by: who, edit: edit });
+    return call;
+  }
+
+  /* ================================================ exports
+     1) CE-summary sheet row (same layout as PKD1_CE_summary_robust.xlsx:
+        16 samples x 2 raw sizes, sample order fixed)
+     2) ML tables — one row per peak, one row per well                    */
+  var CORIELL16 = ["NA03814", "NA03815", "NA04738", "NA04776", "NA04820", "NA06075", "NA06890", "NA07425",
+                   "NA07426", "NA07428", "NA09133", "NA11518", "NA16243", "NA17942", "NA22601", "NA50194"];
+  function summarySheetRow(result, strNo) {
+    var row = { "STR No.": strNo, "Marker": result.design.marker, "Repeat unit": result.design.motif || "" };
+    CORIELL16.forEach(function (s) {
+      var c = result.calls.filter(function (x) { return x.sample === s; })[0];
+      var a = c && c.status !== "no_signal" ? c.alleles.map(function (p) { return +p.size.toFixed(2); }) : [];
+      if (a.length === 1) a.push(a[0]);
+      row[s + " A1"] = a[0] != null ? a[0] : ""; row[s + " A2"] = a[1] != null ? a[1] : "";
+    });
+    return row;
+  }
+  function mlPeakRows(result, meta) {
+    var out = [];
+    result.calls.forEach(function (c) {
+      c.peaks.forEach(function (p) {
+        out.push({ run: meta && meta.run, well: c.well, sample: c.sample, marker: result.design.marker,
+          dye: result.design.dye, size: p.size, height: p.height, area: p.area, width_bp: p.width,
+          data_point: p.dataPoint, in_window: p.size >= result.window.lo && p.size <= result.window.hi,
+          role: p.role || "", rule_role: p.ruleRole || "", parent_allele: p.parent || "", stutter_q: p.q != null ? +p.q.toFixed(3) : "",
+          role_source: p.roleSource, rule_version: p.ruleVersion || "", suggestion_shown: !!p.suggestionShown,
+          peak_source: p.source });
+      });
+    });
+    return out;
+  }
+  function mlWellRows(result, meta) {
+    return result.calls.map(function (c) {
+      return { run: meta && meta.run, well: c.well, sample: c.sample, marker: result.design.marker,
+        status: c.status, zygosity: c.zygosity, genotype: c.genotype ? c.genotype.join("/") : "",
+        allele_sizes: c.alleles.map(function (a) { return a.size.toFixed(2); }).join("/"),
+        stutter_ratio: c.metrics && c.metrics.stutterRatio != null ? +c.metrics.stutterRatio.toFixed(3) : "",
+        height_ratio: c.metrics && c.metrics.heightRatio != null ? +c.metrics.heightRatio.toFixed(3) : "",
+        height_ratio_note: c.metrics && c.metrics.heightRatioNote || "", saturated: !!(c.metrics && c.metrics.saturated),
+        rule_conf: c.ruleCall ? c.ruleCall.conf : c.conf, rule_genotype: c.ruleCall && c.ruleCall.genotype ? c.ruleCall.genotype.join("/") : "",
+        prefilled: c.prefill, reasons: c.reasons.join(" | "),
+        calibration: c.calibration.ok ? c.calibration.method + " n=" + c.calibration.n : "FAILED",
+        confirmed_by: c.confirmedBy || "" };
+    });
+  }
+  function toCsv(rows) {
+    if (!rows.length) return "";
+    var keys = Object.keys(rows[0]);
+    function esc(v) { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+    return [keys.join(",")].concat(rows.map(function (r) { return keys.map(function (k) { return esc(r[k]); }).join(","); })).join("\n");
+  }
+
+  /* ======================================================= worksheet
+     Authoritative identity: well (from .fsa TUBE1) -> worksheet row.
+     Filename is a fallback only, and every row built from it says so.    */
+  function wellFromFilename(name) { var m = /(?:^|[-_])([A-H](?:1[0-2]|[1-9]))_/.exec(name); return m ? m[1] : null; }
+  function resolveWell(well, worksheet) {
+    var hit = worksheet.filter(function (r) { return r.well === well; });
+    if (hit.length !== 1) return { ok: false, reason: hit.length ? "well " + well + " appears " + hit.length + "x in worksheet" : "well " + well + " not in worksheet" };
+    return { ok: true, row: hit[0], source: hit[0].source || "worksheet" };
+  }
+
+  var API = {
+    RULE_VERSION: RULE_VERSION, DYE_TO_COLOR: DYE_TO_COLOR, TAILS: TAILS, PIGTAIL_LEN: PIGTAIL_LEN, CORIELL16: CORIELL16,
+    parseAbif: parseAbif, parsePeakCsv: parsePeakCsv, makeCalibration: makeCalibration, traceInBp: traceInBp,
+    analysisWindow: analysisWindow, inferWindow: inferWindow, tailedFromNaked: tailedFromNaked,
+    callWell: callWell, estimateStutter: estimateStutter, buildGrid: buildGrid, analyseMarker: analyseMarker, refresh: refresh, rolesFromAlleles: rolesFromAlleles,
+    applyEdit: applyEdit, summarySheetRow: summarySheetRow, mlPeakRows: mlPeakRows, mlWellRows: mlWellRows, toCsv: toCsv,
+    wellFromFilename: wellFromFilename, resolveWell: resolveWell
+  };
+  if (typeof module !== "undefined" && module.exports) module.exports = API; else root.SimplexCE = API;
+})(typeof window !== "undefined" ? window : this);
+
+</script>
+<script>
+(function(){
+"use strict";
+var CE = window.SimplexCE;
+var $ = function(id){ return document.getElementById(id); };
+function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+var toastT; function toast(m){ var t=$("toast"); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;},3200); }
+
+/* PKD1 order list (PKD1_order_list_0610). Expected tailed size is missing from
+   that sheet; only 2517 and 1299 are derivable from its notes. The rest wait
+   for the size-planner output. */
+var PANEL = [
+  {strNo:1, marker:"3067", dye:"VIC", motif:"(TG)n",  period:2},
+  {strNo:2, marker:"2769", dye:"NED", motif:"(GAG)n", period:3},
+  {strNo:3, marker:"2517", dye:"PET", motif:"(AC)n",  period:2, ampliconTailed:429, ampliconTailedSource:"order list note 7 · temporary until size-planner file"},
+  {strNo:4, marker:"2343", dye:"NED", motif:"(AGAT)n",period:4},
+  {strNo:5, marker:"2290", dye:"PET", motif:"(GT)n",  period:2},
+  {strNo:6, marker:"2038", dye:"VIC", motif:"(AG)n",  period:2},
+  {strNo:7, marker:"1951", dye:"FAM", motif:"(AAT)n", period:3},
+  {strNo:8, marker:"1830", dye:"FAM", motif:"(GT)n",  period:2},
+  {strNo:9, marker:"1725", dye:"NED", motif:"(ATA)n", period:3},
+  {strNo:10,marker:"1604", dye:"FAM", motif:"(CA)n",  period:2},
+  {strNo:11,marker:"1299", dye:"PET", motif:"(AATG)n",period:4, ampliconTailed:247, ampliconTailedSource:"order list note 9, corrected for gttt pigtail (223+20+4)"},
+  {strNo:12,marker:"1247", dye:"VIC", motif:"",       period:2},
+  {strNo:13,marker:"1202", dye:"NED", motif:"(GTG)n", period:3}
+];
+var ROLES = [
+  {k:"allele", t:"Allele", key:"a", c:"--r-allele"},
+  {k:"stutter_minus1", t:"Stutter −1", key:"s", c:"--r-stutter"},
+  {k:"stutter_minus2", t:"Stutter −2", key:"d", c:"--r-stutter"},
+  {k:"stutter_plus1", t:"Stutter +1", key:"f", c:"--r-stutter"},
+  {k:"minus_a", t:"−A (n−1 bp)", key:"m", c:"--r-stutter"},
+  {k:"noise", t:"Noise", key:"n", c:"--r-noise"},
+  {k:"nonspecific", t:"Non-specific", key:"x", c:"--r-nonspec"}
+];
+function roleDef(k){ for(var i=0;i<ROLES.length;i++) if(ROLES[i].k===k) return ROLES[i]; return {k:k,t:k||"unlabelled",c:"--r-none"}; }
+var DYE_VAR = {Red:"--dye-pet", Orange:"--dye-liz", Blue:"--dye-fam", Green:"--dye-vic", Yellow:"--dye-ned"};
+
+var S = {
+  tab:"import", demo:false, runName:"",
+  fsa:{}, csv:{},            /* by file name */
+  worksheet:null,            /* {rows, source, name} */
+  design: Object.assign({}, PANEL[2]), half:15,
+  result:null, wells:null, sel:0, pick:null, cache:{}
+};
+var STORE = "simplexCE.annotations.v1";
+function storeKey(){ return S.runName + "|" + S.design.marker; }
+function saveEdits(){
+  if(!S.result) return;
+  var out = S.result.calls.map(function(c){
+    return { well:c.well, sample:c.sample, status:c.status, confirmedBy:c.confirmedBy||null, log:c.log||[],
+      peaks:c.peaks.map(function(p){ return {size:+p.size.toFixed(3), height:p.height, role:p.role||null, parent:p.parent||null,
+        roleSource:p.roleSource||null, source:p.source, offset:p.offset, bin:p.bin, offsetResolution:p.offsetResolution||null}; }) };
+  });
+  try{ var all = JSON.parse(localStorage.getItem(STORE)||"{}"); all[storeKey()] = {at:new Date().toISOString(), calls:out}; localStorage.setItem(STORE, JSON.stringify(all)); }catch(e){}
+}
+function restoreEdits(){
+  var all; try{ all = JSON.parse(localStorage.getItem(STORE)||"{}"); }catch(e){ return false; }
+  var saved = all && all[storeKey()]; if(!saved) return false;
+  var n=0;
+  saved.calls.forEach(function(sc){
+    var c = S.result.calls.filter(function(x){ return x.well===sc.well; })[0]; if(!c || !(sc.log&&sc.log.length) && !sc.confirmedBy) return;
+    sc.peaks.forEach(function(sp){
+      var p = c.peaks.filter(function(x){ return Math.abs(x.size-sp.size)<0.01; })[0];
+      if(!p && sp.source==="trace"){ p = {size:sp.size, height:sp.height, source:"trace", dye:S.result.color}; c.peaks.push(p); }
+      if(!p) return;
+      p.role = sp.role; p.parent = sp.parent; p.roleSource = sp.roleSource;
+      if(sp.offsetResolution){ p.offset=false; p.bin=sp.bin; p.offsetResolution=sp.offsetResolution; }
+    });
+    if(sc.status==="called" && c.status==="needs_annotation") c.status="called";
+    c.confirmedBy = sc.confirmedBy; c.log = sc.log; n++;
+  });
+  CE.refresh(S.result);
+  return n;
+}
+
+/* ---------------------------------------------------------------- files */
+function readFiles(list){
+  var arr = Array.prototype.slice.call(list), left = arr.length;
+  if(!left) return;
+  arr.forEach(function(f){
+    var rd = new FileReader();
+    var isFsa = /\.fsa$/i.test(f.name), isCsv = /\.csv$/i.test(f.name);
+    rd.onload = function(){
+      try{
+        if(isFsa){ S.fsa[f.name] = { name:f.name, abif: CE.parseAbif(rd.result) }; }
+        else if(isCsv){
+          var txt = String(rd.result);
+          if(/^\s*well\s*,/i.test(txt)) loadWorksheet(txt, f.name, "worksheet");
+          else S.csv[f.name] = { name:f.name, peaks: CE.parsePeakCsv(txt) };
+        }
+      }catch(e){ toast(f.name + ": " + e.message); }
+      if(--left===0){ S.demo=false; S.result=null; S.runName = S.runName || ("upload " + new Date().toISOString().slice(0,16)); render(); }
+    };
+    if(isFsa) rd.readAsArrayBuffer(f); else rd.readAsText(f);
+  });
+}
+function loadWorksheet(txt, name, source){
+  var lines = txt.replace(/\r/g,"").split("\n").filter(function(l){return l.trim();});
+  var head = lines[0].split(",").map(function(h){return h.trim().toLowerCase();});
+  var rows = lines.slice(1).map(function(l){ var f=l.split(","), o={}; head.forEach(function(h,i){ o[h]=(f[i]||"").trim(); });
+    return { well:o.well, sample:o.sample_id||o.sample, strNo:o.str_no, marker:o.marker, dye:o.dye, source:o.source||source }; });
+  var fromName = rows.some(function(r){ return /filename/i.test(r.source||""); });
+  S.worksheet = { rows:rows, name:name, authoritative: !fromName };
+}
+function worksheetFromFilenames(){
+  var rows = [];
+  Object.keys(S.fsa).forEach(function(n){
+    var a = S.fsa[n].abif, m = /([A-H]\d{1,2})_([A-Za-z0-9]+)-(\d+)(?:-([A-Z]+))?_/.exec(n);
+    var pn = m ? PANEL.filter(function(x){ return String(x.strNo)===m[3]; })[0] : null;
+    rows.push({ well:a.well, sample: m ? m[2] : n.replace(/\.fsa$/i,""), strNo: m ? m[3] : "", marker: pn ? pn.marker : S.design.marker,
+      dye: (m && m[4]) || (pn ? pn.dye : S.design.dye), source:"filename (temporary, NOT authoritative)" });
+  });
+  S.worksheet = { rows:rows, name:"built from filenames", authoritative:false };
+  pickMarkerWithData(); render();
+}
+function markersInWorksheet(){ var m={}; (S.worksheet?S.worksheet.rows:[]).forEach(function(r){ if(r.marker) m[r.marker]=(m[r.marker]||0)+1; }); return m; }
+function pickMarkerWithData(){ var m = markersInWorksheet(); if(!Object.keys(m).length || m[S.design.marker]) return;
+  var first = PANEL.filter(function(p){ return m[p.marker]; })[0]; if(first){ S.design = Object.assign({}, first); } }
+function pairs(){
+  return Object.keys(S.fsa).sort().map(function(n){
+    var a = S.fsa[n].abif;
+    var csv = S.csv[n + ".csv"] || null;
+    if(!csv){ Object.keys(S.csv).forEach(function(k){ var p=S.csv[k].peaks; if(!csv && p.length && p[0].file===n) csv=S.csv[k]; }); }
+    var id = S.worksheet ? CE.resolveWell(a.well, S.worksheet.rows) : {ok:false, reason:"no worksheet loaded"};
+    return { fsa:n, well:a.well, abif:a, csv:csv, id:id };
+  });
+}
+function analyse(){
+  var P = pairs().filter(function(p){ return p.csv && p.id.ok && (!p.id.row.marker || p.id.row.marker===S.design.marker); });
+  if(!P.length){ toast("Nothing to analyse: each .fsa needs its CSV and a worksheet row."); return; }
+
+  S.wells = P.map(function(p){ return { well:p.well, sample:p.id.row.sample, peaks:p.csv.peaks, abif:p.abif, source:p.id.source }; });
+  S.result = CE.analyseMarker(S.wells, S.design, { halfWidth:S.half });
+  var order = CE.CORIELL16;
+  S.result.calls.sort(function(a,b){ var ia=order.indexOf(a.sample), ib=order.indexOf(b.sample);
+    if(ia<0&&ib<0) return a.well<b.well?-1:1; if(ia<0) return 1; if(ib<0) return -1; return ia-ib; });
+  S.cache = {}; S.sel = 0; S.pick = null;
+  var n = restoreEdits();
+  if(n) toast("Restored your earlier edits on " + n + " sample" + (n>1?"s":"") + ".");
+  S.tab = "annot"; render();
+}
+
+/* --------------------------------------------------------------- traces */
+function wellOf(c){ return S.wells.filter(function(w){ return w.well===c.well; })[0]; }
+function traceFor(c, lo, hi){
+  var k = c.well + "|" + lo + "|" + hi; if(S.cache[k]) return S.cache[k];
+  var w = wellOf(c), color = S.result.color, t = null;
+  if(w && w.abif && c.calibration.ok){ t = CE.traceInBp(w.abif, color, c.calibration, lo, hi); if(t) t.real = true; }
+  if(!t){ /* no .fsa: rebuild from the peak table */
+    var X=[],Y=[]; for(var x=lo;x<=hi;x+=(hi-lo)/900){ var y=0; c.peaks.forEach(function(p){ if(p.dye!==color && p.source!=="trace") return; var sd=Math.max(p.width||0.6,0.3)/2.355; y+=p.height*Math.exp(-0.5*Math.pow((x-p.size)/sd,2)); }); X.push(x); Y.push(y); }
+    t = {bp:X, rfu:Y, real:false};
+  }
+  S.cache[k] = t; return t;
+}
+function lizFor(c, lo, hi){
+  var k = "liz|" + c.well; if(S.cache[k]) return S.cache[k];
+  var w = wellOf(c); if(!(w && w.abif && c.calibration.ok)) return null;
+  return S.cache[k] = CE.traceInBp(w.abif, "Orange", c.calibration, lo, hi);
+}
+function setupCanvas(cv, h){
+  var dpr = window.devicePixelRatio||1, w = cv.clientWidth || cv.parentNode.clientWidth || 300;
+  cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.height = h+"px";
+  var g = cv.getContext("2d"); g.setTransform(dpr,0,0,dpr,0,0); return {g:g, w:w, h:h};
+}
+/* one drawing routine for every trace: grid ticks in bp, RFU scale, peaks
+   coloured by role, optional LIZ underlay */
+function drawTrace(cv, c, lo, hi, o){
+  o = o || {};
+  var H = o.h || 60, C = setupCanvas(cv, H), g = C.g, W = C.w;
+  var padL = o.axes ? 38 : 2, padB = o.axes ? 16 : 2, padT = o.axes ? 8 : 3;
+  var t = traceFor(c, lo, hi);
+  var ymax = o.ymax || Math.max(150, Math.max.apply(null, t.rfu.length ? t.rfu : [0]) * 1.12);
+  function X(b){ return padL + (b-lo)/(hi-lo)*(W-padL-4); }
+  function Y(v){ return H - padB - Math.max(0,Math.min(v,ymax))/ymax*(H-padB-padT); }
+  g.fillStyle = css("--sheet"); g.fillRect(0,0,W,H);
+  var step = o.tick || ((hi-lo)>100 ? 100 : (hi-lo)>40 ? 10 : 2);
+  g.strokeStyle = css("--grid"); g.lineWidth = 1; g.fillStyle = css("--faint"); g.font = "10px " + css("--f-mono");
+  for(var b=Math.ceil(lo/step)*step; b<=hi; b+=step){ g.beginPath(); g.moveTo(X(b),padT); g.lineTo(X(b),H-padB); g.stroke();
+    if(o.axes){ g.textAlign="center"; g.fillText(String(b), X(b), H-3); } }
+  if(o.axes){ g.textAlign="right"; g.fillText(Math.round(ymax).toLocaleString(), padL-4, padT+8); g.fillText("0", padL-4, H-padB); }
+  if(o.liz){ var L = lizFor(c, lo, hi); if(L){ g.strokeStyle = css("--dye-liz"); g.globalAlpha=.75; g.lineWidth=.8; g.beginPath();
+    L.bp.forEach(function(b,i){ i?g.lineTo(X(b),Y(L.rfu[i])):g.moveTo(X(b),Y(L.rfu[i])); }); g.stroke(); g.globalAlpha=1; } }
+  if(o.window){ g.fillStyle = css("--teal-soft"); g.globalAlpha=.7; g.fillRect(X(o.window.lo), padT, X(o.window.hi)-X(o.window.lo), H-padB-padT); g.globalAlpha=1; }
+  g.strokeStyle = css(DYE_VAR[S.result.color]||"--dye-pet"); g.lineWidth = o.axes?1.3:1; g.beginPath();
+  t.bp.forEach(function(b,i){ i?g.lineTo(X(b),Y(t.rfu[i])):g.moveTo(X(b),Y(t.rfu[i])); }); g.stroke();
+  if(o.peaks){
+    c.peaks.forEach(function(p){
+      if((p.dye && p.dye!==S.result.color && p.source!=="trace") || p.size<lo || p.size>hi) return;
+      var px=X(p.size), py=Y(p.height), R=roleDef(p.role);
+      g.fillStyle = css(R.c); g.strokeStyle = css(R.c);
+      if(S.pick && Math.abs(S.pick-p.size)<0.01){ g.lineWidth=2; g.beginPath(); g.arc(px,py,7,0,6.3); g.stroke(); }
+      g.beginPath(); if(p.role==="allele"){ g.moveTo(px,py-12); g.lineTo(px-5,py-3); g.lineTo(px+5,py-3); g.closePath(); g.fill(); }
+      else { g.arc(px,py-5,p.role?3.2:2.6,0,6.3); p.role?g.fill():(g.lineWidth=1.2,g.stroke()); }
+      if(o.labels){ g.font="10px "+css("--f-mono"); g.textAlign="center"; g.fillStyle=css("--text");
+        g.fillText(p.size.toFixed(1), px, Math.max(10,py-15)); }
+    });
+  }
+  if(!t.real && o.axes){ g.fillStyle=css("--amber"); g.textAlign="left"; g.font="10px "+css("--f-sans"); g.fillText("rebuilt from peak table — no .fsa", padL+4, padT+10); }
+  cv._map = { X:X, inv:function(px){ return lo + (px-padL)/(W-padL-4)*(hi-lo); }, Y:Y };
+}
+
+/* ---------------------------------------------------------------- status */
+function stateOf(c){
+  if(c.status==="no_signal") return {k:"nosig", t:"No signal"};
+  if(c.status==="needs_annotation") return {k:"needs", t:"Needs you"};
+  if(c.status==="offset_review") return {k:"offset", t:"Offset · review"};
+  if(c.confirmedBy) return {k:"confirmed", t:"Confirmed"};
+  if(c.peaks.some(function(p){ return /human/.test(p.roleSource||""); })) return {k:"edited", t:"Edited"};
+  return {k:"prefill", t:"Pre-filled"};
+}
+function gtText(c){ return c.genotype ? c.genotype.join(" / ") : (c.status==="no_signal" ? "—" : "?"); }
+
+/* ================================================================ views */
+function render(){
+  ["import","annot","report","export"].forEach(function(k){
+    $({import:"tImport",annot:"tAnnot",report:"tReport",export:"tExport"}[k]).setAttribute("aria-current", S.tab===k?"page":"false"); });
+  $("ruleChip").textContent = CE.RULE_VERSION;
+  $("demoFlag").hidden = !S.demo;
+  var nn = S.result ? S.result.calls.filter(function(c){ return /needs_annotation|offset_review/.test(c.status); }).length : 0;
+  $("nNeeds").hidden = !nn; $("nNeeds").textContent = nn;
+  $("ctx").textContent = "PKD1 · STR " + S.design.strNo + " · marker " + S.design.marker + " · " + S.design.dye + (S.runName ? " · " + S.runName : "");
+  var v = $("view"); v.textContent = "";
+  if(S.tab==="import") v.appendChild(importView());
+  else if(!S.result){ var e=el("div","card"); e.appendChild(el("p","readout","Load the run files and press Analyse on the Import step first.")); v.appendChild(e); }
+  else if(S.tab==="annot") annotView(v);
+  else if(S.tab==="report") reportView(v);
+  else v.appendChild(exportView());
+}
+
+function importView(){
+  var f = document.createDocumentFragment();
+  var hd = el("div","head"); hd.appendChild(el("h1",null,"Import a simplex CE run"));
+  hd.appendChild(el("p",null,"Drop the SeqStudio peak-table CSVs together with their .fsa files. Sample identity comes from the well recorded inside each .fsa, looked up in the plate worksheet — never from the file name."));
+  f.appendChild(hd);
+
+  var two = el("div","cols2");
+  /* files */
+  var fc = el("div","card"); fc.appendChild(el("h2",null,"Run files"));
+  var dz = el("label","drop"); var fi = document.createElement("input"); fi.type="file"; fi.multiple=true; fi.id="fileIn"; fi.accept=".fsa,.csv";
+  fi.addEventListener("change", function(){ readFiles(fi.files); });
+  dz.appendChild(fi); var dt=el("div"); dt.appendChild(el("strong",null,"Drop .fsa + .fsa.csv files (and the worksheet CSV)"));
+  dt.appendChild(el("span",null,"Pairs are matched by file name, then by the Sample File Name column inside the CSV."));
+  dz.appendChild(dt);
+  ["dragover","dragenter"].forEach(function(ev){ dz.addEventListener(ev,function(e){ e.preventDefault(); dz.classList.add("over"); }); });
+  ["dragleave","drop"].forEach(function(ev){ dz.addEventListener(ev,function(e){ e.preventDefault(); dz.classList.remove("over"); if(ev==="drop") readFiles(e.dataTransfer.files); }); });
+  fc.appendChild(dz);
+  var row = el("div","row"); row.style.marginTop="10px";
+  var demo = el("button","btn ghost sm","Load STR3 demo run (16 Coriell samples)"); demo.type="button"; demo.addEventListener("click", loadDemo);
+  var clr = el("button","btn ghost sm","Clear files"); clr.type="button"; clr.addEventListener("click", function(){ S.fsa={}; S.csv={}; S.worksheet=null; S.result=null; S.demo=false; S.runName=""; render(); });
+  row.appendChild(demo); row.appendChild(clr); fc.appendChild(row);
+
+  var P = pairs();
+  if(P.length || Object.keys(S.csv).length){
+    var tw = el("div","tablewrap"); tw.style.marginTop="12px";
+    var t = el("table","dt"), th = el("tr");
+    ["Well (in .fsa)","Sample","Marker","CSV","Worksheet","File"].forEach(function(h){ th.appendChild(el("th",null,h)); });
+    var thead=el("thead"); thead.appendChild(th); t.appendChild(thead); var tb=el("tbody");
+    P.forEach(function(p){ var tr=el("tr");
+      tr.appendChild(el("td","m",p.well||"?"));
+      tr.appendChild(el("td","m",p.id.ok?p.id.row.sample:"—"));
+      tr.appendChild(el("td","m",p.id.ok?(p.id.row.marker||"")+(p.id.row.dye?" · "+p.id.row.dye:""):""));
+      tr.appendChild(el("td",null,p.csv?"paired":"missing"));
+      var w=el("td"); w.appendChild(el("span","pill "+(p.id.ok?(S.worksheet.authoritative?"prefill":"needs"):"needs"), p.id.ok?(S.worksheet.authoritative?"worksheet":"from filename"):p.id.reason)); tr.appendChild(w);
+      tr.appendChild(el("td","m",p.fsa)); tb.appendChild(tr); });
+    t.appendChild(tb); tw.appendChild(t); fc.appendChild(tw);
+    var lone = Object.keys(S.csv).filter(function(k){ return !P.some(function(p){ return p.csv===S.csv[k]; }); });
+    if(lone.length) fc.appendChild(el("p","warn","CSV without its .fsa: " + lone.join(", ") + ". These wells can be annotated only after the .fsa is added."));
+  }
+  two.appendChild(fc);
+
+  /* worksheet + design */
+  var right = el("div"); right.style.display="flex"; right.style.flexDirection="column"; right.style.gap="16px";
+  var wc = el("div","card"); wc.appendChild(el("h2",null,"Plate worksheet"));
+  if(S.worksheet){
+    wc.appendChild(el("p","readout", S.worksheet.rows.length + " wells · " + S.worksheet.name));
+    if(!S.worksheet.authoritative) wc.appendChild(el("p","warn","Built from file names for testing. Not an authoritative identity source — replace it with the real plate worksheet (columns: well, sample_id, str_no, marker, dye)."));
+    else wc.appendChild(el("p","ok","Identity follows this worksheet."));
+  } else {
+    wc.appendChild(el("p","readout","No worksheet yet. Drop the plate worksheet CSV with the run files, or build a temporary one from the file names."));
+  }
+  var wb = el("button","btn ghost sm","Build temporary worksheet from file names"); wb.type="button"; wb.disabled=!Object.keys(S.fsa).length;
+  wb.addEventListener("click", worksheetFromFilenames); wb.style.marginTop="8px"; wc.appendChild(wb);
+  right.appendChild(wc);
+
+  var dc = el("div","card"); dc.appendChild(el("h2",null,"Marker and window"));
+  var g = el("div","pgrid");
+  var sel = document.createElement("select"); sel.id="mkSel";
+  var inWs = markersInWorksheet();
+  PANEL.forEach(function(p,i){ var o=document.createElement("option"); o.value=i; o.textContent="STR "+p.strNo+" · "+p.marker+" · "+p.dye+(inWs[p.marker]?"  ("+inWs[p.marker]+" wells)":""); if(p.marker===S.design.marker) o.selected=true; sel.appendChild(o); });
+  sel.addEventListener("change", function(){ S.design = Object.assign({}, PANEL[+sel.value]); S.result=null; render(); });
+  g.appendChild(field("Marker (order list)", sel, "dye sets the channel: " + S.design.dye + " → " + CE.DYE_TO_COLOR[S.design.dye]));
+  var ex = document.createElement("input"); ex.type="number"; ex.id="expIn"; ex.className="mono"; ex.value = S.design.ampliconTailed || ""; ex.placeholder="from size planner";
+  ex.addEventListener("change", function(){ S.design.ampliconTailed = +ex.value || null; S.design.ampliconTailedSource = "entered by hand"; S.result=null; render(); });
+  g.appendChild(field("Expected size incl. tails (bp)", ex, S.design.ampliconTailed ? "source: " + S.design.ampliconTailedSource : "missing — the window will be inferred from the run's peaks and labelled as inferred"));
+  var hw = document.createElement("input"); hw.type="number"; hw.id="hwIn"; hw.className="mono"; hw.value=S.half; hw.min=5; hw.max=40;
+  hw.addEventListener("change", function(){ S.half = +hw.value || 15; S.result=null; render(); });
+  g.appendChild(field("Window half-width (bp)", hw, "window " + (S.design.ampliconTailed ? (S.design.ampliconTailed-S.half)+"–"+(S.design.ampliconTailed+S.half)+" bp" : "—")));
+  var pe = document.createElement("input"); pe.type="number"; pe.id="perIn"; pe.className="mono"; pe.value=S.design.period; pe.min=1; pe.max=6;
+  pe.addEventListener("change", function(){ S.design.period = +pe.value || 2; S.result=null; render(); });
+  g.appendChild(field("Repeat unit (bp)", pe, S.design.motif || "motif not recorded"));
+  dc.appendChild(g);
+  right.appendChild(dc);
+  two.appendChild(right);
+  f.appendChild(two);
+
+  var go = el("div","row");
+  var ab = el("button","btn","Analyse"); ab.type="button"; ab.id="goBtn"; ab.addEventListener("click", analyse);
+  var ready = P.filter(function(p){ return p.csv && p.id.ok && (!p.id.row.marker || p.id.row.marker===S.design.marker); }).length;
+  ab.disabled = !ready;
+  go.appendChild(ab);
+  go.appendChild(el("span","readout", ready ? ready + " wells for marker " + S.design.marker + " ready (of " + P.length + " on the plate)" : "Waiting for files and a worksheet."));
+  f.appendChild(go);
+  return f;
+}
+function field(label, input, hint){ var d=el("div","f"); var l=el("label",null,label); if(input.id) l.htmlFor=input.id; d.appendChild(l); d.appendChild(input); if(hint) d.appendChild(el("span","hint",hint)); return d; }
+
+/* ---------------------------------------------------------- annotate */
+function summaryTiles(){
+  var s = S.result.summary, t = el("div","tiles");
+  function tile(v, lab, cls){ var d=el("div","tile"+(cls?" "+cls:"")); d.appendChild(el("b",null,v)); d.appendChild(el("span",null,lab)); t.appendChild(d); }
+  tile(s.typed + " / " + s.samples, "samples typed", "hi");
+  tile(String(s.alleles.length), "alleles / locus");
+  tile(s.het!=null ? (s.het*100).toFixed(1)+"%" : "—", "heterozygosity (obs.)", "hi");
+  tile(s.alleles.join(" · ") || "—", "alleles observed (bp)", "wide");
+  tile(s.stutterRatioMedian!=null ? s.stutterRatioMedian.toFixed(2) : "—", "stutter ratio · median");
+  tile(s.heightRatioMedian!=null ? s.heightRatioMedian.toFixed(2) : "—", "height ratio · median");
+  tile(s.observedMean!=null ? (s.offsetFromExpected>0?"+":"") + s.offsetFromExpected.toFixed(1) + " bp" : "—", "observed − expected (" + s.expected + ")");
+  var wait = s.needsAnnotation.length + s.pendingReview.length;
+  tile(String(wait), "waiting for you", wait ? "warnt" : "");
+  return t;
+}
+function annotView(v){
+  var hd = el("div","head"); hd.appendChild(el("h1",null,"Annotate · STR " + S.design.strNo + " · marker " + S.design.marker));
+  hd.appendChild(el("p",null,"Green wells are pre-filled by the rule — check and confirm. Amber wells were not pre-filled: mark the alleles yourself, or decide the bin of a shifted allele. Every change is recorded with its source."));
+  v.appendChild(hd);
+  v.appendChild(summaryTiles());
+  var sm = S.result.summary, warns = [];
+  if(S.result.window.inferred) warns.push("Analysis window " + S.result.window.lo + "–" + S.result.window.hi + " bp was inferred from this run's peaks — no expected size from the size planner yet.");
+  if(sm.duplicateSamples.length) warns.push("Same sample in two wells: " + sm.duplicateSamples.join("; ") + ". Check the worksheet before trusting these genotypes.");
+  if(sm.missingReference.length && sm.missingReference.length < 16) warns.push("Reference sample(s) missing from this marker: " + sm.missingReference.join(", ") + ".");
+  if(sm.saturatedWells.length) warns.push(sm.saturatedWells.length + " well(s) off-scale (≥30,000 RFU): genotypes readable, stutter and height ratios excluded from the medians.");
+  warns.forEach(function(w){ v.appendChild(el("p","warn",w)); });
+
+  var gc = el("div","card"); gc.appendChild(el("h2",null,"Wells · " + S.result.window.lo + "–" + S.result.window.hi + " bp · " + S.result.color + " channel"));
+  var grid = el("div","wellgrid"), cvs = [];
+  S.result.calls.forEach(function(c, i){
+    var st = stateOf(c), b = el("button","well s-"+st.k+(i===S.sel?" on":"")); b.type="button";
+    var t = el("div","t"); t.appendChild(el("b",null,c.sample)); t.appendChild(el("em",null,c.well)); b.appendChild(t);
+    var cv = el("canvas"); b.appendChild(cv); cvs.push([cv,c]);
+    var g = el("div","g"); g.appendChild(el("span",null,gtText(c))); g.appendChild(el("span","pill "+st.k, st.t)); b.appendChild(g);
+    b.addEventListener("click", function(){ S.sel=i; S.pick=null; render(); });
+    grid.appendChild(b);
+  });
+  gc.appendChild(grid); v.appendChild(gc);
+  requestAnimationFrame(function(){ cvs.forEach(function(x){ drawTrace(x[0], x[1], S.result.window.lo, S.result.window.hi, {h:46, peaks:true}); }); });
+  v.appendChild(detailCard(S.result.calls[S.sel]));
+}
+
+function detailCard(c){
+  var R = S.result, card = el("div","card detail");
+  var dh = el("div","dhead"); dh.appendChild(el("h2",null,c.sample)); dh.appendChild(el("em",null,"well " + c.well + " · " + gtText(c)));
+  var st = stateOf(c); dh.appendChild(el("span","pill "+st.k, st.t));
+  var nav = el("div","row"); nav.style.marginLeft="auto";
+  var pv = el("button","btn ghost sm","← Prev"); pv.type="button"; pv.disabled = S.sel===0; pv.addEventListener("click",function(){ S.sel--; S.pick=null; render(); });
+  var nx = el("button","btn ghost sm","Next →"); nx.type="button"; nx.disabled = S.sel===R.calls.length-1; nx.addEventListener("click",function(){ S.sel++; S.pick=null; render(); });
+  nav.appendChild(pv); nav.appendChild(nx); dh.appendChild(nav);
+  card.appendChild(dh);
+
+  if(c.reasons.length || c.status==="needs_annotation"){
+    var ul = el("ul","why");
+    if(c.status==="needs_annotation") ul.appendChild(el("li",null,"Not pre-filled: the rule was unsure. Click the allele peaks (key A), then confirm."));
+    c.reasons.forEach(function(r){ ul.appendChild(el("li",null,r)); });
+    card.appendChild(ul);
+  }
+
+  var lg = el("div","legend");
+  [[DYE_VAR[R.color]||"--dye-pet", R.color + " trace"],["--dye-liz","LIZ size standard"],["--r-allele","allele ▲"],["--r-stutter","stutter"],["--r-noise","noise"],["--r-nonspec","non-specific"],["--r-none","unlabelled ○"]].forEach(function(x){
+    var s=el("span"); var i=el("i"); i.style.background=css(x[0]); s.appendChild(i); s.appendChild(document.createTextNode(x[1])); lg.appendChild(s); });
+  card.appendChild(lg);
+
+  var full = el("div","canvaswrap"), fcv = el("canvas"); fcv.id="fullCv"; full.appendChild(fcv); card.appendChild(full);
+  var zoom = el("div","canvaswrap"), zcv = el("canvas"); zcv.id="zoomCv"; zcv.tabIndex=0; zcv.setAttribute("aria-label","Zoomed trace: click a peak to set its role"); zoom.appendChild(zcv); card.appendChild(zoom);
+  requestAnimationFrame(function(){
+    drawTrace(fcv, c, 0, 510, {h:120, axes:true, liz:true, window:R.window, tick:50});
+    drawTrace(zcv, c, R.window.lo, R.window.hi, {h:240, axes:true, peaks:true, labels:true});
+  });
+  zcv.addEventListener("click", function(e){
+    var r = zcv.getBoundingClientRect(), bp = zcv._map.inv(e.clientX - r.left);
+    var best=null; c.peaks.forEach(function(p){ if(p.dye && p.dye!==R.color && p.source!=="trace") return; var d=Math.abs(p.size-bp); if(d<0.7 && (!best||d<best.d)) best={p:p,d:d}; });
+    if(best){ S.pick = best.p.size; }
+    else { S.pick = null; S.addAt = bp; }
+    render();
+  });
+
+  card.appendChild(roleBar(c));
+
+  /* offset review */
+  c.alleles.filter(function(a){ return a.offset; }).forEach(function(a){
+    var ob = el("div","warn"); ob.appendChild(document.createTextNode("偏移等位基因 · " + a.size.toFixed(2) + " bp is " + Math.abs(a.residual).toFixed(2) + " bp off the panel grid. "));
+    var m1 = el("button","btn sm","Merge into bin " + a.nearestBin); m1.type="button";
+    m1.addEventListener("click", function(){ CE.applyEdit(c,{type:"resolveOffset",size:a.size,bin:a.nearestBin},"you"); CE.refresh(R); saveEdits(); render(); toast("Binned as " + a.nearestBin + "."); });
+    var mv = Math.round(a.size*10)/10;
+    var m2 = el("button","btn ghost sm","Keep as microvariant " + mv); m2.type="button";
+    m2.addEventListener("click", function(){ CE.applyEdit(c,{type:"resolveOffset",size:a.size,bin:mv,newMicrovariant:true},"you"); CE.refresh(R); saveEdits(); render(); toast("Kept as a new bin, " + mv + "."); });
+    var rr = el("div","row"); rr.style.marginTop="6px"; rr.appendChild(m1); rr.appendChild(m2); ob.appendChild(rr);
+    card.appendChild(ob);
+  });
+
+  /* metrics + confirm */
+  var mrow = el("div","row");
+  var m = c.metrics || {};
+  mrow.appendChild(el("span","readout","Stutter ratio " + (m.stutterRatio!=null?m.stutterRatio.toFixed(2):"—") +
+    " · height ratio " + (m.heightRatio!=null?m.heightRatio.toFixed(2):"—") + (m.heightRatioNote?" ("+m.heightRatioNote+")":"") +
+    " · calibration " + (c.calibration.ok ? c.calibration.method + ", " + c.calibration.n + " LIZ peaks" : "failed")));
+  var sp = el("span","spacer"); sp.style.flex="1"; mrow.appendChild(sp);
+  var rs = el("button","btn ghost sm","Reset to rule"); rs.type="button";
+  rs.addEventListener("click", function(){ c.peaks = c.peaks.filter(function(p){ return p.source!=="trace"; });
+    c.peaks.forEach(function(p){ var inW=p.size>=R.window.lo&&p.size<=R.window.hi; p.role = (c.ruleCall.conf==="low"&&c.ruleCall.status==="called"&&inW) ? null : p.ruleRole; p.roleSource = p.role ? "rule" : null; p.offsetResolution=null; });
+    if(c.ruleCall.conf==="low"&&c.ruleCall.status==="called") c.status="needs_annotation"; else c.status=c.ruleCall.status==="no_signal"?"no_signal":"called";
+    c.confirmedBy=null; (c.log=c.log||[]).push({at:new Date().toISOString(),by:"you",edit:{type:"reset"}}); CE.refresh(R); saveEdits(); render(); });
+  mrow.appendChild(rs);
+  var cf = el("button","btn sm", c.confirmedBy ? "Confirmed ✓" : "Confirm (Enter)"); cf.type="button"; cf.id="confirmBtn";
+  cf.disabled = !!c.confirmedBy || /needs_annotation|offset_review/.test(c.status);
+  cf.addEventListener("click", function(){ confirmCall(c); });
+  mrow.appendChild(cf);
+  card.appendChild(mrow);
+
+  /* peak table */
+  var tw = el("div","tablewrap"), t = el("table","dt"), hr = el("tr");
+  ["Size (bp)","Height","Role","Parent","Ratio","Source","Rule said"].forEach(function(h){ hr.appendChild(el("th",null,h)); });
+  var th=el("thead"); th.appendChild(hr); t.appendChild(th); var tb = el("tbody");
+  var colourPk = c.peaks.filter(function(p){ return !p.dye || p.dye===R.color || p.source==="trace"; });
+  var shown = colourPk.filter(function(p){ return S.allPeaks || (p.size>=R.window.lo-2*R.design.period && p.size<=R.window.hi+2*R.design.period); });
+  shown.sort(function(a,b){ return a.size-b.size; }).forEach(function(p){
+    var tr = el("tr","click"+(S.pick&&Math.abs(S.pick-p.size)<0.01?" sel":""));
+    tr.appendChild(el("td","m",p.size.toFixed(2))); tr.appendChild(el("td","m",Math.round(p.height).toLocaleString()));
+    var rd = roleDef(p.role), tdr = el("td"); var sw=el("span","pill"); sw.textContent=rd.t; sw.style.color=css(rd.c); sw.style.borderColor=css(rd.c); tdr.appendChild(sw); tr.appendChild(tdr);
+    tr.appendChild(el("td","m",p.parent?(+p.parent).toFixed(1):""));
+    tr.appendChild(el("td","m",p.q!=null?p.q.toFixed(2):""));
+    var ts=el("td"); ts.appendChild(el("span","pill src",p.roleSource||"—")); tr.appendChild(ts);
+    tr.appendChild(el("td","m",p.suggestionShown===false && p.ruleRole ? "(hidden) "+roleDef(p.ruleRole).t : (p.ruleRole?roleDef(p.ruleRole).t:"")));
+    tr.addEventListener("click", function(){ S.pick=p.size; render(); });
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); tw.appendChild(t); card.appendChild(tw);
+  var hidden = colourPk.length - shown.length;
+  if(hidden || S.allPeaks){ var tg = el("button","btn ghost sm", S.allPeaks ? "Show window peaks only" : "Show " + hidden + " peaks outside the window (dimer / front / non-specific)"); tg.type="button";
+    tg.addEventListener("click", function(){ S.allPeaks=!S.allPeaks; render(); }); card.appendChild(tg); }
+  return card;
+}
+
+function roleBar(c){
+  var R = S.result, bar = el("div","rolebar");
+  if(S.pick!=null){
+    var p = c.peaks.filter(function(x){ return Math.abs(x.size-S.pick)<0.01; })[0];
+    if(p){
+      bar.appendChild(el("span","lab mono", p.size.toFixed(2) + " bp · " + Math.round(p.height) + " RFU →"));
+      ROLES.forEach(function(r){ var b = el("button","rbtn"+(p.role===r.k?" on":"")); b.type="button"; b.textContent=r.t; var k=el("kbd",null,r.key.toUpperCase()); b.appendChild(k);
+        b.addEventListener("click", function(){ setRole(c, p, r.k); }); bar.appendChild(b); });
+      return bar;
+    }
+  }
+  if(S.addAt!=null){
+    var t = traceFor(c, R.window.lo, R.window.hi), best=null;
+    t.bp.forEach(function(b,i){ if(Math.abs(b-S.addAt)<0.7 && (!best||t.rfu[i]>best.h)) best={b:b,h:t.rfu[i]}; });
+    if(best && t.real && best.h>20){
+      bar.appendChild(el("span","lab","No peak-table peak here. The trace peaks at " + best.b.toFixed(2) + " bp (" + Math.round(best.h) + " RFU)."));
+      var ad = el("button","btn sm","Add this peak"); ad.type="button";
+      ad.addEventListener("click", function(){ CE.applyEdit(c,{type:"addPeak",peak:{size:best.b,height:best.h,dye:R.color,role:null}},"you"); S.pick=best.b; S.addAt=null; CE.refresh(R); saveEdits(); render(); });
+      bar.appendChild(ad); return bar;
+    }
+    S.addAt = null;
+  }
+  bar.appendChild(el("span","lab","Click a peak in the zoomed trace (or a table row) to set its role. Click an unlisted bump to add it from the trace."));
+  return bar;
+}
+function setRole(c, p, role){
+  var R = S.result;
+  if(role==="allele" && (c.status==="needs_annotation" || p.role!=="allele")){
+    var sizes = c.peaks.filter(function(x){ return x.role==="allele" && x!==p; }).map(function(x){ return x.size; });
+    if(c.status==="needs_annotation") sizes = c.peaks.filter(function(x){ return x.roleSource==="human_edited" && x.role==="allele"; }).map(function(x){ return x.size; });
+    sizes.push(p.size);
+    if(sizes.length>2){ toast("Two alleles already marked. Change one of them first."); return; }
+    CE.rolesFromAlleles(R, c, sizes, "you");
+    c.confirmedBy = null;
+  } else {
+    var parent = null;
+    if(/stutter/.test(role)){ var off = role==="stutter_minus1"?R.design.period:role==="stutter_minus2"?2*R.design.period:-R.design.period;
+      c.alleles.forEach(function(a){ if(Math.abs(a.size-off-p.size)<0.7) parent=a.size; }); }
+    CE.applyEdit(c,{type:"setRole",size:p.size,role:role,parent:parent},"you");
+    c.confirmedBy = null; CE.refresh(R);
+  }
+  saveEdits(); render();
+}
+function confirmCall(c){
+  if(/needs_annotation|offset_review/.test(c.status)){ toast("Finish this well first."); return; }
+  CE.applyEdit(c,{type:"confirm"},"you"); saveEdits();
+  var next = S.result.calls.findIndex(function(x,i){ return i>S.sel && !x.confirmedBy && x.status!=="no_signal"; });
+  toast(c.sample + " confirmed."); if(next>=0){ S.sel=next; S.pick=null; } render();
+}
+document.addEventListener("keydown", function(e){
+  if(S.tab!=="annot" || !S.result || /INPUT|SELECT|TEXTAREA/.test((e.target||{}).tagName||"")) return;
+  var c = S.result.calls[S.sel];
+  if(e.key==="ArrowRight" && S.sel<S.result.calls.length-1){ S.sel++; S.pick=null; render(); e.preventDefault(); return; }
+  if(e.key==="ArrowLeft" && S.sel>0){ S.sel--; S.pick=null; render(); e.preventDefault(); return; }
+  if(e.key==="Enter"){ confirmCall(c); e.preventDefault(); return; }
+  if(S.pick!=null){ var r = ROLES.filter(function(x){ return x.key===e.key.toLowerCase(); })[0];
+    var p = c.peaks.filter(function(x){ return Math.abs(x.size-S.pick)<0.01; })[0];
+    if(r && p){ setRole(c,p,r.k); e.preventDefault(); } }
+});
+
+/* ------------------------------------------------------------ report */
+function reportView(v){
+  var R = S.result, s = R.summary;
+  var hd = el("div","head"); hd.appendChild(el("h1",null,"Report preview"));
+  var unconf = R.calls.filter(function(c){ return c.status!=="no_signal" && !c.confirmedBy; }).length;
+  hd.appendChild(el("p",null,"Same two-page portrait layout as the CE genotyping deck, with stutter ratio and height ratio added. " +
+    (unconf ? unconf + " sample(s) not yet confirmed, so the pages are marked DRAFT." : "All typed samples confirmed.")));
+  v.appendChild(hd);
+  var calls = R.calls, pages = [calls.slice(0,8), calls.slice(8,16)];
+  if(calls.length>16) pages.push(calls.slice(16));
+  var rep = repHet();
+  var todo = [];
+  pages.forEach(function(pc, pi){
+    if(!pc.length) return;
+    var pg = el("section","rpage");
+    pg.appendChild(el("p","rkick","PKD1 STR panel · CE genotyping summary" + (unconf?"  ·  DRAFT":"")));
+    var tt = el("div","rtitle"); var h=el("h2"); h.appendChild(document.createTextNode("STR " + R.design.strNo + " · ")); var sp=el("span",null,"Marker " + R.design.marker); h.appendChild(sp); tt.appendChild(h);
+    var ru = el("div","ru"); ru.appendChild(document.createTextNode("Repeat unit  ")); ru.appendChild(el("b",null,R.design.motif || (R.design.period+" bp"))); tt.appendChild(ru);
+    pg.appendChild(tt);
+    pg.appendChild(el("p","readout","Page " + (pi+1) + " / " + pages.filter(function(x){return x.length;}).length + " · samples " + (pi*8+1) + "–" + (pi*8+pc.length)));
+    var rs = el("div","rstats");
+    function stat(val, lab, wide){ var d=el("div","rstat"+(wide?" wide":"")); d.appendChild(el("b",null,val)); d.appendChild(el("span",null,lab)); rs.appendChild(d); }
+    stat(String(s.typed), "samples typed (n)"); stat(String(s.alleles.length), "alleles / locus");
+    stat(s.het!=null?(s.het*100).toFixed(1)+"%":"—", "heterozygosity (obs.)");
+    stat(s.alleles.join(" · "), "alleles observed (bp)", true);
+    stat(s.stutterRatioMedian!=null?s.stutterRatioMedian.toFixed(2):"—", "stutter ratio · median");
+    pg.appendChild(rs);
+    if(rep){ pg.appendChild(el("p","readout","Representative heterozygote: " + rep.sample + " · alleles " + rep.genotype.join(" / ") + " bp · height ratio " + (rep.metrics.heightRatio!=null?rep.metrics.heightRatio.toFixed(2):"—") + " · median height ratio " + (s.heightRatioMedian!=null?s.heightRatioMedian.toFixed(2):"—"))); }
+    var rows = el("div","rrows"), hdr = el("div","rhdr");
+    ["Sample / genotype","Electropherogram · 0–510 bp","Zoom · " + R.window.lo + "–" + R.window.hi + " bp"].forEach(function(x){ hdr.appendChild(el("span",null,x)); });
+    rows.appendChild(hdr);
+    pc.forEach(function(c){
+      var r = el("div","rrow"), sm = el("div","sm");
+      sm.appendChild(el("b",null,c.sample));
+      sm.appendChild(el("span","gt"+(c.zygosity==="het"?" het":""), gtText(c)));
+      var m = c.metrics||{};
+      sm.appendChild(el("small",null,(c.zygosity||"failed") + (c.status==="offset_review"?" · offset":"") + (!c.confirmedBy && c.status!=="no_signal"?" · unconfirmed":"")));
+      sm.appendChild(el("small",null,"SR " + (m.stutterRatio!=null?m.stutterRatio.toFixed(2):"—") + " · HR " + (m.heightRatio!=null?m.heightRatio.toFixed(2):"—")));
+      r.appendChild(sm);
+      var c1 = el("canvas"), c2 = el("canvas"); r.appendChild(c1); r.appendChild(c2); todo.push([c1,c2,c]);
+      rows.appendChild(r);
+    });
+    pg.appendChild(rows);
+    pg.appendChild(el("p","rfoot","PKD1 PGT-M STR linkage marker · Marker " + R.design.marker + " (STR " + R.design.strNo + ") · SeqStudio peak table + .fsa trace · Local Southern sizing on LIZ · bins: phase " + R.grid.phase + ", " + R.design.period + " bp · " + CE.RULE_VERSION +
+      " · identity: " + (S.worksheet && S.worksheet.authoritative ? "plate worksheet" : "temporary worksheet from file names") + " · expected " + R.window.centre + " bp (" + R.window.source + ")"));
+    v.appendChild(pg);
+  });
+  requestAnimationFrame(function(){ todo.forEach(function(x){
+    drawTrace(x[0], x[2], 0, 510, {h:58, liz:true, tick:100});
+    drawTrace(x[1], x[2], R.window.lo, R.window.hi, {h:58, peaks:true, tick:10});
+  }); });
+}
+function repHet(){
+  var best=null; S.result.calls.forEach(function(c){ if(c.status==="called" && c.zygosity==="het" && c.metrics && c.metrics.heightRatio!=null && !/corrected/.test(c.metrics.heightRatioNote||"")){
+    var h=Math.min(c.alleles[0].height,c.alleles[1].height); if(!best||h>best.h) best={c:c,h:h}; } });
+  return best && best.c;
+}
+
+/* ------------------------------------------------------------ export */
+var dl = null;
+if(window.claude && window.claude.use){ window.claude.use("downloads").then(function(d){ dl=d; if(S.tab==="export") render(); }).catch(function(){}); }
+function save(name, data){
+  if(!dl){ toast("Saving files is not available in this view."); return; }
+  dl.save({filename:name, data:data}).then(function(r){ if(r.status==="saved") toast("Saved " + name + "."); })
+    .catch(function(e){ if(e && e.code==="declined") return; toast(e && e.message ? e.message : "Could not save the file."); });
+}
+function exportView(){
+  var R = S.result, f = document.createDocumentFragment(), stamp = R.design.marker + "_" + new Date().toISOString().slice(0,10);
+  var hd = el("div","head"); hd.appendChild(el("h1",null,"Export"));
+  hd.appendChild(el("p",null,"The platform's tables replace PKD1_CE_summary_robust.xlsx; the first file reproduces its row layout when you need the sheet. The two training tables carry every label with its source and the rule's own answer."));
+  f.appendChild(hd);
+  var items = [
+    ["CE summary row (sheet layout)", "One row: STR No., Marker, Repeat unit, then 16 samples × 2 raw sizes in the fixed Coriell order — paste into the CE Summary sheet.", function(){ return ["CE_summary_row_"+stamp+".csv", CE.toCsv([CE.summarySheetRow(R, R.design.strNo)])]; }],
+    ["Training table · one row per peak", "size, height, area, width, role, parent allele, stutter ratio, role source, the rule's role (also when it was hidden), rule version.", function(){ return ["ce_peaks_"+stamp+".csv", CE.toCsv(CE.mlPeakRows(R,{run:S.runName}))]; }],
+    ["Training table · one row per well", "status, genotype, allele sizes, stutter ratio, height ratio, rule confidence, rule genotype, pre-filled or not, who confirmed.", function(){ return ["ce_wells_"+stamp+".csv", CE.toCsv(CE.mlWellRows(R,{run:S.runName}))]; }],
+    ["Marker summary (JSON)", "Typed, alleles, HET, stutter and height ratio medians, expected vs observed size and its source, samples awaiting review.", function(){ var s=Object.assign({},R.summary); return ["ce_marker_"+stamp+".json", JSON.stringify({design:R.design, window:R.window, summary:s, ruleVersion:CE.RULE_VERSION, run:S.runName, worksheet:S.worksheet&&{name:S.worksheet.name, authoritative:S.worksheet.authoritative}}, null, 1)]; }]
+  ];
+  items.forEach(function(it){
+    var c = el("div","card"), r = el("div","row");
+    var tx = el("div"); tx.style.flex="1"; tx.style.minWidth="0"; tx.appendChild(el("b",null,it[0])); tx.appendChild(el("p","readout",it[1]));
+    r.appendChild(tx);
+    var b = el("button","btn sm","Save file"); b.type="button"; b.disabled=!dl; b.addEventListener("click", function(){ var o=it[2](); save(o[0], o[1]); });
+    r.appendChild(b); c.appendChild(r); f.appendChild(c);
+  });
+  if(!dl){ f.appendChild(el("p","warn","File saving is not available in this view. Open the page in claude.ai to save the exports.")); }
+  var pv = el("div","card"); pv.appendChild(el("h2",null,"Preview · CE summary row"));
+  var pre = el("pre","mono"); pre.style.fontSize="11px"; pre.style.overflowX="auto"; pre.style.margin="0"; pre.style.color=css("--muted");
+  pre.textContent = CE.toCsv([CE.summarySheetRow(R, R.design.strNo)]);
+  pv.appendChild(pre); f.appendChild(pv);
+  return f;
+}
+
+/* -------------------------------------------------------------- demo */
+function loadDemo(){
+  toast("Loading the STR3 run…");
+  fetch("str3/manifest.json").then(function(r){ return r.json(); }).then(function(man){
+    var jobs = [];
+    man.pairs.forEach(function(p){
+      /* .fsa ships as base64 text: the artifact host only serves web file types */
+      jobs.push(fetch("str3/"+encodeURIComponent(p.fsaB64 || p.fsa)).then(function(r){ return p.fsaB64 ? r.text() : r.arrayBuffer(); }).then(function(b){
+        if(typeof b === "string"){ var bin = atob(b.trim()), u = new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); b = u.buffer; }
+        S.fsa[p.fsa] = {name:p.fsa, abif:CE.parseAbif(b)}; }));
+      jobs.push(fetch("str3/"+encodeURIComponent(p.csv)).then(function(r){ return r.text(); }).then(function(t){ S.csv[p.csv] = {name:p.csv, peaks:CE.parsePeakCsv(t)}; }));
+    });
+    jobs.push(fetch("str3/"+man.worksheet).then(function(r){ return r.text(); }).then(function(t){ loadWorksheet(t, man.worksheet, "filename"); }));
+    return Promise.all(jobs).then(function(){ S.demo=true; S.runName=man.run; S.design=Object.assign({},PANEL[2]); analyse(); });
+  }).catch(function(e){ toast("Could not load the demo files: " + e.message); S.tab="import"; render(); });
+}
+
+$("tImport").addEventListener("click", function(){ S.tab="import"; render(); });
+$("tAnnot").addEventListener("click", function(){ S.tab="annot"; render(); });
+$("tReport").addEventListener("click", function(){ S.tab="report"; render(); });
+$("tExport").addEventListener("click", function(){ S.tab="export"; render(); });
+var rT; window.addEventListener("resize", function(){ clearTimeout(rT); rT=setTimeout(function(){ if(S.tab!=="import") render(); },180); });
+if(window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(){ render(); });
+
+render();
+loadDemo();
+})();
+</script>
+
+</body></html>

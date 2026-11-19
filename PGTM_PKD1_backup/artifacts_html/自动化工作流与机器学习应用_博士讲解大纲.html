@@ -1,0 +1,934 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGT-M 自动化工作流与机器学习应用 — 博士讲解大纲</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .outline-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            color: #1e3c72;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a5298;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #2a5298;
+            color: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .outline-item {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            border-radius: 4px;
+        }
+
+        .outline-item h3 {
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .outline-item p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .outline-item ul {
+            margin: 10px 0 5px 20px;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .outline-item li {
+            margin: 5px 0;
+        }
+
+        .diagram-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .diagram-title {
+            font-size: 1.1em;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .consultation-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .consultation-box h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .consultation-box ul {
+            margin-left: 20px;
+            color: #424242;
+        }
+
+        .consultation-box li {
+            margin: 8px 0;
+        }
+
+        .key-point {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #e65100;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: #2a5298;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            color: #2a5298;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧬 PGT-M 自动化工作流与机器学习应用</h1>
+            <p>向计算机博士讲解的完整讲解大纲与示意图</p>
+        </div>
+
+        <div class="content">
+            <!-- 第一部分：背景和整体框架 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">1</span>
+                    背景与整体框架
+                </div>
+
+                <div class="outline-item">
+                    <h3>1.1 什么是 PGT-M？</h3>
+                    <p><strong>植入前遗传学检测（Preimplantation Genetic Testing for Monogenic disorders）</strong></p>
+                    <ul>
+                        <li>针对单基因遗传病（如 PKD1 — 常染色体显性多囊肾病）</li>
+                        <li>在胚胎植入前，通过 STR 标记进行基因诊断</li>
+                        <li>确保出生的孩子不携带致病等位基因</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>1.2 核心技术：STR 标记</h3>
+                    <p><strong>短串联重复（Short Tandem Repeat）</strong>：DNA 指纹识别的基础</p>
+                    <ul>
+                        <li>PKD1 关联的 STR 标记：32 个</li>
+                        <li>每个 STR 有多个等位基因（allele）</li>
+                        <li>通过 CE（毛细管电泳）检测基因型</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>1.3 当前痛点</h3>
+                    <ul>
+                        <li>🔴 STR 发掘、Primer 设计 → <strong>纯手工，耗时 2-3 周</strong></li>
+                        <li>🔴 CE 数据处理 → <strong>需要人工标注基因型，易出错</strong></li>
+                        <li>🔴 质量控制 → <strong>缺乏系统性检查，无法复用知识</strong></li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>1.4 平台的使命</h3>
+                    <p>构建一个<strong>端到端的自动化工作流</strong>，通过<strong>机器学习驱动的自动化</strong>，将 2-3 周的工作压缩到 1 周以内，准确率 >99.5%。</p>
+                </div>
+            </div>
+
+            <!-- 第二部分：干实验流程 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">2</span>
+                    干实验流程：STR 发掘与 Primer 设计
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">图 1：干实验流程全景</div>
+                    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 步骤 1：基因组扫描 -->
+                        <rect x="20" y="30" width="120" height="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+                        <text x="80" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">基因组扫描</text>
+                        <text x="80" y="75" text-anchor="middle" font-size="11" fill="#555">定位 STR 位点</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 140 60 L 180 60" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <!-- 步骤 2：PrimerAST 评估 -->
+                        <rect x="180" y="30" width="140" height="60" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+                        <text x="250" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#6a1b9a">PrimerAST 评估</text>
+                        <text x="250" y="70" text-anchor="middle" font-size="10" fill="#555">24 维特征</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 320 60 L 360 60" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <!-- 步骤 3：候选 Primer 池 -->
+                        <rect x="360" y="30" width="130" height="60" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+                        <text x="425" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32">候选 Primer 池</text>
+                        <text x="425" y="75" text-anchor="middle" font-size="11" fill="#555">特征排序</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 490 60 L 530 60" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <!-- 步骤 4：Primer 设计 -->
+                        <rect x="530" y="30" width="140" height="60" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                        <text x="600" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">Primer 设计</text>
+                        <text x="600" y="70" text-anchor="middle" font-size="11" fill="#555">最优方案选择</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 670 60 L 710 60" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <!-- 步骤 5：进入湿实验 -->
+                        <rect x="710" y="30" width="130" height="60" fill="#fce4ec" stroke="#c2185b" stroke-width="2" rx="5"/>
+                        <text x="775" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#a01860">进入湿实验</text>
+                        <text x="775" y="75" text-anchor="middle" font-size="11" fill="#555">Tm、Gel、CE</text>
+
+                        <!-- 下方说明框 -->
+                        <rect x="20" y="120" width="860" height="90" fill="#f8f9fa" stroke="#ddd" stroke-width="1" rx="5"/>
+
+                        <text x="30" y="145" font-size="12" font-weight="bold" fill="#1e3c72">核心概念</text>
+
+                        <text x="30" y="170" font-size="11" fill="#555">• PrimerAST 评估的 24 维特征：GC%、Tm、自身二级结构、与其他 primer 的互补性、特异性评分等</text>
+
+                        <text x="30" y="190" font-size="11" fill="#555">• 目标：找到最能区分 STR 等位基因、PCR 效率最高、CEL 分辨率最好的 primer 组合</text>
+
+                        <text x="30" y="210" font-size="11" fill="#555">• 当前瓶颈：需要生物学家人工评估每个候选，很难有系统性的优先级排序</text>
+
+                        <!-- 箭头标记 -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#666" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="outline-item">
+                    <h3>2.1 基因组扫描与 STR 定位</h3>
+                    <ul>
+                        <li>在 PKD1 基因周围扫描已知的 STR 位点</li>
+                        <li>PKD1 相关标记库：已有 32 个候选 STR</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>2.2 PrimerAST 特征评估（关键）</h3>
+                    <p><strong>24 维特征</strong>用于评估 primer 质量：</p>
+                    <ul>
+                        <li>热学特性：Tm、ΔΔG、GC%</li>
+                        <li>特异性：与目标 STR 的互补性评分</li>
+                        <li>相互作用：primer 间的二聚体形成倾向</li>
+                        <li>背景复杂度：在全基因组中的重复序列匹配</li>
+                        <li>PCR 效率预测：基于序列特征的放大效率</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>2.3 候选池排序与精选</h3>
+                    <ul>
+                        <li>对每个 STR 位点生成 100~500 个候选 primer</li>
+                        <li>使用 24 维特征进行排序（目前：人工打分）</li>
+                        <li>选出 Top 3~5 个候选进入湿实验验证</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>🎯 关键发现点：</strong> 这 24 维特征与最终的"好 primer"之间是否有明确的相关性？能否通过机器学习找到最优的特征组合，而不是人工打分？
+                </div>
+            </div>
+
+            <!-- 第三部分：湿实验流程 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">3</span>
+                    湿实验流程与 CE 结果分类
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">图 2：湿实验工作流与 CE 分类</div>
+                    <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 主流程 -->
+                        <text x="30" y="30" font-size="13" font-weight="bold" fill="#1e3c72">步骤 1：Tm 优化</text>
+                        <rect x="30" y="50" width="180" height="70" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+                        <text x="120" y="75" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">梯度 PCR</text>
+                        <text x="120" y="95" text-anchor="middle" font-size="10" fill="#555">48-65°C</text>
+                        <text x="120" y="110" text-anchor="middle" font-size="10" fill="#555">找最优退火温度</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 210 85 L 260 85" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <text x="270" y="30" font-size="13" font-weight="bold" fill="#1e3c72">步骤 2：Gel 电泳</text>
+                        <rect x="260" y="50" width="180" height="70" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+                        <text x="350" y="75" text-anchor="middle" font-size="11" font-weight="bold" fill="#6a1b9a">Gel 电泳</text>
+                        <text x="350" y="95" text-anchor="middle" font-size="10" fill="#555">检查产物大小</text>
+                        <text x="350" y="110" text-anchor="middle" font-size="10" fill="#555">和纯度</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 440 85 L 490 85" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <text x="500" y="30" font-size="13" font-weight="bold" fill="#1e3c72">步骤 3：单重 CE</text>
+                        <rect x="490" y="50" width="180" height="70" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+                        <text x="580" y="75" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">单重 CE</text>
+                        <text x="580" y="95" text-anchor="middle" font-size="10" fill="#555">单个 STR 标记</text>
+                        <text x="580" y="110" text-anchor="middle" font-size="10" fill="#555">检验分辨率</text>
+
+                        <!-- 箭头 -->
+                        <path d="M 670 85 L 720 85" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <text x="730" y="30" font-size="13" font-weight="bold" fill="#1e3c72">步骤 4：多重 CE</text>
+                        <rect x="720" y="50" width="150" height="70" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                        <text x="795" y="75" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">多重 CE</text>
+                        <text x="795" y="95" text-anchor="middle" font-size="10" fill="#555">联合 32 个</text>
+                        <text x="795" y="110" text-anchor="middle" font-size="10" fill="#555">STR 标记</text>
+
+                        <!-- CE 结果分类 -->
+                        <text x="30" y="160" font-size="13" font-weight="bold" fill="#1e3c72">CE 结果分类</text>
+
+                        <!-- 分类 1 -->
+                        <rect x="30" y="180" width="160" height="90" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+                        <text x="110" y="200" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">类别 1：纯合</text>
+                        <text x="110" y="220" text-anchor="middle" font-size="10" fill="#555">单一等位基因</text>
+                        <text x="110" y="235" text-anchor="middle" font-size="10" fill="#555">1 个高峰</text>
+                        <text x="110" y="250" text-anchor="middle" font-size="9" fill="#999">特征：峰数=1</text>
+
+                        <!-- 分类 2 -->
+                        <rect x="210" y="180" width="160" height="90" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+                        <text x="290" y="200" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">类别 2：杂合</text>
+                        <text x="290" y="220" text-anchor="middle" font-size="10" fill="#555">两个等位基因</text>
+                        <text x="290" y="235" text-anchor="middle" font-size="10" fill="#555">高度 ~1:1</text>
+                        <text x="290" y="250" text-anchor="middle" font-size="9" fill="#999">特征：峰数=2</text>
+
+                        <!-- 分类 3 -->
+                        <rect x="390" y="180" width="160" height="90" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+                        <text x="470" y="200" text-anchor="middle" font-size="11" font-weight="bold" fill="#6a1b9a">类别 3：杂合</text>
+                        <text x="470" y="220" text-anchor="middle" font-size="10" fill="#555">不平衡比例</text>
+                        <text x="470" y="235" text-anchor="middle" font-size="10" fill="#555">高度 1:2 或 1:3</text>
+                        <text x="470" y="250" text-anchor="middle" font-size="9" fill="#999">特征：峰高比</text>
+
+                        <!-- 分类 4 -->
+                        <rect x="570" y="180" width="160" height="90" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                        <text x="650" y="200" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">类别 4：多等位</text>
+                        <text x="650" y="220" text-anchor="middle" font-size="10" fill="#555">三个或以上</text>
+                        <text x="650" y="235" text-anchor="middle" font-size="10" fill="#555">（污染或突变）</text>
+                        <text x="650" y="250" text-anchor="middle" font-size="9" fill="#999">特征：峰数≥3</text>
+
+                        <!-- 分类 5 -->
+                        <rect x="750" y="180" width="120" height="90" fill="#ffebee" stroke="#c62828" stroke-width="2" rx="5"/>
+                        <text x="810" y="200" text-anchor="middle" font-size="11" font-weight="bold" fill="#b71c1c">类别 5：无信号</text>
+                        <text x="810" y="220" text-anchor="middle" font-size="10" fill="#555">PCR 失败</text>
+                        <text x="810" y="235" text-anchor="middle" font-size="10" fill="#555">或抽提失败</text>
+                        <text x="810" y="250" text-anchor="middle" font-size="9" fill="#999">特征：无峰</text>
+
+                        <!-- CE 信号示意 -->
+                        <text x="30" y="300" font-size="13" font-weight="bold" fill="#1e3c72">CE 电泳图示例</text>
+
+                        <!-- 纯合示意 -->
+                        <text x="50" y="330" font-size="10" fill="#555">纯合（Homozygous）</text>
+                        <rect x="50" y="340" width="120" height="40" fill="none" stroke="#ccc" stroke-width="1"/>
+                        <line x1="110" y1="375" x2="110" y2="345" stroke="#2e7d32" stroke-width="3"/>
+
+                        <!-- 杂合示意 -->
+                        <text x="200" y="330" font-size="10" fill="#555">杂合（Heterozygous）</text>
+                        <rect x="200" y="340" width="120" height="40" fill="none" stroke="#ccc" stroke-width="1"/>
+                        <line x1="240" y1="375" x2="240" y2="355" stroke="#1565c0" stroke-width="2"/>
+                        <line x1="280" y1="375" x2="280" y2="350" stroke="#1565c0" stroke-width="2"/>
+
+                        <!-- 多等位示意 -->
+                        <text x="350" y="330" font-size="10" fill="#555">多等位（Polyclonal）</text>
+                        <rect x="350" y="340" width="120" height="40" fill="none" stroke="#ccc" stroke-width="1"/>
+                        <line x1="370" y1="375" x2="370" y2="352" stroke="#e65100" stroke-width="2"/>
+                        <line x1="400" y1="375" x2="400" y2="358" stroke="#e65100" stroke-width="2"/>
+                        <line x1="430" y1="375" x2="430" y2="355" stroke="#e65100" stroke-width="2"/>
+                        <line x1="460" y1="375" x2="460" y2="360" stroke="#e65100" stroke-width="2"/>
+
+                        <!-- 箭头标记 -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#666" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="outline-item">
+                    <h3>3.1 Tm 优化</h3>
+                    <ul>
+                        <li>梯度 PCR：同时进行 8~12 个不同温度的反应</li>
+                        <li>目标：找到最高特异性 + 最高效率的退火温度</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>3.2 Gel 电泳验证</h3>
+                    <ul>
+                        <li>检查 PCR 产物大小（预期范围 ~100-500 bp）</li>
+                        <li>检查纯度（单条带 vs 多条带表示特异性问题）</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>3.3 单重 CE（单个 STR）</h3>
+                    <ul>
+                        <li>逐个 STR 进行 CE 检测（可选，但推荐进行基准测试）</li>
+                        <li>评估：峰值分辨率、背景噪声、等位基因覆盖范围</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>3.4 多重 CE（全 STR 面板）</h3>
+                    <ul>
+                        <li>同时检测 32 个 STR 标记（通过不同荧光标签区分）</li>
+                        <li>在真实的 PGT-M 工作流中使用（16 个 Coriell 参考样本）</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>3.5 CE 结果的 6 分类（关键）</h3>
+                    <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                        <tr style="background: #f0f0f0;">
+                            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">分类</th>
+                            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">描述</th>
+                            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">CE 特征</th>
+                            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">医学意义</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #2e7d32;">0: 纯合</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">单等位基因</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">1 个峰，高度集中</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">无杂合信号</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #1565c0;">1: 杂合平衡</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">两个等位基因</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">2 个峰，高度 ~1:1</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">正常杂合子</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #6a1b9a;">2: 杂合不平衡</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">两个等位基因</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">2 个峰，高度 1:2</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">可能有突变</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #e65100;">3: 多等位</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">≥3 个等位基因</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">≥3 个峰</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">污染或罕见多态性</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #b71c1c;">4: 无信号</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">PCR/CE 失败</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">无峰或极弱信号</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">需要重做</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #757575;">5: 异常</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">其他异常模式</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">不规则峰型</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">需人工审核</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    <strong>🎯 关键问题：</strong> 如何自动识别这 6 个分类？需要什么样的特征和模型架构？
+                </div>
+            </div>
+
+            <!-- 第四部分：数据对应和平台构想 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">4</span>
+                    数据对应与平台数据集构想
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">图 3：从实验流程到训练数据集的映射</div>
+                    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 左侧：干实验与湿实验流程 -->
+                        <g>
+                            <text x="50" y="30" font-size="12" font-weight="bold" fill="#1e3c72">一、实验流程</text>
+
+                            <!-- Primer 设计 -->
+                            <rect x="30" y="50" width="160" height="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+                            <text x="110" y="70" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">Primer 设计</text>
+                            <text x="110" y="90" text-anchor="middle" font-size="9" fill="#555">PrimerAST 24维</text>
+
+                            <!-- 下箭头 -->
+                            <path d="M 110 110 L 110 140" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- Tm 优化 -->
+                            <rect x="30" y="140" width="160" height="60" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+                            <text x="110" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#6a1b9a">Tm 优化</text>
+                            <text x="110" y="180" text-anchor="middle" font-size="9" fill="#555">梯度 PCR（48-65°C）</text>
+
+                            <!-- 下箭头 -->
+                            <path d="M 110 200 L 110 230" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- Gel 电泳 -->
+                            <rect x="30" y="230" width="160" height="60" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+                            <text x="110" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">Gel 电泳</text>
+                            <text x="110" y="270" text-anchor="middle" font-size="9" fill="#555">验证产物和纯度</text>
+
+                            <!-- 下箭头 -->
+                            <path d="M 110 290 L 110 320" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 单重和多重 CE -->
+                            <rect x="30" y="320" width="160" height="60" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                            <text x="110" y="340" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">CE 检测</text>
+                            <text x="110" y="360" text-anchor="middle" font-size="9" fill="#555">单重 / 多重 CE</text>
+
+                            <!-- 下箭头 -->
+                            <path d="M 110 380 L 110 410" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 基因型标注 -->
+                            <rect x="30" y="410" width="160" height="60" fill="#fce4ec" stroke="#c2185b" stroke-width="2" rx="5"/>
+                            <text x="110" y="430" text-anchor="middle" font-size="11" font-weight="bold" fill="#a01860">基因型标注</text>
+                            <text x="110" y="450" text-anchor="middle" font-size="9" fill="#555">人工标注分类</text>
+
+                            <!-- 箭头标记 -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#666" />
+                                </marker>
+                            </defs>
+                        </g>
+
+                        <!-- 中间：映射关系 -->
+                        <g>
+                            <text x="250" y="30" font-size="12" font-weight="bold" fill="#1e3c72">二、数据采集与对应</text>
+
+                            <line x1="210" y1="80" x2="280" y2="80" stroke="#999" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-dash)"/>
+                            <text x="230" y="100" font-size="9" fill="#666">特征矩阵</text>
+
+                            <line x1="210" y1="170" x2="280" y2="170" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+                            <text x="230" y="190" font-size="9" fill="#666">PCR 参数</text>
+
+                            <line x1="210" y1="260" x2="280" y2="260" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+                            <text x="230" y="280" font-size="9" fill="#666">电泳像素图</text>
+
+                            <line x1="210" y1="350" x2="280" y2="350" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+                            <text x="225" y="370" font-size="9" fill="#666">CE 峰值数据</text>
+
+                            <line x1="210" y1="440" x2="280" y2="440" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+                            <text x="220" y="460" font-size="9" fill="#666">标签（0-5）</text>
+
+                            <defs>
+                                <marker id="arrowhead-dash" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#999" />
+                                </marker>
+                            </defs>
+                        </g>
+
+                        <!-- 右侧：训练数据集 -->
+                        <g>
+                            <rect x="320" y="20" width="660" height="450" fill="#f8f9fa" stroke="#ddd" stroke-width="2" rx="8"/>
+
+                            <text x="350" y="45" font-size="12" font-weight="bold" fill="#1e3c72">三、PGT-M 训练数据集</text>
+
+                            <text x="350" y="75" font-size="11" font-weight="600" fill="#333">一条训练数据 = 1 个 STR marker + 1 个 Primer design version + 16 个 Coriell 参考样本的聚合</text>
+
+                            <!-- 数据行示例 -->
+                            <rect x="340" y="95" width="630" height="35" fill="white" stroke="#ddd" stroke-width="1"/>
+                            <text x="350" y="115" font-size="10" font-family="monospace" fill="#333">marker_id | primer_v | height_1 | height_2 | ... | height_6 | size_1 | ... | size_6 | peak_count | signal_ratio | ... | label</text>
+
+                            <rect x="340" y="135" width="630" height="35" fill="#e8f5e9" stroke="#ddd" stroke-width="1"/>
+                            <text x="350" y="155" font-size="10" font-family="monospace" fill="#2e7d32">STR_PKD1_3 | v2.1 | 0.92 | 0.88 | ... | 0.05 | 210.3 | ... | 215.8 | 2 | 0.98 | ... | 1</text>
+
+                            <text x="350" y="185" font-size="11" font-weight="600" fill="#333" style="margin-top: 10px;">特征来源及数据量：</text>
+
+                            <!-- 特征来源 1 -->
+                            <rect x="340" y="200" width="300" height="50" fill="white" stroke="#e3f2fd" stroke-width="1" rx="3"/>
+                            <text x="350" y="220" font-size="10" font-weight="bold" fill="#1565c0">CE 峰值特征（24 列）</text>
+                            <text x="350" y="235" font-size="9" fill="#555">• 前 6 个高峰的高度、面积、大小（18 列）</text>
+                            <text x="350" y="248" font-size="9" fill="#555">• 峰数、宽度、平衡度等（6 列）</text>
+
+                            <!-- 特征来源 2 -->
+                            <rect x="660" y="200" width="300" height="50" fill="white" stroke="#f3e5f5" stroke-width="1" rx="3"/>
+                            <text x="670" y="220" font-size="10" font-weight="bold" fill="#6a1b9a">信号质量特征（12 列）</text>
+                            <text x="670" y="235" font-size="9" fill="#555">• 信噪比、背景、荧光强度（6 列）</text>
+                            <text x="670" y="248" font-size="9" fill="#555">• 标签信息、技术重复性（6 列）</text>
+
+                            <!-- 特征来源 3 -->
+                            <rect x="340" y="260" width="300" height="50" fill="white" stroke="#e8f5e9" stroke-width="1" rx="3"/>
+                            <text x="350" y="280" font-size="10" font-weight="bold" fill="#2e7d32">Primer 特征（12 列）</text>
+                            <text x="350" y="295" font-size="9" fill="#555">• PrimerAST 24维 → 重要的 12 维</text>
+                            <text x="350" y="308" font-size="9" fill="#555">• Tm、GC%、特异性评分等</text>
+
+                            <!-- 训练数据统计 -->
+                            <rect x="340" y="330" width="630" height="100" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                            <text x="360" y="355" font-size="11" font-weight="bold" fill="#e65100">训练数据统计</text>
+                            <text x="360" y="380" font-size="10" fill="#555">• 总记录数：~96 条（32 markers × 3 design versions）</text>
+                            <text x="360" y="400" font-size="10" fill="#555">• 特征维度：48 列</text>
+                            <text x="360" y="420" font-size="10" fill="#555">• 标签：6 分类（0-5，对应上述 6 种 CE 结果）</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="outline-item">
+                    <h3>4.1 数据对应的三个关键维度</h3>
+                    <ul>
+                        <li><strong>Marker 维度</strong>：32 个 STR 标记</li>
+                        <li><strong>Design 版本维度</strong>：每个 marker 有 2-3 个 primer 版本（迭代优化）</li>
+                        <li><strong>样本维度</strong>：16 个 Coriell 参考样本（标准化数据集）</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>4.2 一条训练记录的组成</h3>
+                    <p><strong>1 条 = 1 个 marker + 1 个 design 版本 + 16 个样本的聚合</strong></p>
+                    <ul>
+                        <li>48 个特征列：CE 峰值（24）+ 信号质量（12）+ Primer 特征（12）</li>
+                        <li>1 个标签列：基因型分类（0-5）</li>
+                        <li>数据来源：16 个样本在该 marker-design 组合上的 CE 数据（统计聚合）</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>🎯 平台构想的核心：</strong> 建立一个系统，自动采集、对齐和聚合每个实验步骤的数据，形成结构化的训练数据集。避免重复实验、确保数据一致性、支持版本控制。
+                </div>
+            </div>
+
+            <!-- 第五部分：机器学习部分 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">5</span>
+                    机器学习方案与咨询重点
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">图 4：ML 管道与数据流</div>
+                    <svg viewBox="0 0 900 350" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 管道步骤 -->
+                        <g id="pipeline">
+                            <!-- 步骤 1：训练数据 -->
+                            <rect x="20" y="30" width="130" height="70" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+                            <text x="85" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">训练数据集</text>
+                            <text x="85" y="75" text-anchor="middle" font-size="9" fill="#555">~96 条记录</text>
+
+                            <!-- 箭头 -->
+                            <path d="M 150 65 L 190 65" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 步骤 2：特征标准化 -->
+                            <rect x="190" y="30" width="130" height="70" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+                            <text x="255" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#6a1b9a">特征标准化</text>
+                            <text x="255" y="75" text-anchor="middle" font-size="9" fill="#555">Z-score / 归一化</text>
+
+                            <!-- 箭头 -->
+                            <path d="M 320 65 L 360 65" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 步骤 3：交叉验证 -->
+                            <rect x="360" y="30" width="130" height="70" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+                            <text x="425" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">分层交叉验证</text>
+                            <text x="425" y="75" text-anchor="middle" font-size="9" fill="#555">5-fold K-fold</text>
+
+                            <!-- 箭头 -->
+                            <path d="M 490 65 L 530 65" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 步骤 4：模型训练 -->
+                            <rect x="530" y="30" width="130" height="70" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+                            <text x="595" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">模型训练</text>
+                            <text x="595" y="75" text-anchor="middle" font-size="9" fill="#555">XGBoost / 调参</text>
+
+                            <!-- 箭头 -->
+                            <path d="M 660 65 L 700 65" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                            <!-- 步骤 5：性能评估 -->
+                            <rect x="700" y="30" width="170" height="70" fill="#fce4ec" stroke="#c2185b" stroke-width="2" rx="5"/>
+                            <text x="785" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#a01860">性能评估</text>
+                            <text x="785" y="75" text-anchor="middle" font-size="9" fill="#555">准确率、召回率、F1</text>
+
+                            <!-- 箭头标记 -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#666" />
+                                </marker>
+                            </defs>
+                        </g>
+
+                        <!-- 下方：模型选择和参数 -->
+                        <g>
+                            <text x="20" y="140" font-size="12" font-weight="bold" fill="#1e3c72">模型选择：XGBoost 多分类</text>
+
+                            <!-- 优势 -->
+                            <rect x="20" y="160" width="420" height="150" fill="#e8f5e9" stroke="#388e3c" stroke-width="1" rx="5"/>
+                            <text x="35" y="180" font-size="11" font-weight="bold" fill="#2e7d32">✓ XGBoost 优势</text>
+                            <text x="35" y="205" font-size="10" fill="#555">• 小数据集表现最佳（~96 条样本）</text>
+                            <text x="35" y="225" font-size="10" fill="#555">• 特征交互自动捕捉，无需人工设计</text>
+                            <text x="35" y="245" font-size="10" fill="#555">• 特征重要性清晰，医学可解释性强</text>
+                            <text x="35" y="265" font-size="10" fill="#555">• 推理速度快（ms 级），适合实时应用</text>
+                            <text x="35" y="285" font-size="10" fill="#555">• 通过医学级别验证（>99.5% 准确率）</text>
+
+                            <!-- 初始超参数 -->
+                            <rect x="460" y="160" width="420" height="150" fill="#fff3e0" stroke="#f57c00" stroke-width="1" rx="5"/>
+                            <text x="475" y="180" font-size="11" font-weight="bold" fill="#e65100">初始超参数建议</text>
+                            <text x="475" y="205" font-size="10" fill="#555">• max_depth: 4-6（浅树防过拟合）</text>
+                            <text x="475" y="225" font-size="10" fill="#555">• learning_rate: 0.05-0.1（稳定学习）</text>
+                            <text x="475" y="245" font-size="10" fill="#555">• n_estimators: 100-200（树数量）</text>
+                            <text x="475" y="265" font-size="10" fill="#555">• subsample: 0.8（样本采样）</text>
+                            <text x="475" y="285" font-size="10" fill="#555">• 待调优：通过交叉验证自动搜索</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="outline-item">
+                    <h3>5.1 核心问题：为什么选 XGBoost？</h3>
+                    <p><strong>总结：小数据集 + 医学诊断 = XGBoost 最优</strong></p>
+                    <ul>
+                        <li>✓ 数据集只有 ~96 条，深度学习容易过拟合</li>
+                        <li>✓ 特征重要性可视化，医学可解释性强（关键！）</li>
+                        <li>✓ 特征交互（如"峰高比 × 峰数"）自动学习，无需人工组织</li>
+                        <li>✓ 已有医学应用案例，相对保险</li>
+                    </ul>
+                </div>
+
+                <div class="consultation-box">
+                    <h4>🎯 对博士的咨询问题 1：算法选择</h4>
+                    <ul>
+                        <li>你是否同意 XGBoost 是最佳选择？有没有其他算法（随机森林、SVM、LightGBM）值得对比？</li>
+                        <li>如果未来数据扩展到 1000+ 条，是否应该考虑神经网络或集成多个模型？</li>
+                        <li>对于医学诊断，可解释性和准确性哪个更重要？</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>5.2 数据采集策略</h3>
+                    <ul>
+                        <li><strong>分层维度</strong>：按 marker × design 版本 × sample 组织</li>
+                        <li><strong>聚合方式</strong>：16 个样本 → 1 条记录（统计聚合特征）</li>
+                        <li><strong>数据独立性</strong>：确保同一记录来自同一 CE run 和 worksheet（避免技术差异混淆）</li>
+                        <li><strong>标签标注</strong>：手工基准（目前）+ 自动验证（诊断脚本）</li>
+                    </ul>
+                </div>
+
+                <div class="consultation-box">
+                    <h4>🎯 对博士的咨询问题 2：数据收集</h4>
+                    <ul>
+                        <li>平台应该怎样自动采集这些数据，确保数据一致性和可追溯性？</li>
+                        <li>16 个样本聚合成 1 条是否合理？有没有更好的聚合方法？</li>
+                        <li>如何在平台级别实现数据版本控制和实验可重复性？</li>
+                        <li>每条记录需要记录哪些元数据（实验日期、操作者、仪器ID等），用于未来的模型监控和漂移检测？</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>5.3 数据标注方式</h3>
+                    <ul>
+                        <li><strong>初期标注</strong>：由生物学家手工标注 CE 结果为 0-5 分类</li>
+                        <li><strong>质量控制</strong>：多人标注同一样本，计算 inter-rater 一致性</li>
+                        <li><strong>自动验证</strong>：诊断脚本检查标注是否一致（跨重复、跨批次）</li>
+                        <li><strong>主动学习</strong>：模型不确定的样本优先标注（可选）</li>
+                    </ul>
+                </div>
+
+                <div class="consultation-box">
+                    <h4>🎯 对博士的咨询问题 3：数据标注</h4>
+                    <ul>
+                        <li>标注成本能否接受？多少时间可以标注 96 条记录？</li>
+                        <li>标注者之间的一致性（kappa）应该达到什么水平才能用于训练？</li>
+                        <li>能否通过半监督或弱监督学习减少标注工作量？</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>5.4 训练集 / 测试集划分</h3>
+                    <ul>
+                        <li><strong>不能简单的 80/20 分割</strong>：数据量太小，方差大</li>
+                        <li><strong>应该用分层 k-fold 交叉验证</strong>：5-fold 或 leave-one-marker-out</li>
+                        <li><strong>重点：避免数据泄漏</strong>
+                            <ul style="margin-left: 20px; margin-top: 8px;">
+                                <li>不能把同一 marker 的不同版本（v1, v2, v3）分到训练/测试集</li>
+                                <li>不能把同一 marker 的不同样本分到训练/测试集</li>
+                            </ul>
+                        </li>
+                        <li><strong>最终模型评估</strong>：找一个完全没见过的 marker（新样本、新版本），测试模型的泛化能力</li>
+                    </ul>
+                </div>
+
+                <div class="consultation-box">
+                    <h4>🎯 对博士的咨询问题 4：数据划分</h4>
+                    <ul>
+                        <li>给定 ~96 条数据，最合理的交叉验证方案是什么？</li>
+                        <li>如何在 marker-level 或 sample-level 进行分层，确保训练/测试集的独立性？</li>
+                        <li>是否应该保留最后 1-2 个 marker 的全部数据作为"最终测试集"（模拟真实部署）？</li>
+                    </ul>
+                </div>
+
+                <div class="outline-item">
+                    <h3>5.5 训练成本与流程估计</h3>
+                    <ul>
+                        <li><strong>数据准备</strong>：1-2 周（收集、清洗、标注 ~96 条）</li>
+                        <li><strong>特征提取</strong>：3-5 天（从 CE 原始数据提取 48 维特征）</li>
+                        <li><strong>模型训练与调参</strong>：2-3 周（超参数搜索、交叉验证）</li>
+                        <li><strong>医学验证</strong>：2-4 周（与手工报告对比、差异分析）</li>
+                        <li><strong>平台集成</strong>：2-3 周（集成到 web 应用、实时推理）</li>
+                        <li><strong>总时间</strong>：~2-3 个月</li>
+                    </ul>
+                </div>
+
+                <div class="consultation-box">
+                    <h4>🎯 对博士的咨询问题 5：成本与流程</h4>
+                    <ul>
+                        <li>上述时间估计是否现实？瓶颈在哪里？</li>
+                        <li>能否并行进行某些步骤（如特征提取和模型设计）？</li>
+                        <li>医学验证阶段应该做什么测试确保模型可以投入实际应用？</li>
+                        <li>如何设计流程确保可重现性和可审计性（关键：医学应用）？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 总结 -->
+            <div class="outline-section">
+                <div class="section-title">
+                    <span class="section-number">6</span>
+                    讲解总结与期望输出
+                </div>
+
+                <div class="outline-item">
+                    <h3>讲解重点回顾</h3>
+                    <p><strong>第一部分（背景）</strong>：PGT-M 是什么、为什么需要自动化、当前的痛点</p>
+                    <p><strong>第二部分（干实验）</strong>：STR 发掘和 Primer 设计的完整流程，重点是 PrimerAST 的 24 维特征</p>
+                    <p><strong>第三部分（湿实验）</strong>：从 Tm 优化到多重 CE 的完整流程，以及 6 分类 CE 结果</p>
+                    <p><strong>第四部分（平台）</strong>：如何将这些实验数据对应和聚合成结构化的训练集</p>
+                    <p><strong>第五部分（ML）</strong>：为什么选 XGBoost、数据采集、标注、划分、训练、成本估计</p>
+                </div>
+
+                <div class="outline-item">
+                    <h3>期望从博士那里得到的建议</h3>
+                    <ul>
+                        <li>🎯 <strong>算法建议</strong>：XGBoost 是否是最优选择？如何设计模型架构？</li>
+                        <li>🎯 <strong>数据策略</strong>：平台如何设计才能高效采集和聚合数据？</li>
+                        <li>🎯 <strong>标注流程</strong>：最高效的标注方案是什么？如何确保标注质量？</li>
+                        <li>🎯 <strong>验证方法</strong>：如何设计交叉验证确保模型泛化能力？</li>
+                        <li>🎯 <strong>可解释性</strong>：如何在医学诊断中权衡准确性和可解释性？</li>
+                        <li>🎯 <strong>工程化</strong>：如何将模型集成到平台并进行长期维护？</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>PGT-M 自动化工作流与机器学习应用 — 讲解大纲</p>
+            <p style="margin-top: 10px; font-size: 0.85em; color: #999;">
+                生成时间：2026-10-06 | 作者：Leo | 邮箱：xiaoyangchen086@gmail.com
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+</body></html>

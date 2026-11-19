@@ -1,0 +1,939 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD1 STR Panel - CE Genotyping Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #2d3748;
+            background: white;
+            line-height: 1.6;
+        }
+
+        @media print {
+            body { margin: 0; padding: 0; }
+            .page-break { page-break-after: always; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .page {
+            background: white;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .page-break {
+            page-break-after: always;
+            margin-bottom: 40px;
+        }
+
+        header {
+            border-bottom: 3px solid #1e3a8a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header-title {
+            color: #2563eb;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .marker-name {
+            display: flex;
+            gap: 30px;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .marker-name h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .marker-num {
+            color: #2563eb;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .repeat-unit {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .page-indicator {
+            background: #f0f4f8;
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #2563eb;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .alleles-observed {
+            background: #f0f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .alleles-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2563eb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .representative-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .rep-het-sample {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .rep-het-chart {
+            flex: 1;
+        }
+
+        .rep-het-info {
+            flex: 1;
+        }
+
+        .sample-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .sample-genotype {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2563eb;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+        }
+
+        .sample-type {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .legend-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        .legend-het {
+            background: #2563eb;
+        }
+
+        .legend-hom {
+            background: #94a3b8;
+        }
+
+        .per-sample-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .sample-row {
+            border-left: 4px solid #2563eb;
+            padding-left: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .sample-row.hom {
+            border-left-color: #94a3b8;
+        }
+
+        .sample-header {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+            align-items: start;
+        }
+
+        .sample-info {
+            flex: 1;
+        }
+
+        .sample-info-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 80px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            font-family: 'Courier New', monospace;
+        }
+
+        .traces {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .trace-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .trace-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .trace-image {
+            width: 100%;
+            height: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .failed-sample {
+            background: #fef2f2;
+            border-left-color: #dc2626;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .failed-label {
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rep-het-sample {
+                grid-template-columns: 1fr;
+            }
+
+            .traces {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <header>
+        <div class="header-title">PKD1 STR Panel · CE Genotyping Summary</div>
+        <div class="marker-name">
+            <div>
+                <h1>STR 3</h1>
+            </div>
+            <div style="flex: 1;">
+                <div style="color: #2563eb; font-size: 24px; font-weight: 700;">Marker 3</div>
+            </div>
+            <div class="repeat-unit">Repeat unit GATA</div>
+        </div>
+    </header>
+
+    <div class="page-indicator">Page 1 / 2 · Samples 1 – 8</div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Samples typed (n)</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">24</div>
+            <div class="stat-label">Alleles / locus</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">100.0%</div>
+            <div class="stat-label">Heterozygosity (obs.)</div>
+        </div>
+        <div class="stat-box">
+            <div class="alleles-label">Alleles observed (bp)</div>
+            <div class="alleles-observed">46.95 · 422.37 · 422.49 · 424.66 · 426.58 · 426.62 · 426.63 · 426.64 · 426.67 · 426.69 · 426.74 · 427.77 · 428.74 · 428.76 · 428.77 · 428.78 · 428.79 · 428.8 · 428.81 · 428.84 · 428.86 · 428.87 · 428.88 · 429.91</div>
+        </div>
+    </div>
+
+    <div class="representative-section">
+        <div class="section-title">Representative heterozygote</div>
+        <div class="rep-het-sample">
+            <div class="rep-het-chart">
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 15px; height: 150px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                    [Representative trace - 415-445 bp]
+                </div>
+            </div>
+            <div class="rep-het-info">
+                <div class="sample-name">代表性杂合体</div>
+                <div class="sample-genotype">428 / 429 bp</div>
+                <div class="sample-type">(AC)n · 2 bp/repeat</div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-icon legend-het"></span>
+                        <span>Heterozygous (het)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon legend-hom"></span>
+                        <span>Homozygous (hom)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Per-sample CE traces · Samples 1 – 8</div>
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 15px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px;">
+        <div>Sample / genotype</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>Raw electropherogram · full trace (0–510 bp)</div>
+            <div>Zoom ≈415–445 bp</div>
+        </div>
+    </div>
+
+    <div class="per-sample-grid">
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA03814</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">422.37/428.77</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A1</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA03815</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.79/426.58</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A2</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA04738</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">426.62/428.74</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A3</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA04776</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.76/426.63</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A4</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA04820</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.86/426.74</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A5</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA06075</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.81/426.69</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A6</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA06890</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">426.64/428.76</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A7</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA07425</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.8/426.67</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: A8</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="page">
+    <header>
+        <div class="header-title">PKD1 STR Panel · CE Genotyping Summary</div>
+        <div class="marker-name">
+            <div>
+                <h1>STR 3</h1>
+            </div>
+            <div style="flex: 1;">
+                <div style="color: #2563eb; font-size: 24px; font-weight: 700;">Marker 3</div>
+            </div>
+            <div class="repeat-unit">Repeat unit GATA</div>
+        </div>
+    </header>
+
+    <div class="page-indicator">Page 2 / 2 · Samples 9 – 16</div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Samples typed (n)</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">24</div>
+            <div class="stat-label">Alleles / locus</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">100.0%</div>
+            <div class="stat-label">Heterozygosity (obs.)</div>
+        </div>
+        <div class="stat-box">
+            <div class="alleles-label">Alleles observed (bp)</div>
+            <div class="alleles-observed">46.95 · 422.37 · 422.49 · 424.66 · 426.58 · 426.62 · 426.63 · 426.64 · 426.67 · 426.69 · 426.74 · 427.77 · 428.74 · 428.76 · 428.77 · 428.78 · 428.79 · 428.8 · 428.81 · 428.84 · 428.86 · 428.87 · 428.88 · 429.91</div>
+        </div>
+    </div>
+
+    <div class="representative-section">
+        <div class="section-title">Representative heterozygote</div>
+        <div class="rep-het-sample">
+            <div class="rep-het-chart">
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 15px; height: 150px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                    [Representative trace - 415-445 bp]
+                </div>
+            </div>
+            <div class="rep-het-info">
+                <div class="sample-name">代表性杂合体</div>
+                <div class="sample-genotype">428 / 429 bp</div>
+                <div class="sample-type">(AC)n · 2 bp/repeat</div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-icon legend-het"></span>
+                        <span>Heterozygous (het)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon legend-hom"></span>
+                        <span>Homozygous (hom)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Per-sample CE traces · Samples 9 – 16</div>
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 15px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px;">
+        <div>Sample / genotype</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>Raw electropherogram · full trace (0–510 bp)</div>
+            <div>Zoom ≈415–445 bp</div>
+        </div>
+    </div>
+
+    <div class="per-sample-grid">
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA07426</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.74/426.62</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B1</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA07428</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">428.87/426.74</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B2</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA09133</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">426.74/428.88</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B3</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA11518</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">422.49/428.78</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B4</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row hom">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA16243</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">46.95</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">hom</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B5</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA17942</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">426.64/428.77</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B6</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA22601</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">424.66/428.84</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B7</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-row ">
+            <div class="sample-header">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="color: #2563eb; font-weight: 700; font-size: 13px;">NA50194</div>
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700;">429.91/427.77</div>
+                    <div style="color: #64748b; font-size: 11px; text-transform: uppercase;">het</div>
+                </div>
+                <div class="sample-info">
+                    <div style="color: #94a3b8; font-size: 11px; margin-bottom: 8px;">Position: B8</div>
+                </div>
+            </div>
+            <div class="traces">
+                <div class="trace-container">
+                    <div class="trace-label">Raw electropherogram (0–510 bp)</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Full trace]
+                    </div>
+                </div>
+                <div class="trace-container">
+                    <div class="trace-label">Zoom ≈415–445 bp</div>
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; height: 120px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px;">
+                        [Zoom trace]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div>PKD1 PGT-M STR linkage marker · Marker 2517 (STR 3) · GeneMapper / SeqStudio CE · samples from filename indices · auto-binning 2 bp (AC)</div>
+        <div style="margin-top: 10px;">Generated: 2026-10-02 10:58:57</div>
+    </footer>
+</div>
+
+</body>
+</html>
+
+</body></html>

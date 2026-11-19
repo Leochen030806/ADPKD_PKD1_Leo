@@ -1,0 +1,539 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PrimeGen 参考文献</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap">
+<style>
+/* Layout: a bibliography workbench — a sticky theme rail on the left, the numbered reference list on the right; rail folds into a chip row on phones. */
+:root {
+  --bg: #F4F6F5;
+  --surface: #FFFFFF;
+  --ink: #18211F;
+  --muted: #5A6866;
+  --line: #DCE2E0;
+  --accent: #0D6170;
+  --accent-soft: #E2EEEF;
+  --dot-off: #C9D2D0;
+  --font-display: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-body: "IBM Plex Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1514; --surface: #161E1D; --ink: #E3EAE9; --muted: #93A3A0;
+    --line: #27312F; --accent: #62B9C6; --accent-soft: #15303A; --dot-off: #33403E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1514; --surface: #161E1D; --ink: #E3EAE9; --muted: #93A3A0;
+  --line: #27312F; --accent: #62B9C6; --accent-soft: #15303A; --dot-off: #33403E;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 14px; line-height: 1.6;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 56px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+header { display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent);
+}
+h1 {
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.25; margin: 0; text-wrap: balance;
+}
+.cite { color: var(--muted); font-size: 13.5px; }
+.cite i { font-style: italic; }
+.cite a { color: var(--accent); }
+.facts {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.facts b { color: var(--ink); font-weight: 500; }
+
+.reading {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;
+}
+.reading h2 { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin: 0; }
+.reading ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; max-width: 78ch; }
+.reading li::marker { color: var(--accent); font-family: var(--font-mono); font-size: 12px; }
+.ref-inline { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+
+.workbench { display: grid; grid-template-columns: 228px minmax(0, 1fr); gap: 28px; align-items: start; }
+.rail {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px);
+  display: flex; flex-direction: column; gap: 18px; min-width: 0;
+}
+.rail-label {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.themes { display: flex; flex-direction: column; gap: 2px; }
+.theme-btn {
+  display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+  width: 100%; text-align: left; background: none; border: 0; border-radius: 6px;
+  padding: 6px 10px; color: var(--ink); font: inherit; font-size: 13.5px; cursor: pointer;
+}
+.theme-btn .n { font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.theme-btn:hover { background: var(--accent-soft); }
+.theme-btn[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.theme-btn[aria-pressed="true"] .n { color: var(--surface); opacity: .85; }
+
+.seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button {
+  flex: 1; border: 0; background: var(--surface); color: var(--ink); font: inherit; font-size: 13px;
+  padding: 6px 4px; cursor: pointer; border-right: 1px solid var(--line);
+}
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+
+.legend { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.legend div { display: flex; gap: 8px; align-items: center; }
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+.main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search {
+  flex: 1 1 260px; min-width: 0; font: inherit; font-size: 14px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px;
+}
+.search::placeholder { color: var(--muted); }
+.tool {
+  font: inherit; font-size: 13px; padding: 7px 12px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none;
+  white-space: nowrap;
+}
+.tool:hover { border-color: var(--accent); color: var(--accent); }
+.status { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; min-height: 1.4em; }
+
+.list { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.group-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 14px 18px 8px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+}
+.group-head .n { font-family: var(--font-mono); font-weight: 400; font-size: 12px; color: var(--muted); }
+.ref {
+  display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 4px 12px;
+  padding: 14px 18px; border-bottom: 1px solid var(--line);
+}
+.ref:last-child { border-bottom: 0; }
+.ref .num {
+  font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+  font-variant-numeric: tabular-nums; padding-top: 2px;
+}
+.ref.hi .num { color: var(--accent); font-weight: 500; }
+.body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.title { font-family: var(--font-display); font-weight: 500; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.meta { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.meta .venue { font-style: italic; }
+.note {
+  margin-top: 4px; font-size: 13px; background: var(--accent-soft); color: var(--ink);
+  border-radius: 6px; padding: 7px 10px; max-width: 72ch;
+}
+.note b { color: var(--accent); font-weight: 600; margin-right: 6px; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 2px; font-size: 12.5px; align-items: center; }
+.links a { color: var(--accent); font-family: var(--font-mono); font-size: 12px; text-decoration: none; overflow-wrap: anywhere; }
+.links a:hover { text-decoration: underline; }
+.tag { font-size: 12px; color: var(--muted); }
+.rel { display: flex; gap: 3px; padding-top: 6px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot-off); }
+.dot.on { background: var(--accent); }
+.empty { padding: 36px 18px; text-align: center; color: var(--muted); }
+.empty button { margin-top: 10px; }
+footer { font-size: 12.5px; color: var(--muted); max-width: 78ch; }
+
+@media (max-width: 780px) {
+  .workbench { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .rail { position: static; }
+  .themes { flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .theme-btn { width: auto; white-space: nowrap; border: 1px solid var(--line); background: var(--surface); }
+  .legend { flex-direction: row; flex-wrap: wrap; gap: 6px 14px; }
+  .ref { grid-template-columns: 2.4rem minmax(0, 1fr) auto; padding: 12px 14px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .theme-btn, .seg button, .tool { transition: background-color .12s, color .12s, border-color .12s; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Nat. Biomed. Eng. · 参考文献全表</div>
+    <h1>PrimeGen 参考文献</h1>
+    <div class="cite">
+      Wang, Y., Hou, Y., Yang, L. <i>et al.</i> Accelerating primer design for amplicon sequencing using large language model-powered agents.
+      <i>Nat. Biomed. Eng.</i> <b>10</b>, 338–353 (2026)。在线发表 2025-07-30 ·
+      <a href="https://doi.org/10.1038/s41551-025-01455-z" target="_blank" rel="noopener">doi:10.1038/s41551-025-01455-z</a>
+    </div>
+    <div class="facts" id="facts"></div>
+  </header>
+
+  <section class="reading" aria-labelledby="reading-h">
+    <h2 id="reading-h">这份清单说明了什么</h2>
+    <ol>
+      <li>引用重心在 LLM agent、科学 agent 和自动化实验室，三类合计 40 篇；引物设计与多重 PCR 只有 14 篇。</li>
+      <li>没有一篇涉及 STR、微卫星、毛细管电泳或 PGT-M。生殖遗传只有两篇扩展携带者筛查（ECS）文献 <span class="ref-inline">[65, 66]</span>，对应它做的 35 基因 ECS panel。</li>
+      <li>它在 SARS-CoV-2 任务上的对照组里有一个 Primer3 版本（PrimeGen-Primer3），与 ARTIC、PrimalScheme 并列。你用 Primer3 作 baseline 有现成先例。</li>
+      <li>代码 <span class="ref-inline">[98]</span> 和 Fig. 2–4 源数据 <span class="ref-inline">[97]</span> 公开，代码采用 GPLv3。</li>
+    </ol>
+  </section>
+
+  <div class="workbench">
+    <aside class="rail" aria-label="筛选">
+      <div>
+        <div class="rail-label">主题</div>
+        <div class="themes" id="themes" role="group" aria-label="按主题筛选"></div>
+      </div>
+      <div>
+        <div class="rail-label">与你课题的相关度</div>
+        <div class="seg" id="relSeg" role="group" aria-label="按相关度筛选">
+          <button type="button" id="rel-all" data-rel="all" aria-pressed="true">全部</button>
+          <button type="button" id="rel-mid" data-rel="mid" aria-pressed="false">中及以上</button>
+          <button type="button" id="rel-high" data-rel="high" aria-pressed="false">仅高</button>
+        </div>
+      </div>
+      <div>
+        <div class="rail-label">排列</div>
+        <div class="seg" id="viewSeg" role="group" aria-label="排列方式">
+          <button type="button" id="view-num" data-view="num" aria-pressed="true">按编号</button>
+          <button type="button" id="view-group" data-view="group" aria-pressed="false">按主题</button>
+        </div>
+      </div>
+      <div class="legend" aria-label="相关度图例">
+        <div><span class="rel"><i class="dot on"></i><i class="dot on"></i><i class="dot on"></i></span>高：写你的文章大概率要引或要对照</div>
+        <div><span class="rel"><i class="dot on"></i><i class="dot on"></i><i class="dot"></i></span>中：方法或背景，按需引用</div>
+        <div><span class="rel"><i class="dot on"></i><i class="dot"></i><i class="dot"></i></span>低：服务于 PrimeGen 的其他应用</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="toolbar">
+        <input class="search" id="q" type="search" placeholder="搜索标题、作者、期刊或编号，如 Primer3、Nature、38" aria-label="搜索参考文献">
+        <button class="tool" id="copyBtn" type="button">复制当前列表</button>
+        <a class="tool" href="https://citation-needed.springer.com/v2/references/10.1038/s41551-025-01455-z?format=refman&amp;flavour=references" target="_blank" rel="noopener">导出 RIS（Zotero / EndNote）</a>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <div class="list" id="list"></div>
+      <textarea id="copyFallback" aria-label="复制用文本" style="position:absolute;left:-9999px;top:0;width:1px;height:1px" readonly></textarea>
+    </main>
+  </div>
+
+  <footer>
+    文献信息取自 Nature 官网文章页的参考文献列表（共 98 条）。主题与相关度是按题目和你的 PGT-M STR panel 课题做的归类，不代表这些文献在原文中的引用位置。无 DOI 的会议论文给出 Google Scholar 检索链接。
+  </footer>
+</div>
+
+<script>
+(function () {
+  var THEMES = [
+    ["primer", "引物设计与多重 PCR"],
+    ["repro", "生殖遗传 / 携带者筛查"],
+    ["sci", "科学 agent 与 AI 科研"],
+    ["llm", "LLM 推理与 agent 框架"],
+    ["vlm", "视觉语言模型与实验监控"],
+    ["db", "数据库、注释与比对"],
+    ["data", "本文数据与代码"],
+    ["lab", "自动化与自驱动实验室"],
+    ["tngs", "tNGS 应用与扩增子方案"],
+    ["protein", "蛋白突变检测应用"]
+  ];
+  var THEME_NAME = {};
+  THEMES.forEach(function (t) { THEME_NAME[t[0]] = t[1]; });
+
+  // [n, authors, title, venue, year, link, theme, rel, note]
+  var R = [
+    [1,"Merchant, A. et al.","Scaling deep learning for materials discovery","Nature 624, 80–85","2023","doi:10.1038/s41586-023-06735-9","lab","low"],
+    [2,"Bennett, J. A. et al.","Autonomous reaction Pareto-front mapping with a self-driving catalysis laboratory","Nat. Chem. Eng. 1, 240–250","2024","doi:10.1038/s44286-024-00033-5","lab","low"],
+    [3,"Slattery, A. et al.","Automated self-optimization, intensification, and scale-up of photocatalysis in flow","Science 383, eadj1817","2024","doi:10.1126/science.adj1817","lab","low"],
+    [4,"Bryant, J. A. Jr, Kellinger, M., Longmire, C., Miller, R. & Wright, R. C.","AssemblyTron: flexible automation of DNA assembly with Opentrons OT-2 lab robots","Synth. Biol. 8, ysac032","2023","doi:10.1093/synbio/ysac032","lab","low"],
+    [5,"Volk, A. A. et al.","AlphaFlow: autonomous discovery and optimization of multi-step chemistry using a self-driven fluidic lab guided by reinforcement learning","Nat. Commun. 14, 1403","2023","doi:10.1038/s41467-023-37139-y","lab","low"],
+    [6,"Wierenga, R. P., Golas, S. M., Ho, W., Coley, C. W. & Esvelt, K. M.","PyLabRobot: an open-source, hardware-agnostic interface for liquid-handling robots and accessories","Device 1, 100111","2023","doi:10.1016/j.device.2023.100111","lab","low"],
+    [7,"Liu, L., Huang, Y. & Wang, H. H.","Fast and efficient template-mediated synthesis of genetic variants","Nat. Methods 20, 841–848","2023","doi:10.1038/s41592-023-01868-1","lab","low"],
+    [8,"Huang, Y. et al.","High-throughput microbial culturomics using automation and machine learning","Nat. Biotechnol. 41, 1424–1433","2023","doi:10.1038/s41587-023-01674-2","lab","low"],
+    [9,"Dama, A. C. et al.","BacterAI maps microbial metabolism without prior knowledge","Nat. Microbiol. 8, 1018–1025","2023","doi:10.1038/s41564-023-01376-0","lab","low"],
+    [10,"Vemprala, S. H., Bonatti, R., Bucker, A. & Kapoor, A.","ChatGPT for robotics: design principles and model abilities","IEEE Access 12, 55682–55696","2024","doi:10.1109/ACCESS.2024.3387941","lab","low"],
+    [11,"Achiam, J. et al.","GPT-4 technical report","Preprint, arXiv:2303.08774","2023","https://arxiv.org/abs/2303.08774","llm","low"],
+    [12,"Yao, S. et al.","ReAct: synergizing reasoning and acting in language models","ICLR 2023","2023","","llm","mid","agent“推理—调用工具—观察”循环的基础范式。你的 agent 调用 Primer3、BLAST 时引这篇。"],
+    [13,"Wei, J. et al.","Chain-of-thought prompting elicits reasoning in large language models","Adv. Neural Inf. Process. Syst. 35, 24824–24837","2022","","llm","low"],
+    [14,"Brown, T. et al.","Language models are few-shot learners","Adv. Neural Inf. Process. Syst. 33, 1877–1901","2020","","llm","low"],
+    [15,"Romera-Paredes, B. et al.","Mathematical discoveries from program search with large language models","Nature 625, 468–475","2024","doi:10.1038/s41586-023-06924-6","llm","low"],
+    [16,"Yang, C. et al.","Large language models as optimizers","ICLR 2024","2024","","llm","mid","用 LLM 当优化器。若你让 agent 迭代调整 Primer3 参数或尺寸道分配，可作为方法依据。"],
+    [17,"Lewis, P. et al.","Retrieval-augmented generation for knowledge-intensive NLP tasks","Adv. Neural Inf. Process. Syst. 33, 9459–9474","2020","","llm","mid","RAG 的出处。若 agent 检索 SOP 或历史实验记录来做决策，引这篇。"],
+    [18,"Xi, Z. et al.","The rise and potential of large language model based agents: a survey","Sci. China Inf. Sci. 68, 121101","2025","doi:10.1007/s11432-024-4222-0","llm","mid","LLM agent 综述，引言铺垫用。"],
+    [19,"Zhou, W. et al.","Agents: an open-source framework for autonomous language agents","ICLR 2024","2024","","llm","low"],
+    [20,"Shen, Y. et al.","HuggingGPT: solving AI tasks with ChatGPT and its friends in hugging face","Adv. Neural Inf. Process. Syst. 36, 38154–38180","2023","","llm","low"],
+    [21,"Qian, C. et al.","Communicative agents for software development","Preprint, arXiv:2307.07924","2023","https://arxiv.org/abs/2307.07924","llm","low"],
+    [22,"Wu, Q. et al.","AutoGen: enabling next-gen LLM applications via multi-agent conversations","First Conference on Language Modeling","2024","","llm","low"],
+    [23,"Ghafarollahi, A. & Buehler, M. J.","SciAgents: automating scientific discovery through bioinspired multi-agent intelligent graph reasoning","Adv. Mater. 37, 2413523","2025","doi:10.1002/adma.202413523","sci","low"],
+    [24,"Yang, Z. et al.","MM-REACT: prompting ChatGPT for multimodal reasoning and action","Preprint, arXiv:2303.11381","2023","https://arxiv.org/abs/2303.11381","llm","low"],
+    [25,"Patil, S. G., Zhang, T., Wang, X. & Gonzalez, J. E.","Gorilla: large language model connected with massive APIs","Adv. Neural Inf. Process. Syst. 37, 126544–126565","2024","","llm","low"],
+    [26,"Messeri, L. & Crockett, M. J.","Artificial intelligence and illusions of understanding in scientific research","Nature 627, 49–58","2024","doi:10.1038/s41586-024-07146-0","sci","mid","讨论 AI 辅助科研可能带来的理解错觉。写临床场景下必须人工复核的理由时可引。"],
+    [27,"Krenn, M. et al.","On scientific understanding with artificial intelligence","Nat. Rev. Phys. 4, 761–769","2022","doi:10.1038/s42254-022-00518-3","sci","low"],
+    [28,"Boiko, D. A., MacKnight, R., Kline, B. & Gomes, G.","Autonomous chemical research with large language models","Nature 624, 570–578","2023","doi:10.1038/s41586-023-06792-0","sci","high","Coscientist：LLM 规划并执行湿实验的代表作，引言必引。"],
+    [29,"Bran, A. M. et al.","Augmenting large language models with chemistry tools","Nat. Mach. Intell. 6, 525–535","2024","doi:10.1038/s42256-024-00832-8","sci","high","ChemCrow：LLM 加领域工具的范式，与你封装 Primer3、BLAST、UCSC 的做法同构。"],
+    [30,"Darvish, K. et al.","ORGANA: a robotic assistant for automated chemistry experimentation and characterization","Matter 8, 101897","2025","doi:10.1016/j.matt.2024.10.015","lab","low"],
+    [31,"Dai, T. et al.","Autonomous mobile robots for exploratory synthetic chemistry","Nature 635, 890–897","2024","doi:10.1038/s41586-024-08173-7","lab","low"],
+    [32,"Gao, S. et al.","Empowering biomedical discovery with AI agents","Cell 187, 6125–6151","2024","doi:10.1016/j.cell.2024.09.022","sci","high","生物医学 AI agent 的总览，适合用来给你的工作定位。"],
+    [33,"Xiao, M. et al.","Multiple approaches for massively parallel sequencing of SARS-CoV-2 genomes directly from clinical samples","Genome Med. 12, 57","2020","doi:10.1186/s13073-020-00751-4","tngs","low"],
+    [34,"Kunasol, C. et al.","Comparative analysis of targeted next-generation sequencing for Plasmodium falciparum drug resistance markers","Sci. Rep. 12, 5563","2022","doi:10.1038/s41598-022-09474-5","tngs","low"],
+    [35,"Nozawa, A. et al.","Comprehensive targeted next-generation sequencing in patients with slow-flow vascular malformations","J. Hum. Genet. 67, 721–728","2022","doi:10.1038/s10038-022-01081-6","tngs","low"],
+    [36,"Rawat, A. et al.","Utility of targeted next generation sequencing for inborn errors of immunity at a tertiary care centre in North India","Sci. Rep. 12, 10416","2022","doi:10.1038/s41598-022-14522-1","tngs","low"],
+    [37,"Jan, Y.-H. et al.","Comprehensive assessment of actionable genomic alterations in primary colorectal carcinoma using targeted next-generation sequencing","Br. J. Cancer 127, 1304–1311","2022","doi:10.1038/s41416-022-01913-4","tngs","low"],
+    [38,"Xie, N. G. et al.","Designing highly multiplex PCR primer sets with simulated annealing design using dimer likelihood estimation (SADDLE)","Nat. Commun. 13, 1881","2022","doi:10.1038/s41467-022-29500-4","primer","high","SADDLE：多重 PCR 二聚体风险的定量估计与优化。你的 12/16 重 panel 交叉二聚体筛查可直接借用或作对照。"],
+    [39,"Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K. & Yao, S.","Reflexion: language agents with verbal reinforcement learning","Adv. Neural Inf. Process. Syst. 36, 8634–8652","2023","","llm","mid","用反馈做自我修正，对应你的“湿实验结果回灌、再设计”。"],
+    [40,"Madaan, A. et al.","Self-refine: iterative refinement with self-feedback","Adv. Neural Inf. Process. Syst. 36, 46534–46594","2023","","llm","mid","迭代自我修正，和 Reflexion 一起支撑闭环设计的论述。"],
+    [41,"Szymanski, N. J. et al.","An autonomous laboratory for the accelerated synthesis of novel materials","Nature 624, 86–91","2023","doi:10.1038/s41586-023-06734-w","lab","low"],
+    [42,"Amberger, J. S., Bocchini, C. A., Schiettecatte, F., Scott, A. F. & Hamosh, A.","OMIM.org: Online Mendelian Inheritance in Man (OMIM®), an online catalog of human genes and genetic disorders","Nucleic Acids Res. 43, D789–D798","2015","doi:10.1093/nar/gku1205","db","mid","疾病基因检索，PKD1/PKD2 背景介绍可引。"],
+    [43,"Sondka, Z. et al.","COSMIC: a curated database of somatic variants and clinical data for cancer","Nucleic Acids Res. 52, D1210–D1217","2024","doi:10.1093/nar/gkad986","db","low"],
+    [44,"Landrum, M. J. et al.","ClinVar: improvements to accessing data","Nucleic Acids Res. 48, D835–D844","2020","doi:10.1093/nar/gkz972","db","mid","致病变异位置。讨论连锁 marker 与致病变异的距离时用。"],
+    [45,"UniProt Consortium","UniProt: a hub for protein information","Nucleic Acids Res. 43, D204–D212","2015","doi:10.1093/nar/gku989","db","low"],
+    [46,"Federhen, S.","The NCBI taxonomy database","Nucleic Acids Res. 40, D136–D143","2012","doi:10.1093/nar/gkr1178","db","low"],
+    [47,"WHO","The WHO Global Tuberculosis Report 2022","World Health Organization","2022","https://www.who.int/teams/global-tuberculosis-programme/tb-reports/global-tuberculosis-report-2022","tngs","low"],
+    [48,"McArthur, A. G. et al.","The comprehensive antibiotic resistance database","Antimicrob. Agents Chemother. 57, 3348–3357","2013","doi:10.1128/AAC.00419-13","db","low"],
+    [49,"Camacho, C. et al.","BLAST+: architecture and applications","BMC Bioinform. 10, 421","2009","doi:10.1186/1471-2105-10-421","primer","high","BLAST+：特异性检查的标准引用，对应你的假基因过滤步骤。"],
+    [50,"Wang, M. X. et al.","Olivar: towards automated variant aware primer design for multiplex tiled amplicon sequencing of pathogens","Nat. Commun. 15, 6306","2024","doi:10.1038/s41467-024-49957-9","primer","high","Olivar：变异感知的引物设计，会避开 SNP 位点。对应你特征里的 SNP 与 3′ 端风险。"],
+    [51,"Xia, H. et al.","MultiPrime: a reliable and efficient tool for targeted next-generation sequencing","iMeta 2, e143","2023","doi:10.1002/imt2.143","primer","mid","tNGS 多重引物设计工具，可列为相关工作。"],
+    [52,"Wang, K. et al.","MFEprimer-3.0: quality control for PCR primers","Nucleic Acids Res. 47, W610–W613","2019","doi:10.1093/nar/gkz351","primer","high","MFEprimer-3.0：引物质控（错配结合、二聚体、发夹），可作 Primer3 之外的独立质检层或对照。"],
+    [53,"Dreier, M., Berthoud, H., Shani, N., Wechsler, D. & Junier, P.","SpeciesPrimer: a bioinformatics pipeline dedicated to the design of qPCR primers for the quantification of bacterial species","PeerJ 8, e8544","2020","doi:10.7717/peerj.8544","primer","low"],
+    [54,"Yang, L. et al.","A tool to automatically design multiplex PCR primer pairs for specific targets using diverse templates","Sci. Rep. 13, 16451","2023","doi:10.1038/s41598-023-43825-0","primer","mid","自动化多重 PCR 引物设计，可列为相关工作。"],
+    [55,"Yuan, J. et al.","The web-based multiplex PCR primer design software Ultiplex and the associated experimental workflow: up to 100-plex multiplicity","BMC Genom. 22, 835","2021","doi:10.1186/s12864-021-08149-1","primer","mid","Ultiplex：高重数多重引物的兼容性设计，与你的多重兼容问题相近。"],
+    [56,"Ghezzi, H. et al.","PUPpy: a primer design pipeline for substrain-level microbial detection and absolute quantification","mSphere 9, e00360-24","2024","doi:10.1128/msphere.00360-24","primer","low"],
+    [57,"DNA Software","dnasoftware（网站）","dnasoftware.com","2025","https://www.dnasoftware.com/","primer","low"],
+    [58,"SantaLucia, J. Jr & Hicks, D.","The thermodynamics of DNA structural motifs","Annu. Rev. Biophys. Biomol. Struct. 33, 415–440","2004","doi:10.1146/annurev.biophys.32.110601.141800","primer","high","最近邻热力学参数，Tm、ΔG 类特征的源头引用。"],
+    [59,"Untergasser, A. et al.","Primer3—new capabilities and interfaces","Nucleic Acids Res. 40, e115","2012","doi:10.1093/nar/gks596","primer","high","Primer3：你的 baseline 工具，必引。"],
+    [60,"Sinai, S. et al.","AdaLead: a simple and robust adaptive greedy search algorithm for sequence design","Preprint, arXiv:2010.02141","2020","https://arxiv.org/abs/2010.02141","primer","mid","PrimeGen 拿 LLM 与 GA、AdaLead、Greedy 比较 panel 优化。你做染料×尺寸道分配优化时可沿用这组 baseline。"],
+    [61,"Goldberg, D. E.","Genetic Algorithms in Search, Optimization and Machine Learning","Addison Wesley","1989","","primer","mid","遗传算法经典教材，作为优化 baseline 的引用。"],
+    [62,"ARTIC","hCoV-2019/nCoV-2019 Version 3 Amplicon Set","ARTIC Network","2020","https://artic.network/resources/ncov/ncov-amplicon-v3.pdf","tngs","low"],
+    [63,"ARTIC","ARTIC v5.3.2","GitHub: quick-lab/SARS-CoV-2","","https://github.com/quick-lab/SARS-CoV-2/blob/main/400/v5.3.2_400/pooling","tngs","low"],
+    [64,"Quick, J. et al.","Multiplex PCR method for MinION and Illumina sequencing of Zika and other virus genomes directly from clinical samples","Nat. Protoc. 12, 1261–1276","2017","doi:10.1038/nprot.2017.066","tngs","low"],
+    [65,"Edwards, J. G. et al.","Expanded carrier screening in reproductive medicine—points to consider: a joint statement of the American College of Medical Genetics and Genomics, American College of Obstetricians and Gynecologists, National Society of Genetic Counselors, Perinatal Quality Foundation, and Society for Maternal-Fetal Medicine","Obstet. Gynecol. 125, 653–662","2015","doi:10.1097/AOG.0000000000000666","repro","high","全文唯一的生殖遗传线索：PrimeGen 做了一个 35 基因的扩展携带者筛查 panel。你的 PGT-M 处在同一条临床链条的下游，写新颖性时要提到。"],
+    [66,"Goldberg, J. D., Pierson, S. & Johansen Taber, K.","Expanded carrier screening: what conditions should we screen for?","Prenat. Diagn. 43, 496–505","2023","doi:10.1002/pd.6306","repro","high","同上，讨论 ECS 应筛哪些疾病。"],
+    [67,"Cabibbe, A. M. et al.","Application of targeted next-generation sequencing assay on a portable sequencing platform for culture-free detection of drug-resistant tuberculosis from clinical samples","J. Clin. Microbiol. 58","2020","doi:10.1128/JCM.00632-20","tngs","low"],
+    [68,"Dookie, N., Khan, A., Padayatchi, N. & Naidoo, K.","Application of next generation sequencing for diagnosis and clinical management of drug-resistant tuberculosis: updates on recent developments in the field","Front. Microbiol. 13, 775030","2022","doi:10.3389/fmicb.2022.775030","tngs","low"],
+    [69,"WHO","Catalogue of Mutations in Mycobacterium tuberculosis Complex and Their Association with Drug Resistance","World Health Organization","2021","https://www.who.int/publications/i/item/9789240028173","tngs","low"],
+    [70,"Butler, W. R. & Guthertz, L. S.","Mycolic acid analysis by high-performance liquid chromatography for identification of Mycobacterium species","Clin. Microbiol. Rev. 14, 704–726","2001","doi:10.1128/CMR.14.4.704-726.2001","tngs","low"],
+    [71,"Ni, G. et al.","Novel multiplexed amplicon-based sequencing to quantify SARS-CoV-2 RNA from wastewater","Environ. Sci. Technol. Lett. 8, 683–690","2021","doi:10.1021/acs.estlett.1c00408","tngs","low"],
+    [72,"Vanella, R., Kovacevic, G., Doffini, V., de Santaella, J. F. & Nash, M. A.","High-throughput screening, next generation sequencing and machine learning: advanced methods in enzyme engineering","Chem. Commun. 58, 2455–2467","2022","doi:10.1039/D1CC04635G","protein","low"],
+    [73,"Nakatsu, T. et al.","Structural basis for the spectral difference in luciferase bioluminescence","Nature 440, 372–376","2006","doi:10.1038/nature04542","protein","low"],
+    [74,"Hashimoto, H. et al.","Crystal structure of DNA polymerase from hyperthermophilic archaeon Pyrococcus kodakaraensis KOD1","J. Mol. Biol. 306, 469–477","2001","doi:10.1006/jmbi.2000.4403","protein","low"],
+    [75,"Lunde, B. M., Magler, I. & Meinhart, A.","Crystal structures of the Cid1 poly (U) polymerase reveal the mechanism for UTP selectivity","Nucleic Acids Res. 40, 9815–9824","2012","doi:10.1093/nar/gks740","protein","low"],
+    [76,"Lu, X. et al.","Enzymatic DNA synthesis by engineering terminal deoxynucleotidyl transferase","ACS Catal. 12, 2988–2997","2022","doi:10.1021/acscatal.1c04879","protein","low"],
+    [77,"MGI","MGI AlphaTool","mgi-tech.com","2024","https://www.mgi-tech.com/647","lab","low"],
+    [78,"Khot, T. et al.","Decomposed prompting: a modular approach for solving complex tasks","ICLR 2023","2023","","llm","low"],
+    [79,"Li, C. et al.","LLaVA-Med: training a large language-and-vision assistant for biomedicine in one day","Adv. Neural Inf. Process. Syst. 36, 28541–28564","2023","","vlm","mid","生物医学 VLM。若你的胶图或 CE 图像判读改用 VLM，可作对照。"],
+    [80,"NVIDIA","Jetson Nano","developer.nvidia.com","2019","https://developer.nvidia.com/embedded/jetson-nano","vlm","low"],
+    [81,"Taymans, W., Baker, S., Wingo, A., Bultje, R. S. & Kost, S.","GStreamer application development manual (1.2.3)","gstreamer.freedesktop.org","2013","https://gstreamer.freedesktop.org/","vlm","low"],
+    [82,"Hong, Y. et al.","3D-LLM: injecting the 3D world into large language models","Adv. Neural Inf. Process. Syst. 36, 20482–20494","2023","","vlm","low"],
+    [83,"Wang, P. et al.","Qwen2-VL: enhancing vision-language model's perception of the world at any resolution","Preprint, arXiv:2409.12191","2024","https://arxiv.org/abs/2409.12191","vlm","mid","开源 VLM。胶图或 CE 图像判读若微调开源 VLM，可参考。"],
+    [84,"Hu, E. J. et al.","LoRA: low-rank adaptation of large language models","ICLR 2022","2022","","vlm","low"],
+    [85,"Yao, S. et al.","Tree of thoughts: deliberate problem solving with large language models","Adv. Neural Inf. Process. Syst. 36, 11809–11822","2023","","llm","low"],
+    [86,"Zelikman, E. et al.","Quiet-STaR: language models can teach themselves to think before speaking","Preprint, arXiv:2403.09629","2024","https://arxiv.org/abs/2403.09629","llm","low"],
+    [87,"Liu, Z. et al.","Inference-time scaling for generalist reward modeling","Preprint, arXiv:2504.02495","2025","https://arxiv.org/abs/2504.02495","llm","low"],
+    [88,"Frankish, A. et al.","GENCODE: reference annotation for the human and mouse genomes in 2023","Nucleic Acids Res. 51, D942–D949","2023","doi:10.1093/nar/gkac1071","db","mid","基因坐标与外显子注释的标准引用，PKD1 坐标锚定可引。"],
+    [89,"Wright, C. F., FitzPatrick, D. R., Ware, J. S., Rehm, H. L. & Firth, H. V.","Importance of adopting standardized MANE transcripts in clinical reporting","Genet. Med. 25, 100331","2023","doi:10.1016/j.gim.2022.10.013","db","mid","MANE 转录本在临床报告中的标准化。"],
+    [90,"Morales, J. et al.","A joint NCBI and EMBL-EBI transcript set for clinical genomics and research","Nature 604, 310–315","2022","doi:10.1038/s41586-022-04558-8","db","mid","MANE 转录本集的原始文章。"],
+    [91,"NCBI Virus","SARS-CoV-2 Variants Overview","NCBI Virus, 2004–2024","","https://www.ncbi.nlm.nih.gov/activ","db","low"],
+    [92,"Katoh, K., Misawa, K., Kuma, K. I. & Miyata, T.","MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform","Nucleic Acids Res. 30, 3059–3066","2002","doi:10.1093/nar/gkf436","db","low"],
+    [93,"Abdin, M. et al.","Phi-3 technical report: a highly capable language model locally on your phone","Preprint, arXiv:2404.14219","2024","https://arxiv.org/abs/2404.14219","vlm","low"],
+    [94,"Yao, Y. et al.","MiniCPM-V: a GPT-4V level MLLM on your phone","Preprint, arXiv:2408.01800","2024","https://arxiv.org/abs/2408.01800","vlm","low"],
+    [95,"Hui, T.","Gene data from Clinvar","figshare","2025","doi:10.6084/m9.figshare.28876808.v4","data","low"],
+    [96,"Hui, T.","Species identification data from NCBI","figshare","2025","doi:10.6084/m9.figshare.28877087.v1","data","low"],
+    [97,"Hui, T.","PrimeGen Figs. 2–4 Source Data","figshare","2025","doi:10.6084/m9.figshare.28876844.v1","data","mid","Fig. 2–4 的源数据，可复核它的评估指标和统计口径。"],
+    [98,"melobio","melobio/PrimeGen: V1.0.1","Zenodo","2025","doi:10.5281/zenodo.15279353","data","high","代码仓库（GPLv3）。可参考 primer agent 的实现；若直接复用进你的平台，衍生代码需按 GPLv3 开源。仓库：github.com/melobio/PrimeGen"]
+  ];
+
+  var REL_RANK = { high: 3, mid: 2, low: 1 };
+  var state = { theme: "all", rel: "all", view: "num", q: "" };
+  try {
+    var saved = JSON.parse(localStorage.getItem("primegen-refs-state") || "null");
+    if (saved && typeof saved === "object") {
+      if (saved.theme) state.theme = saved.theme;
+      if (saved.rel) state.rel = saved.rel;
+      if (saved.view) state.view = saved.view;
+    }
+  } catch (e) {}
+  function save() {
+    try { localStorage.setItem("primegen-refs-state", JSON.stringify({ theme: state.theme, rel: state.rel, view: state.view })); } catch (e) {}
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function linkFor(r) {
+    var l = r[5];
+    if (l && l.indexOf("doi:") === 0) {
+      var d = l.slice(4);
+      return { href: "https://doi.org/" + d, label: "doi:" + d };
+    }
+    if (l) return { href: l, label: l.replace(/^https?:\/\//, "").replace(/\/$/, "") };
+    return { href: "https://scholar.google.com/scholar?q=" + encodeURIComponent('"' + r[2] + '"'), label: "Google Scholar 检索" };
+  }
+
+  // facts strip
+  var counts = { high: 0, mid: 0, low: 0 };
+  R.forEach(function (r) { counts[r[7]]++; });
+  document.getElementById("facts").innerHTML =
+    "<span><b>" + R.length + "</b> 篇</span>" +
+    "<span>高相关 <b>" + counts.high + "</b></span>" +
+    "<span>中相关 <b>" + counts.mid + "</b></span>" +
+    "<span>涉及 STR / 微卫星 / CE <b>0</b></span>";
+
+  // theme buttons
+  var themesEl = document.getElementById("themes");
+  function themeCount(key) {
+    return R.filter(function (r) { return key === "all" || r[6] === key; }).length;
+  }
+  var themeList = [["all", "全部主题"]].concat(THEMES);
+  themesEl.innerHTML = themeList.map(function (t) {
+    return '<button type="button" class="theme-btn" id="theme-' + t[0] + '" data-theme-key="' + t[0] + '" aria-pressed="false"><span>' +
+      esc(t[1]) + '</span><span class="n">' + themeCount(t[0]) + "</span></button>";
+  }).join("");
+
+  function matches(r) {
+    if (state.theme !== "all" && r[6] !== state.theme) return false;
+    if (state.rel === "high" && r[7] !== "high") return false;
+    if (state.rel === "mid" && REL_RANK[r[7]] < 2) return false;
+    var q = state.q.trim().toLowerCase();
+    if (!q) return true;
+    if (/^\d+$/.test(q)) return String(r[0]) === q || (r[1] + r[2] + r[3]).toLowerCase().indexOf(q) !== -1;
+    var hay = (r[1] + " " + r[2] + " " + r[3] + " " + r[4] + " " + (r[8] || "") + " " + THEME_NAME[r[6]]).toLowerCase();
+    return q.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
+  }
+
+  function dots(rel) {
+    var n = REL_RANK[rel];
+    var label = rel === "high" ? "高相关" : rel === "mid" ? "中相关" : "低相关";
+    var h = '<span class="rel" title="' + label + '" aria-label="' + label + '">';
+    for (var i = 1; i <= 3; i++) h += '<i class="dot' + (i <= n ? " on" : "") + '"></i>';
+    return h + "</span>";
+  }
+
+  function rowHTML(r) {
+    var l = linkFor(r);
+    var note = r[8] ? '<div class="note"><b>对你的课题</b>' + esc(r[8]) + "</div>" : "";
+    var year = r[4] ? " (" + esc(r[4]) + ")" : "";
+    return '<article class="ref' + (r[7] === "high" ? " hi" : "") + '">' +
+      '<div class="num">[' + r[0] + "]</div>" +
+      '<div class="body">' +
+        '<div class="title">' + esc(r[2]) + "</div>" +
+        '<div class="meta">' + esc(r[1]) + ' · <span class="venue">' + esc(r[3]) + "</span>" + year + "</div>" +
+        note +
+        '<div class="links"><a href="' + esc(l.href) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a><span class="tag">' + esc(THEME_NAME[r[6]]) + "</span></div>" +
+      "</div>" +
+      dots(r[7]) +
+    "</article>";
+  }
+
+  var listEl = document.getElementById("list");
+  var statusEl = document.getElementById("status");
+  var current = [];
+
+  function render() {
+    current = R.filter(matches);
+    Array.prototype.forEach.call(themesEl.querySelectorAll(".theme-btn"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-theme-key") === state.theme ? "true" : "false");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#relSeg button"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-rel") === state.rel ? "true" : "false");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#viewSeg button"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-view") === state.view ? "true" : "false");
+    });
+
+    statusEl.textContent = "显示 " + current.length + " / " + R.length + " 篇";
+
+    if (!current.length) {
+      listEl.innerHTML = '<div class="empty">没有匹配的文献。换个关键词，或清除筛选。<br><button class="tool" type="button" id="clearBtn">清除全部筛选</button></div>';
+      document.getElementById("clearBtn").addEventListener("click", function () {
+        state.theme = "all"; state.rel = "all"; state.q = "";
+        document.getElementById("q").value = "";
+        save(); render();
+      });
+      return;
+    }
+
+    if (state.view === "group") {
+      var html = "";
+      THEMES.forEach(function (t) {
+        var rows = current.filter(function (r) { return r[6] === t[0]; });
+        if (!rows.length) return;
+        html += '<div class="group-head"><span>' + esc(t[1]) + '</span><span class="n">' + rows.length + " 篇</span></div>";
+        html += rows.map(rowHTML).join("");
+      });
+      listEl.innerHTML = html;
+    } else {
+      listEl.innerHTML = current.map(rowHTML).join("");
+    }
+  }
+
+  themesEl.addEventListener("click", function (e) {
+    var b = e.target.closest(".theme-btn");
+    if (!b) return;
+    state.theme = b.getAttribute("data-theme-key");
+    save(); render();
+  });
+  document.getElementById("relSeg").addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    state.rel = b.getAttribute("data-rel");
+    save(); render();
+  });
+  document.getElementById("viewSeg").addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    state.view = b.getAttribute("data-view");
+    save(); render();
+  });
+  document.getElementById("q").addEventListener("input", function (e) {
+    state.q = e.target.value;
+    render();
+  });
+
+  function plainText() {
+    return current.map(function (r) {
+      var l = linkFor(r);
+      var link = r[5] ? " " + (r[5].indexOf("doi:") === 0 ? "https://doi.org/" + r[5].slice(4) : r[5]) : "";
+      return "[" + r[0] + "] " + r[1] + " " + r[2] + ". " + r[3] + (r[4] ? " (" + r[4] + ")" : "") + "." + link;
+    }).join("\n");
+  }
+  var copyBtn = document.getElementById("copyBtn");
+  copyBtn.addEventListener("click", function () {
+    var text = plainText();
+    function done(msg) {
+      copyBtn.textContent = msg;
+      setTimeout(function () { copyBtn.textContent = "复制当前列表"; }, 1800);
+    }
+    function fallback() {
+      var ta = document.getElementById("copyFallback");
+      ta.value = text;
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      done(ok ? "已复制 " + current.length + " 条" : "请按 Ctrl/⌘+C 复制");
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done("已复制 " + current.length + " 条"); }, fallback);
+      } else { fallback(); }
+    } catch (e) { fallback(); }
+  });
+
+  render();
+})();
+</script>
+
+</body></html>
