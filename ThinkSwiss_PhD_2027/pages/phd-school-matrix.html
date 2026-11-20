@@ -1,0 +1,291 @@
+<title>瑞士·KI 申博选校表</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: single reading column; scoring panel first, then fact matrix, timeline, checklist */
+:root{
+  --bg:#f6f7f6; --surface:#ffffff; --fg:#17201d; --muted:#5b6964; --line:#d9dfdc;
+  --accent:#0f6b5c; --accent-soft:#dcefea; --warn:#a15c00; --warn-soft:#fbefdc;
+  --eth:#1f5fa8; --epfl:#b0312b; --uzh:#2f7d46; --ki:#6b3fa0;
+  --f-display:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;
+  --f-body:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#18201d; --fg:#e4ebe8; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17;
+  --eth:#6fa6e8; --epfl:#ec7a72; --uzh:#6cc287; --ki:#b493e0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#18201d; --fg:#e4ebe8; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17;
+  --eth:#6fa6e8; --epfl:#ec7a72; --uzh:#6cc287; --ki:#b493e0; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+h1{font-family:var(--f-display);font-size:clamp(26px,4vw,36px);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-family:var(--f-display);font-size:20px;margin:0 0 4px;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:68ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);letter-spacing:.02em}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+section>p.lead{color:var(--muted);margin:0 0 16px;max-width:70ch}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+tr:last-child td{border-bottom:0}
+thead th{font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500;background:var(--bg);position:sticky;top:0}
+th.rowh{font-weight:500;color:var(--muted);white-space:nowrap;width:120px;font-size:13px}
+.sch{font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--fg);letter-spacing:0}
+.sch i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.cny{font-family:var(--f-mono);font-weight:600;color:var(--accent)}
+.flag{color:var(--warn);font-size:12px}
+/* scoring */
+.score td,.score th{vertical-align:middle}
+.score input[type=range]{width:110px;accent-color:var(--accent)}
+.score select{font:inherit;font-family:var(--f-mono);padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+.score select:focus-visible,.score input:focus-visible,button:focus-visible,.check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wv{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:inline-block;width:3ch;text-align:right}
+.crit small{display:block;color:var(--muted);font-size:12px;line-height:1.4}
+tfoot td{background:var(--bg);font-weight:700}
+.bar{height:6px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:3px}
+.rank{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;font-size:13px;color:var(--muted)}
+button{font:inherit;font-size:13px;padding:5px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+/* route callout */
+.route{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.route div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.route b{font-family:var(--f-display)}
+.route p{margin:6px 0 0;color:var(--muted);font-size:14px}
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tl .when{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:2px}
+.tl .what{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tl .key .when{color:var(--accent);font-weight:600}
+.tag{font-family:var(--f-mono);font-size:11px;padding:1px 6px;border-radius:4px;margin-right:6px;color:var(--surface);vertical-align:1px}
+.t-ts{background:var(--accent)} .t-eth{background:var(--eth)} .t-epfl{background:var(--epfl)} .t-uzh{background:var(--uzh)} .t-ki{background:var(--ki)} .t-lsz{background:var(--muted)}
+/* checklist */
+.check{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 24px}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:4px 0}
+.check input{margin-top:5px;accent-color:var(--accent)}
+.check label:has(input:checked) span{color:var(--muted);text-decoration:line-through}
+.src{font-size:13px;color:var(--muted);columns:2 280px;column-gap:32px;padding-left:18px;margin:0}
+.src a{color:var(--accent);word-break:break-all}
+@media (max-width:560px){.tl li{grid-template-columns:1fr;gap:4px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>瑞士 · KI 申博选校表</h1>
+  <p class="sub">NUS 硕士（2027 年 7 月毕业），背景为 PKD1 / ADPKD 的 PGT-M STR 连锁分析。目标是 2027 年秋到 2028 年初入学，并利用 2027 年 5–7 月的 ThinkSwiss 访问作为跳板。</p>
+  <div class="meta">
+    <span class="chip">整理于 2026-11-20</span>
+    <span class="chip">汇率 1 CHF ≈ 8.0 元 · 1 SEK ≈ 0.67 元</span>
+    <span class="chip warn">数据来自网络搜索摘要，投递前请到官网核实</span>
+  </div>
+</header>
+
+<section>
+  <h2>加权评分</h2>
+  <p class="lead">初始分值是我根据你的背景给的参考分，可以直接改。权重和分数会保存在你自己的浏览器里，总分已换算成百分制。</p>
+  <div class="scroll">
+    <table class="score" id="score">
+      <thead><tr><th>维度</th><th>权重</th>
+        <th><span class="sch"><i style="background:var(--eth)"></i>ETH</span></th>
+        <th><span class="sch"><i style="background:var(--epfl)"></i>EPFL</span></th>
+        <th><span class="sch"><i style="background:var(--uzh)"></i>UZH</span></th>
+        <th><span class="sch"><i style="background:var(--ki)"></i>KI</span></th></tr></thead>
+      <tbody id="score-body"></tbody>
+      <tfoot><tr><td>加权总分</td><td></td><td id="t0"></td><td id="t1"></td><td id="t2"></td><td id="t3"></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="tools"><button type="button" id="reset">恢复初始分值</button><span id="saved"></span></div>
+</section>
+
+<section>
+  <h2>LSZGS 是进入 ETH / UZH 的途径</h2>
+  <p class="lead">LSZGS 由 ETH 和 UZH 联合开办。录取后按导师所在的学校注册和发工资，所以它不单列为一个去处。进入 ETH 或 UZH 一共有三条路：</p>
+  <div class="route">
+    <div><b>导师直接招人</b><p>ETH 和 UZH 都适用，全年滚动。ThinkSwiss 访问期间当面谈，录取把握最大。</p></div>
+    <div><b>LSZGS 统一招生</b><p>5 月 1 日和 11 月 1 日两轮。2027 年 5 月这一轮的面试在 6 月下旬和 7 月中旬，正好在你访问期间。</p></div>
+    <div><b>分子生命科学等项目的 Track 2</b><p>已经有导师的人可以直接加入项目。具体规则以各项目页面为准。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>四个去处的事实对比</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th></th>
+        <th><span class="sch"><i style="background:var(--eth)"></i>ETH Zurich</span></th>
+        <th><span class="sch"><i style="background:var(--epfl)"></i>EPFL</span></th>
+        <th><span class="sch"><i style="background:var(--uzh)"></i>UZH</span></th>
+        <th><span class="sch"><i style="background:var(--ki)"></i>Karolinska (KI)</span></th></tr></thead>
+      <tbody>
+        <tr><th class="rowh">QS 2026</th><td class="num">综合第 7</td><td class="num">综合第 22</td><td class="num">综合第 100</td><td class="num">生命科学与医学学科第 11<br>医学学科第 10</td></tr>
+        <tr><th class="rowh">城市</th><td>苏黎世（D-BSSE 在巴塞尔）</td><td>洛桑</td><td>苏黎世</td><td>斯德哥尔摩</td></tr>
+        <tr><th class="rowh">学科特点</th><td>工程、计算、基础生命科学；临床研究依靠 UZH 和苏黎世大学医院</td><td>生命科学学院、生物工程、微流控和诊断技术</td><td>医学院加苏黎世大学医院；医学遗传、肾脏、基因编辑</td><td>纯医学院；临床遗传、生殖医学，背靠卡罗林斯卡大学医院</td></tr>
+        <tr><th class="rowh">和 PGT-M 背景的契合点</th><td>单细胞、计算、基因编辑类技术课题</td><td>诊断平台、微流控等工程类课题</td><td>瑞士最贴近临床遗传和肾病的一家</td><td>整体最贴近临床遗传和生殖医学</td></tr>
+        <tr><th class="rowh">招生方式</th><td>导师直接招人，或经 LSZGS</td><td>博士学院统一招生：网上申请、Zoom 初筛、Hiring Days</td><td>先找导师，再走院系和中央录取，或经 LSZGS</td><td>Varbi 系统上的带薪职位，每个职位单独截止</td></tr>
+        <tr><th class="rowh">截止日期</th><td>全年滚动<br>LSZGS：5 月 1 日 / 11 月 1 日</td><td class="num">3 月 31 日 / 11 月 1 日<br>Hiring Days 在 1 月和 6 月</td><td>院系各自规定<br>LSZGS：5 月 1 日 / 11 月 1 日</td><td>职位发布后约 3–4 周</td></tr>
+        <tr><th class="rowh">推荐信</th><td>导师要求；LSZGS 需要多封</td><td>3 封，必须在截止前提交</td><td>导师要求；LSZGS 需要多封</td><td>按职位要求，常见 2 封或推荐人联系方式</td></tr>
+        <tr><th class="rowh">学历和语言</th><td>硕士；外国学位可能被要求补课或参加资格考试 <span class="flag">需核实</span></td><td>硕士；英语</td><td>硕士，学校须为国家认可的大学</td><td>硕士，或 240 学分且含 60 高级阶段学分；英语达到瑞典英语 6 级，NUS 学位能否免考 <span class="flag">需核实</span></td></tr>
+        <tr><th class="rowh">年限</th><td>约 4 年</td><td>约 4 年</td><td>约 3–4 年</td><td>全职 4 年（240 学分）</td></tr>
+        <tr><th class="rowh">税前年薪（原币）</th><td class="num">CHF 53,500–73,100<br><span class="flag">第三方数据，按院系分档</span></td><td class="num">CHF 55,225<br>（官方，2026 年起）</td><td class="num">约 CHF 50,000–54,000<br>（SNSF 最低 50,000）</td><td class="num">每月 SEK 32,100<br>满 12 个月 +500，答辩后 +1,300 以上</td></tr>
+        <tr><th class="rowh">折合人民币/年</th><td class="cny">约 43–58 万</td><td class="cny">约 44 万</td><td class="cny">约 40–43 万</td><td class="cny">约 26 万</td></tr>
+        <tr><th class="rowh">每月到手</th><td class="num">约 CHF 3,760–5,020</td><td class="num">约 CHF 3,750</td><td class="num">约 CHF 3,500</td><td class="num">约 SEK 26,185（约 1.75 万元）</td></tr>
+        <tr><th class="rowh">和 ThinkSwiss 的结合</th><td>可以结合，但需要办 Project Mobility，而且最短 91 天，和 ThinkSwiss 的 90 天上限冲突 <span class="flag">需核实</span></td><td>可以结合；访问身份的要求 <span class="flag">需核实</span></td><td>可以结合，手续最简单</td><td>不在 ThinkSwiss 资助范围内，要单独申请</td></tr>
+        <tr><th class="rowh">定位</th><td><b>首选</b>：可以通过 ThinkSwiss 访问打通</td><td><b>次选</b>：Hiring Days 和访问时间重合</td><td><b>首选</b>：和 ETH 共用 LSZGS</td><td><b>并行</b>：只投高度匹配的职位</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>整合时间线</h2>
+  <p class="lead">按月份排列，标签表示每件事对应哪个申请。</p>
+  <ol class="tl">
+    <li><span class="when">2026-11 至 12-19</span><div class="what">
+      <span><span class="tag t-ts">ThinkSwiss</span>发套磁邮件，同时说明读博意向；12 月 19 日前争取拿到导师的口头同意</span>
+      <span><span class="tag t-lsz">全部</span>确定 3 位推荐人，提前告诉他们 3–5 月会有几轮推荐信请求</span>
+      <span><span class="tag t-ki">KI</span>在 Varbi 设置职位提醒；确认 NUS 学位能否免语言成绩</span></div></li>
+    <li class="key"><span class="when">2027-01</span><div class="what">
+      <span><span class="tag t-ts">ThinkSwiss</span>拿到东道主导师的接收函，1 月 25 日前提交申请</span>
+      <span><span class="tag t-eth">ETH</span>如果东道主在 ETH，同时提交 Project Mobility 申请</span>
+      <span><span class="tag t-lsz">全部</span>写一份通用的读博研究陈述</span></div></li>
+    <li><span class="when">2027-02</span><div class="what">
+      <span><span class="tag t-ts">ThinkSwiss</span>2 月 26 日公布结果，3 月 15 日前确认接受</span>
+      <span><span class="tag t-ki">KI</span>筛选并投递合适的职位</span></div></li>
+    <li class="key"><span class="when">2027-03-31</span><div class="what">
+      <span><span class="tag t-epfl">EPFL</span>提交 EDBB 或 EDMS 申请，3 封推荐信截止前到位</span>
+      <span><span class="tag t-ts">ThinkSwiss</span>办签证（如需）、保险，找住处</span></div></li>
+    <li class="key"><span class="when">2027-05-01</span><div class="what">
+      <span><span class="tag t-lsz">LSZGS</span>提交申请，把东道主实验室列为首选，可以请东道主导师表态支持</span>
+      <span><span class="tag t-ts">ThinkSwiss</span>到瑞士开始访问</span></div></li>
+    <li><span class="when">2027-06</span><div class="what">
+      <span><span class="tag t-lsz">LSZGS</span>6 月 22–25 日网络面试</span>
+      <span><span class="tag t-epfl">EPFL</span>Hiring Days（如果进入面试），从苏黎世坐火车约 2 小时</span>
+      <span><span class="tag t-eth">ETH</span><span class="tag t-uzh">UZH</span>和东道主导师正式谈读博，按导师直接招人的流程申请</span>
+      <span><span class="tag t-ki">KI</span>远程面试</span></div></li>
+    <li class="key"><span class="when">2027-07</span><div class="what">
+      <span><span class="tag t-lsz">LSZGS</span>7 月 13–16 日到校面试，你人就在苏黎世</span>
+      <span><span class="tag t-ts">ThinkSwiss</span>访问结束，NUS 毕业，比较各家录取后做决定</span></div></li>
+    <li><span class="when">2027-08 至 10</span><div class="what">
+      <span><span class="tag t-eth">ETH</span><span class="tag t-uzh">UZH</span>如果是导师直接录取，最快秋季入学；读博需要重新申请瑞士 B 类居留许可</span>
+      <span><span class="tag t-ki">KI</span>入学</span></div></li>
+    <li><span class="when">2027-11-01</span><div class="what">
+      <span><span class="tag t-lsz">LSZGS</span><span class="tag t-epfl">EPFL</span>备选：如果都没成，申请这一轮，2028 年初入学</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <h2>待核实清单</h2>
+  <p class="lead">勾选状态保存在你自己的浏览器里。</p>
+  <div class="check" id="check"></div>
+</section>
+
+<section>
+  <h2>来源</h2>
+  <ul class="src">
+    <li><a href="https://ethz.ch/en/news-and-events/eth-news/news/2025/06/qs-rankings-eth-zurich-secures-7th-place-once-again.html" target="_blank" rel="noopener">ETH QS 2026 第 7</a></li>
+    <li><a href="https://republic-of-innovation.ch/classement-qs-2026-eth-zurich-et-epfl-brillent-au-sommet-de-lexcellence-academique/" target="_blank" rel="noopener">瑞士高校 QS 2026 排名</a></li>
+    <li><a href="https://ki.se/en/about-ki/facts-about-karolinska-institutet/ranking-and-karolinska-institutet" target="_blank" rel="noopener">KI 排名</a></li>
+    <li><a href="https://epfl.ch/education/phd/doctoral-studies-structure/doctoral-students-salary" target="_blank" rel="noopener">EPFL 官方博士薪资</a></li>
+    <li><a href="https://www.edusailabroad.com/articles/eth-zurich-phd-salary-rates/" target="_blank" rel="noopener">ETH 薪资分档（第三方）</a></li>
+    <li><a href="https://snf.ch/en/kHunysxdKHpyUL8s/news/salary-increase-for-doctoral-students" target="_blank" rel="noopener">SNSF 博士工资上调</a></li>
+    <li><a href="https://staff.uzh.ch/dam/jcr:1061c8bb-5bd5-49d2-a985-4e0f4f591981/ESKAS%20PhD%20Candidates_Factsheet_EN_from%2020250101.pdf" target="_blank" rel="noopener">UZH 薪资说明</a></li>
+    <li><a href="https://staff.ki.se/media/27475/download" target="_blank" rel="noopener">KI 博士生地方集体协议</a></li>
+    <li><a href="https://medarbetare.ki.se/media/697/download" target="_blank" rel="noopener">KI 博士生薪资速查</a></li>
+    <li><a href="https://www.lifescience-graduateschool.uzh.ch/en/application/application-process.html" target="_blank" rel="noopener">LSZGS 申请流程</a></li>
+    <li><a href="https://www.mls-phd.uzh.ch/en/Admisson-and-Application/PhD-application-Track-1.html" target="_blank" rel="noopener">分子生命科学项目 Track 1</a></li>
+    <li><a href="https://ethz.ch/content/dam/ethz/common/docs/publications/education/doctorate_brochure.pdf" target="_blank" rel="noopener">ETH 博士手册</a></li>
+    <li><a href="https://ethz.ch/en/studies/non-degree-courses/project.html" target="_blank" rel="noopener">ETH Project Mobility</a></li>
+    <li><a href="https://uzh.ch/en/studies/application/doctoralstudies.html" target="_blank" rel="noopener">UZH 博士申请</a></li>
+    <li><a href="https://www.epfl.ch/education/admission/admission-2/phd-admission-criteria-and-application/application-deadlines/" target="_blank" rel="noopener">EPFL 申请截止日期</a></li>
+    <li><a href="https://www.epfl.ch/education/phd/edbb-biotechnology-and-bioengineering/edbb-for-applicants/" target="_blank" rel="noopener">EPFL EDBB</a></li>
+    <li><a href="https://www.epfl.ch/education/phd/edms-molecular-life-sciences/edms-how-to-apply/" target="_blank" rel="noopener">EPFL EDMS</a></li>
+    <li><a href="https://education.ki.se/doctoral-education/entry-requirements-to-doctoral-education-at-karolinska-institutet-ki" target="_blank" rel="noopener">KI 博士入学要求</a></li>
+    <li><a href="https://www.schweiz-singapur.eda.admin.ch/en/thinkswiss-2026" target="_blank" rel="noopener">ThinkSwiss 2026–2027（新加坡和文莱）</a></li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var schools=["eth","epfl","uzh","ki"];
+  var colors=["var(--eth)","var(--epfl)","var(--uzh)","var(--ki)"];
+  var crit=[
+    {k:"fit",n:"课题契合度",d:"和 PGT-M、临床遗传背景的贴合程度",w:25,s:[3,3,4,5]},
+    {k:"admit",n:"录取把握",d:"算上 ThinkSwiss 访问带来的优势",w:20,s:[4,3,4,3]},
+    {k:"rep",n:"学术声誉",d:"QS 综合排名或学科排名",w:15,s:[5,4,3,4]},
+    {k:"pay",n:"薪资和结余",d:"扣除生活成本后能存下多少",w:10,s:[4,4,3,2]},
+    {k:"clin",n:"临床资源",d:"附属医院、遗传门诊、样本来源",w:10,s:[2,3,5,5]},
+    {k:"time",n:"时间线衔接",d:"和 2027 年 5–7 月访问的配合程度",w:10,s:[5,4,5,3]},
+    {k:"life",n:"手续和生活",d:"签证、居留许可、Project Mobility 等手续",w:10,s:[3,3,4,3]}
+  ];
+  var KEY="phd-matrix-v1",CKEY="phd-matrix-check-v1";
+  var state=load(KEY)||defaults();
+  function defaults(){var o={};crit.forEach(function(c){o[c.k]={w:c.w,s:c.s.slice()}});return o}
+  function load(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+  var body=document.getElementById("score-body");
+  function build(){
+    body.innerHTML="";
+    crit.forEach(function(c){
+      var st=state[c.k]||{w:c.w,s:c.s.slice()};state[c.k]=st;
+      var tr=document.createElement("tr");
+      var h='<td class="crit">'+c.n+'<small>'+c.d+'</small></td>';
+      h+='<td><input type="range" min="0" max="40" step="5" id="w-'+c.k+'" value="'+st.w+'" aria-label="'+c.n+' 权重"> <span class="wv" id="wv-'+c.k+'">'+st.w+'</span></td>';
+      schools.forEach(function(s,i){
+        h+='<td><select id="s-'+c.k+'-'+s+'" aria-label="'+c.n+' '+s.toUpperCase()+'">';
+        for(var v=1;v<=5;v++)h+='<option'+(v===st.s[i]?' selected':'')+'>'+v+'</option>';
+        h+='</select></td>';
+      });
+      tr.innerHTML=h;body.appendChild(tr);
+      document.getElementById("w-"+c.k).addEventListener("input",function(e){st.w=+e.target.value;document.getElementById("wv-"+c.k).textContent=st.w;calc()});
+      schools.forEach(function(s,i){document.getElementById("s-"+c.k+"-"+s).addEventListener("change",function(e){st.s[i]=+e.target.value;calc()})});
+    });
+    calc();
+  }
+  function calc(){
+    var wsum=0,tot=[0,0,0,0];
+    crit.forEach(function(c){var st=state[c.k];wsum+=st.w;st.s.forEach(function(v,i){tot[i]+=st.w*v})});
+    var pct=tot.map(function(t){return wsum?Math.round(t/wsum*20):0});
+    var order=pct.map(function(p,i){return[p,i]}).sort(function(a,b){return b[0]-a[0]});
+    var rank=[];order.forEach(function(o,r){rank[o[1]]=r+1});
+    pct.forEach(function(p,i){
+      document.getElementById("t"+i).innerHTML='<span class="num">'+p+'</span> <span class="rank">第 '+rank[i]+'</span><div class="bar"><span style="width:'+p+'%;background:'+colors[i]+'"></span></div>';
+    });
+    document.getElementById("saved").textContent=save(KEY,state)?"已保存在本浏览器":"";
+  }
+  document.getElementById("reset").addEventListener("click",function(){state=defaults();build()});
+  build();
+
+  var items=[
+    "发邮件向使馆确认 ThinkSwiss 截止日期是否为 2027-01-31，以及是哪个时区",
+    "确认每所大学最多 2 个名额的限制是否仍然有效",
+    "向 NUS 确认学籍的确切终止日期，确保覆盖整个访问期",
+    "向 ETH 确认 Project Mobility 最短 91 天和 ThinkSwiss 90 天上限的冲突怎么处理",
+    "确认东道主导师所在院系的博士薪资档位",
+    "查清 LSZGS 目标项目是否有 Track 2，以及 2027 年 5 月这一轮的面试日期",
+    "确认 EPFL EDMS 的 3 月 31 日截止日期",
+    "向 KI 确认 NUS 学位能否免雅思或托福",
+    "确认 ETH 是否会要求外国硕士学位补课或参加资格考试",
+    "确定 3 位推荐人，并告知他们推荐信的大致时间"
+  ];
+  var done=load(CKEY)||{};
+  var box=document.getElementById("check");
+  items.forEach(function(t,i){
+    var l=document.createElement("label");
+    l.innerHTML='<input type="checkbox" id="c'+i+'"'+(done[i]?' checked':'')+'><span>'+t+'</span>';
+    box.appendChild(l);
+    l.querySelector("input").addEventListener("change",function(e){done[i]=e.target.checked;save(CKEY,done)});
+  });
+})();
+</script>

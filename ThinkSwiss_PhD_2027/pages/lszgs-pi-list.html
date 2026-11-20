@@ -1,0 +1,443 @@
+<title>LSZGS 导师清单</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: alert + summary table first, then one detailed card per PI grouped by tier */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --fg:#16201c; --muted:#5a6863; --line:#d8dfdb;
+  --accent:#0f6b5c; --accent-soft:#dcefea; --warn:#9c5700; --warn-soft:#fbefdc; --crit:#b42318; --crit-soft:#fde8e6;
+  --hi:#0f6b5c; --mid:#9c5700; --lo:#8a8f8c;
+  --f-display:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;
+  --f-body:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#18201d; --fg:#e3eae7; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17; --crit:#f2867a; --crit-soft:#3b1d1a;
+  --hi:#4fbfa8; --mid:#f0a94a; --lo:#7d8a85; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#18201d; --fg:#e3eae7; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17; --crit:#f2867a; --crit-soft:#3b1d1a;
+  --hi:#4fbfa8; --mid:#f0a94a; --lo:#7d8a85; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--f-display);font-size:clamp(26px,4vw,36px);margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-size:20px;margin:0 0 10px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:18px;margin:0}
+.sub{color:var(--muted);margin:6px 0 0;max-width:72ch}
+.alert{background:var(--crit-soft);border-radius:10px;padding:14px 18px;font-size:14px}
+.alert b{color:var(--crit)}
+.note{background:var(--warn-soft);border-radius:10px;padding:12px 16px;font-size:14px}
+.note b{color:var(--warn)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:14px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+tr:last-child td{border-bottom:0}
+thead th{font-size:12px;letter-spacing:.05em;color:var(--muted);font-weight:500;background:var(--bg)}
+td a{color:var(--fg);text-decoration:none;border-bottom:1px dotted var(--muted)}
+td a:hover{color:var(--accent)}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;white-space:nowrap;font-weight:500}
+.p-hi{background:var(--accent-soft);color:var(--hi)}
+.p-mid{background:var(--warn-soft);color:var(--mid)}
+.p-lo{background:var(--line);color:var(--muted)}
+.p-x{background:var(--crit-soft);color:var(--crit)}
+.mono{font-family:var(--f-mono);font-size:13px}
+.tier{display:flex;flex-direction:column;gap:14px}
+.tier-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tier-h p{margin:0;color:var(--muted);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.card-h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.aff{color:var(--muted);font-size:14px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+dl{display:grid;grid-template-columns:110px 1fr;gap:8px 16px;margin:0}
+dt{color:var(--muted);font-size:13px;padding-top:1px}
+dd{margin:0;min-width:0}
+dd ul{margin:0;padding-left:18px}
+.v{color:var(--warn);font-size:12px;white-space:nowrap}
+.hook{background:var(--accent-soft);border-radius:8px;padding:10px 14px;font-size:14px}
+.hook b{color:var(--accent)}
+.excl{font-size:14px}
+.excl li{margin-bottom:4px}
+.src{font-size:13px;color:var(--muted);columns:2 300px;column-gap:32px;padding-left:18px;margin:0}
+.src a{color:var(--accent);word-break:break-all}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font-size:13px;padding:4px 11px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;white-space:nowrap}
+.links a:hover{background:var(--accent-soft)}
+.links a.aux{border-color:var(--line);color:var(--muted)}
+.links a:focus-visible,td a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.home{font-size:12px;margin-left:6px;color:var(--accent)!important;border:0!important}
+@media (max-width:560px){dl{grid-template-columns:1fr;gap:2px 0}dt{margin-top:6px}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>LSZGS 导师清单</h1>
+  <p class="sub">按你的 PGT-M、PKD1 和 STR 连锁分析背景筛选。每位导师列出研究方向、近五年成果、经费、开放职位、和你的关联，以及我对申请成功率的估计。整理于 2026-11-20，信息来自网络搜索摘要，没能逐页读原文。</p>
+</header>
+
+<div class="alert"><b>现在就要核实：BioMed 项目的截止日期。</b>和你最相关的几位导师（Rauch、Devuyst、Bachmann-Gagescu）都在 LSZGS 的 BioMed 博士项目里，但这个项目的截止日期有三种说法：2022 年的项目章程写 <b>12 月 1 日和 7 月 1 日</b>，项目申请页写 5 月 1 日，Devuyst 组的招聘页写"6 月和 12 月"。<b>如果真是 12 月 1 日，那就只剩 11 天。</b>请今天就给 BioMed 项目协调人发邮件问清楚。如果 7 月 1 日也是截止日，它正好落在你的访问期内，可以作为第二次机会。</div>
+
+<div class="note"><b>两条通用规则：</b>① LSZGS 里招博士的导师必须是某个项目的成员，而且要有自己的竞争性经费（SNSF、ERC 等）才能加入。下面标了"成员待核实"的，套磁前先到项目页面的导师名单里确认。② ThinkSwiss 只资助在公立大学或公立研究机构的访问，UZH、ETH 和苏黎世大学医院都符合。</div>
+
+<section>
+  <h2>总览</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>导师</th><th>单位</th><th>LSZGS 项目</th><th>和你的关联</th><th>经费</th><th>开放职位</th><th>成功率（估计）</th></tr></thead>
+      <tbody id="sum"></tbody>
+    </table>
+  </div>
+  <p class="sub" style="font-size:13px">成功率是我综合关联性、组的规模、竞争程度和 ThinkSwiss 访问能带来的优势做的主观判断，不是统计数据。前提是你拿到了 ThinkSwiss 访问机会，并在访问期间表现良好。</p>
+</section>
+
+<div id="tiers" style="display:flex;flex-direction:column;gap:28px"></div>
+
+<section>
+  <h2>没有列入的人选</h2>
+  <ul class="excl">
+    <li><b>Brigitte Leeners（苏黎世大学医院生殖内分泌科主任）：</b>H2R 重点研究项目的共同负责人，但她自己的研究是月经周期、多囊卵巢综合征和子宫内膜异位症，没查到和 PGT 相关的工作。适合作为了解苏黎世生殖医学临床情况的联系人，不作为首选导师。</li>
+    <li><b>Constance Ciaudo（ETH，胚胎干细胞 RNAi）：</b>ETH 的论文库把她的课题组标为"former"，最近的论文停在 2022 年，很可能已经离开 ETH。</li>
+    <li><b>Andrew deMello、Petra Dittrich（ETH，微流控）：</b>和你的技术背景相关，但没查到他们属于任何 LSZGS 项目。如果走 ETH 直接招人的途径，可以重新考虑。</li>
+    <li><b>Barbara Treutlein、Valentina Boeva、Gunnar Rätsch（ETH）：</b>LSZGS 成员身份没查到，研究方向也离 PGT-M 较远。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>建议的套磁顺序</h2>
+  <ol style="margin:0;padding-left:20px">
+    <li><b>第一批（11 月 30 日前）：</b>Rauch、Cavazza、Lienkamp、Baumgartner、Devuyst。按你的精准医疗、PGT-M 和基因诊断方向排序，都在 UZH 或苏黎世大学医院（Cavazza、Lienkamp 的 LSZGS 成员身份需核实），访问手续最简单。</li>
+    <li><b>第二批（12 月 6 日前）：</b>Häberle、Bachmann-Gagescu、Krauthammer、Schwank、Corn。单基因病转化、纤毛病、临床数据和基因编辑方向。</li>
+    <li><b>第三批（视情况）：</b>Baudis、Beerenwinkel、Robinson，适合你想往计算方向发展时联系。</li>
+  </ol>
+</section>
+
+<section>
+  <h2>来源</h2>
+  <ul class="src" id="src"></ul>
+</section>
+</div>
+
+<script>
+(function(){
+var L={hi:["高","p-hi"],mid:["中","p-mid"],lo:["低","p-lo"],na:["未知","p-lo"]};
+var PIS=[
+{tier:"S",id:"rauch",name:"Anita Rauch",aff:"UZH 医学遗传研究所所长",prog:"BioMed（已确认）",progOk:true,
+ dir:"罕见病和发育障碍的致病基因发现、致病机制、基因型与表型的关联；生殖遗传检测方法；二代测序和长读长全基因组测序。",
+ out:["牵头 UZH 临床研究重点项目 Praeclare：通过研究发育障碍的遗传图谱和变异致病性，改进生殖遗传检测","主持瑞士临床级遗传变异解读平台 SwissGenVar","2022 年扩展携带者筛查研究：近亲夫妇中 44% 可检出风险，其他夫妇为 5%","2025–2026 年论文：EIF3A/EIF3B 功能缺失变异、UNC13A 变异与神经发育综合征"],
+ fund:"待确认：Praeclare 官网说 UZH 的临床研究重点项目<b>已经结束</b>，但研究还在继续，所以项目级经费可能已经停了。SwissGenVar 是全国性平台。套磁时一定要问 2027 年有没有博士经费。",fundL:"mid",
+ pos:"团队页面没有公开的博士职位，需要直接询问。",
+ rel:"最高。生殖遗传检测正是 PGT-M 的上游。携带者筛查、变异解读、长读长测序，都能直接接上你的单倍型和连锁分析经验。",relL:"hi",
+ hook:"在 Praeclare 框架下，比较长读长单倍型分析和传统 STR 连锁分析在单基因病 PGT-M 中的表现。",
+ ts:"UZH 和苏黎世大学医院都是公立机构，符合 ThinkSwiss 要求。",
+ rate:"mid",rateTxt:"中：方向完全对口，但组以临床诊断为主，博士名额可能少。所长事务繁忙，可以同时联系组里的高级研究员。"},
+{tier:"S",id:"lienkamp",name:"Soeren Lienkamp",aff:"UZH 解剖研究所，2025 年 1 月升任副教授",prog:"成员待核实（可能在 BioMed 或 MLS）",progOk:false,
+ dir:"遗传性肾病的分子机制。用热带爪蟾（Xenopus tropicalis）加 CRISPR 快速构建多囊肾等囊性肾病模型，并用 AI 自动分析影像。",
+ out:["2021 年 Development：爪蟾多囊肾模型，几天内出现囊肿（和 Loffing 合作）","研究所新闻提到他获得 ERC Proof of Concept 资助","获得 ETH Grant，资助一个新的博士课题：代谢病中的肾损伤，结合 CRISPR 模型、代谢组学和活体成像","此前获得过 ERC Starting Grant 和 SNSF 资助"],
+ fund:"充足：有 ERC、SNSF 资助，还有一个专门为博士课题拿到的 ETH Grant。",fundL:"hi",
+ pos:"上面那个 ETH Grant 资助的博士课题可能还在招人，要尽快问。",
+ rel:"很高。研究对象就是 PKD 这类囊性肾病，基因编辑会用到引物设计和基因分型，这些正是你的技能。",relL:"hi",
+ hook:"用你的 PKD1 引物设计和分型经验，帮组里建立高通量的 CRISPR 编辑效率和基因型鉴定流程。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"hi",rateTxt:"较高：刚升副教授、有新经费、有明确的博士课题。前提是确认他是 LSZGS 项目成员。"},
+{tier:"S",id:"devuyst",name:"Olivier Devuyst",aff:"UZH 生理研究所正教授，兼任比利时鲁汶大学（UCLouvain）肾内科",prog:"BioMed（已确认）",progOk:true,
+ dir:"遗传性肾病和肾小管生理：近端小管的内吞机制、远端肾单位对盐和水的调节；ADPKD、UMOD 相关疾病、胱氨酸病。",
+ out:["2025 年与 Vicente Torres 共同主持首部 KDIGO 国际 ADPKD 诊疗指南，执行摘要发表于 Kidney International","与 Alessandro Luciani 合作的 Nature Communications 论文","共同主持 UZH 罕见病重点研究项目 ITINERARE","参与欧洲 ADPKD 参比中心网络 EuroCYST"],
+ fund:"充足：有欧盟、美国 NIH 资助，2025 年还获得胱氨酸病研究基金会的项目资助。",fundL:"hi",
+ pos:"组网站写明：除非单独发布职位，博士只通过 LSZGS 招收。申请需要求职信、CV、论文列表和 3 位推荐人的联系方式。",
+ rel:"课题高度相关（他是 ADPKD 领域的权威），但组里做的是细胞生理和肾小管生物学，你需要补湿实验方面的技能。",relL:"hi",
+ hook:"讲清楚 ADPKD 的临床诊断（你的 PGT-M）和机制研究（他的组）之间的衔接，例如 PKD1 变异的功能分析。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：大组、知名度高，竞争激烈；而且他的组明确只通过 LSZGS 招人，所以访问期间的表现和面试最关键。"},
+{tier:"S",id:"bachmann",name:"Ruxandra Bachmann-Gagescu",aff:"UZH 分子生命科学研究所，同时在医学遗传研究所",prog:"BioMed（已确认）",progOk:true,
+ dir:"纤毛病（Joubert 综合征等）的遗传学和斑马鱼模型，研究纤毛相关蛋白的功能。",
+ out:["2014–2017 年发现 CSPP1、KIAA0586、ARMC9 等 Joubert 综合征致病基因","2022 年 Frontiers in Genetics 综述：Joubert 综合征的斑马鱼模型","Praeclare 项目的共同负责人之一","2024–2025 年论文没搜到，要到 PubMed 核实"],
+ fund:"不确定：有 Praeclare 项目的支持，其他经费没查到。",fundL:"na",
+ pos:"<b>有一个硕士课题招人</b>（不是博士职位，用户 11 月 20 日提供的招聘海报）：用斑马鱼研究纤毛病，对纤毛病基因突变体做表型分析，开始日期灵活。联系方式 ruxandra.bachmann@imls.uzh.ch。可以问是否接受 3 个月的访问项目，作为 ThinkSwiss 的落脚点。",
+ rel:"高。多囊肾本质上也是一种纤毛病（PKD1 编码的 polycystin-1 定位在初级纤毛上）。再加上她参与 Praeclare，和生殖遗传检测有交集。",relL:"hi",
+ hook:"把 PKD1 放进纤毛病的框架里讲，提出用斑马鱼验证 PKD1 意义未明变异的功能。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：方向契合，但近两年的产出没查到，要先核实组的现状和经费。"},
+{tier:"A",id:"corn",name:"Jacob Corn",aff:"ETH 分子健康科学研究所，基因组生物学教授",prog:"成员待核实（可能在 MLS）",progOk:false,
+ dir:"基因组编辑技术开发、细胞的 DNA 修复机制、细胞器稳态。",
+ out:["2025 年 Nature Biotechnology：抑制 TREX1 能提高难编辑细胞中的同源重组修复效率","Nature Biotechnology：HDR 增强剂 AZD7648 会造成千碱基到兆碱基级的大片段缺失","2025 年 Nature Biotechnology：append editing（用细菌抗噬菌体毒素 DarT2 在 DNA 上添加 ADP-核糖基）","2025 年：在范可尼贫血患者造血干细胞中用碱基编辑恢复功能","Cell：全基因组 ER 自噬筛选"],
+ fund:"非常充足：2025 年获得 ERC Advanced Grant，2019 年牵头 ERC Synergy Grant，另有 NOMIS 基金会资助。",fundL:"hi",
+ pos:"没查到公开的博士职位。",
+ rel:"中等偏高，技术上可以对接。他发现编辑会造成大片段缺失，而检测这种缺失正好可以用 STR 杂合性丢失和单倍型分析，这和你在 PGT-M 里做的是同一套方法。",relL:"mid",
+ hook:"用多重 STR 和单倍型分析，检测基因编辑后的大片段缺失和杂合性丢失。这是你能直接带过去的技能。",
+ ts:"ETH 需要办 Project Mobility，最短 91 天和 ThinkSwiss 90 天上限有冲突，需核实。",
+ rate:"lo",rateTxt:"偏低：顶级课题组，竞争非常激烈；去 ETH 访问的手续也更复杂。"},
+{tier:"A",id:"schwank",name:"Gerald Schwank",aff:"UZH 药理与毒理研究所教授",prog:"成员待核实",progOk:false,
+ dir:"用碱基编辑和先导编辑治疗遗传病；用机器学习和蛋白质工程改进编辑工具；递送系统（脂质纳米颗粒）。",
+ out:["2025 年 9 月 Nature Biomedical Engineering：用原位测序追踪小鼠和猕猴组织中的编辑","2023 年 Nature Biotechnology：预测先导编辑效率的深度学习模型（与 Krauthammer 组合作）","在小鼠中用体内先导编辑治疗 PKU 和瓜氨酸血症","2021 年 Nature Biotechnology：在小鼠和猕猴中用碱基编辑持续降低 LDL 胆固醇","Prime Medicine 公司科学顾问"],
+ fund:"较充足：有产业合作，项目也多。ERC 资助没查到。",fundL:"mid",
+ pos:"没查到公开职位。",
+ rel:"中等偏高：方向是治疗单基因病，和 PGT-M 的出发点一样，只是从预防转到治疗。",relL:"mid",
+ hook:"从 PGT-M 的预防角度延伸到基因治疗，编辑结果的分子检测和基因分型是你的强项。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"lo",rateTxt:"偏低：热门方向，申请人多。"},
+{tier:"A",id:"loffing",name:"Johannes Loffing",aff:"UZH 解剖研究所教授",prog:"成员待核实（可能在 BioMed）",progOk:false,
+ dir:"肾小管的离子转运和生理调节；参与多囊肾爪蟾模型研究。",
+ out:["2026 年获邀做 Hans H. Ussing 奖讲座","2021 年 Development 爪蟾多囊肾模型论文的合作者"],
+ fund:"不确定，需查 SNSF 数据库。",fundL:"na",
+ pos:"没查到公开职位。",
+ rel:"中等：做肾脏生理，和 PKD 有交集，但离遗传诊断较远。",relL:"mid",
+ hook:"更适合作为联系 Lienkamp 时的第二人选。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：资深教授，具体情况要看他目前是否在招人。"},
+{tier:"B",id:"baudis",name:"Michael Baudis",aff:"UZH 分子生命科学系教授",prog:"Systems Biology（UZH 人员页面列出）",progOk:true,
+ dir:"癌症中的突变和拷贝数变异模式；基因组数据的交换标准和分析工具。",
+ out:["Progenetix：最大的免费癌症拷贝数变异数据库","共同领导国际基因组数据联盟（GA4GH）的 Beacon 协议"],
+ fund:"不确定。",fundL:"na",
+ pos:"没查到公开职位。",
+ rel:"中等：拷贝数变异分析和基因组数据标准化，可以和临床遗传检测的数据工作对接。",relL:"mid",
+ hook:"PGT-M 和临床遗传检测的数据标准化、可共享问题。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：组的规模适中，竞争相对小，但你需要证明有编程能力。"},
+{tier:"B",id:"beerenwinkel",name:"Niko Beerenwinkel",aff:"ETH 生物系统科学与工程系（D-BSSE，在巴塞尔）",prog:"成员待核实",progOk:false,
+ dir:"从单细胞测序数据重建肿瘤演化历史；突变和拷贝数的概率模型。",
+ out:["2024 年巴塞尔学术报告：从突变和拷贝数数据学习肿瘤系统发育树","ISCB 招聘网站上有一个计算肿瘤学博士职位（发布日期未知）"],
+ fund:"较充足，但没查到具体的资助记录。",fundL:"mid",
+ pos:"ISCB 上有一个博士职位，要求很强的数学、统计或计算机背景。需要核实是否还在招人。",
+ rel:"中低：单细胞系统发育推断和单倍型推断在方法上有相似之处，但他要的是很强的数理背景。",relL:"lo",
+ hook:"把单细胞和低起始量 DNA 的单倍型推断作为切入点。",
+ ts:"ETH，在巴塞尔，需要办 Project Mobility。",
+ rate:"lo",rateTxt:"低：除非你有很强的编程和统计基础。"},
+{tier:"B",id:"robinson",name:"Mark Robinson",aff:"UZH 分子生命科学系正教授（2023 年起）",prog:"组网站说通过 LSZGS 招人（具体项目待核实）",progOk:false,
+ dir:"高通量测序数据的统计方法，目前侧重单细胞数据。",
+ out:["edgeR 等广泛使用的统计工具的作者之一","2023 年升任正教授"],
+ fund:"较充足。",fundL:"mid",
+ pos:"组网站说博士通过 LSZGS 招收，每年两轮，不接受直接套磁申请。",
+ rel:"低：纯统计方法。",relL:"lo",
+ hook:"只在你想彻底转向计算方向时考虑。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"lo",rateTxt:"低。"},
+{tier:"C",id:"matyas",name:"Gabor Matyas",aff:"心血管遗传与基因诊断中心（Schlieren，罕见病患者基金会下属）",prog:"BioMed（已确认）",progOk:true,
+ dir:"遗传性心血管疾病的基因诊断。",
+ out:["公开信息很少，没查到 2024–2025 年的论文清单"],
+ fund:"不确定。",fundL:"na",
+ pos:"没查到公开职位。",
+ rel:"中等：临床分子诊断，和你的工作模式最接近。",relL:"mid",
+ hook:"临床基因诊断流程的验证和质控。",
+ ts:"<b>可能不符合 ThinkSwiss 要求：</b>这个中心隶属于一个基金会，可能是私立机构，ThinkSwiss 不资助私立机构，需核实。",
+ rate:"na",rateTxt:"未知：信息太少。"},
+{tier:"C",id:"berger",name:"Wolfgang Berger",aff:"UZH 医学分子遗传研究所",prog:"BioMed（名单上列出）",progOk:true,
+ dir:"遗传性视网膜病。",
+ out:["<b>已于 2025 年 1 月 31 日退休</b>，医学分子遗传研究所随之撤销，职能并入医学遗传研究所（Rauch）"],
+ fund:"不适用。",fundL:"na",
+ pos:"不再招收博士生。",
+ rel:"不适用。",relL:"lo",
+ hook:"不建议联系。原研究所的诊断业务已并入医学遗传研究所，相关问题可以问 Rauch 组。",
+ ts:"不适用。",
+ rate:"lo",rateTxt:"排除：已退休。"},
+{tier:"P",id:"mueller",name:"Martin Müller",aff:"UZH 分子生命科学系副教授（2022 年起），Praeclare 合作者",prog:"可能在 MLS 或 Neuroscience 项目（需核实）",progOk:false,
+ dir:"突触传递、稳态可塑性、突触纳米结构、蛋白质稳态、离子通道病。在 Praeclare 里的分工很可能是对神经发育障碍相关的变异做功能验证 <span class=\"v\">推测，需核实</span>。",
+ out:["2013–2022 年 SNSF 助理教授，2022 年升副教授","博士后在 UCSF Grae Davis 组研究稳态可塑性","近五年论文请看下方 Google Scholar 链接"],
+ fund:"不确定。",fundL:"na",
+ pos:"没查到公开职位。",
+ rel:"中等偏低：研究的是变异的功能后果，主要靠电生理和神经生物学，和你的基因分型技能交集不多。",relL:"lo",
+ hook:"从「诊断出变异」延伸到「验证变异是否致病」，适合想学功能实验时联系。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"lo",rateTxt:"偏低：方向偏神经科学，你需要补的技能较多。"},
+{tier:"P",id:"burkhardt",name:"Tilo Burkhardt",aff:"苏黎世大学医院产科主治医生（PD Dr. med.），Praeclare 合作者",prog:"不太可能是 LSZGS 项目成员",progOk:false,
+ dir:"胎儿医学和产前诊断：产科超声、胎儿畸形、胎儿宫内生长受限、无创产前检测（NIPT）的临床应用。",
+ out:["2016 年在苏黎世取得教授资格（Habilitation）","2018 年起任 Archives of Gynecology and Obstetrics 副主编","在瑞士做过 NIPT 法律、伦理和适应症的专题报告"],
+ fund:"不确定。",fundL:"na",
+ pos:"没查到。他是临床医生，一般不独立招收理学博士。",
+ rel:"临床上相关：产前诊断和 PGT-M 都属于生殖遗传检测的临床环节，但他不是研究实验室导师。",relL:"mid",
+ hook:"不作为导师人选。访问期间可以通过 Rauch 组认识他，了解苏黎世产前和植入前诊断的临床流程。",
+ ts:"苏黎世大学医院是公立机构，但临床医生没有研究实验室，不适合做 ThinkSwiss 东道主。",
+ rate:"lo",rateTxt:"不适用：不是博士导师人选。"},
+{tier:"P",id:"cavazza",name:"Tommaso Cavazza",aff:"UZH / 苏黎世大学医院生殖内分泌科，H2R 重点研究项目助理教授",prog:"成员待核实",progOk:false,
+ dir:"早期胚胎为什么会失败：研究细胞过程如何控制胚胎发生，以及这些过程出错如何导致胚胎停育；评估基因组编辑在辅助生殖中的效力和安全性。用牛胚胎做实验，<b>不做人类胚胎研究</b>。",
+ out:["实验室由 UZH 重点研究项目「人类生殖再探」（Human Reproduction Reloaded，简称 H2R）资助","和 ETH 的 Katharina Gapp 共同创立苏黎世生殖研究网络（Zuri-Repro Network）","博士后期间研究哺乳动物早期胚胎中的染色体分离错误 <span class=\"v\">具体论文需核实</span>"],
+ fund:"较充足：由 H2R 重点研究项目资助，但这是阶段性经费。",fundL:"mid",
+ pos:"没查到公开职位。新成立的组通常在扩张，值得直接询问。",
+ rel:"<b>和 PGT 最接近的基础研究方向。</b>早期胚胎的染色体异常（也就是 PGT-A 检测的对象）、胚胎编辑的安全性评估，都需要单细胞或少量细胞的基因分型，而这正是你在 PGT-M 里做的事。",relL:"hi",
+ hook:"用 PGT 里的单细胞 STR 和单倍型分型，检测胚胎编辑后的脱靶、嵌合和杂合性丢失。",
+ ts:"UZH 和苏黎世大学医院，公立机构，符合要求。",
+ rate:"hi",rateTxt:"较高：年轻的组、课题高度对口，你的胚胎遗传检测经验很少见。前提是确认他是 LSZGS 项目成员。"},
+{tier:"P",id:"baumgartner",name:"Matthias Baumgartner",aff:"苏黎世大学儿童医院（Kispi）代谢科",prog:"BioMed（已确认）",progOk:true,
+ dir:"先天性代谢病。用分子遗传学、基于质谱的代谢物检测、代谢组学和多组学方法做罕见病诊断。",
+ out:["UZH 罕见病重点研究项目 ITINERARE 的共同主任（和 Devuyst 等一起）","牵头 RAINDROP 项目：用多组学快速准确识别先天性疾病","负责瑞士罕见病登记库（已有 3,500 多名患者同意参与）"],
+ fund:"充足：ITINERARE 从 2021 年起运行，周期 12 年。",fundL:"hi",
+ pos:"没查到公开职位。",
+ rel:"高：多组学快速诊断就是基因诊断的下一代，罕见病登记库也属于精准医疗的基础设施。",relL:"hi",
+ hook:"在基因组诊断里引入单倍型和连锁分析，帮助判断意义未明变异的致病性。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：经费稳定，方向对口；组在儿童医院，偏临床。"},
+{tier:"P",id:"haeberle",name:"Johannes Häberle",aff:"苏黎世大学儿童医院代谢科",prog:"BioMed（已确认）",progOk:true,
+ dir:"尿素循环障碍（一类单基因代谢病）的诊断、生物标志物和治疗，包括基因治疗和基因编辑。",
+ out:["2025 年和 Citrin 基金会合作成立尿素循环障碍转化研究中心，方向包括生物标志物、新疗法开发和临床试验准备","和 Schwank 合作，用基因编辑治疗 citrin 缺乏症（SLC25A13）","2020 年 Molecular Therapy：在 CPS1 缺乏症小鼠中用 split-AAV 做基因治疗"],
+ fund:"充足：2025 年新成立的转化中心有基金会资助。",fundL:"hi",
+ pos:"没查到公开职位。新中心通常需要招人，值得询问。",
+ rel:"中等偏高：从单基因病的诊断到治疗都做，你的分子诊断经验可以用在患者基因型鉴定和疗效评估上。",relL:"mid",
+ hook:"建立尿素循环障碍患者的基因型鉴定和携带者检测流程，为将来的植入前诊断打基础。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中等偏高：新中心有经费，而且和 Schwank 有合作，可以同时接触诊断和编辑两条线。"},
+{tier:"P",id:"krauthammer",name:"Michael Krauthammer",aff:"UZH 定量生物医学系，医学信息学",prog:"BioMed（已确认）",progOk:true,
+ dir:"临床数据科学和转化生物信息学：医学人工智能、医学文本处理、精准肿瘤学。",
+ out:["2025 年 UZH 新闻：开发辅助癌症治疗决策的数字助手","2023 年 Nature Biotechnology：和 Schwank 合作的先导编辑效率预测模型","参与苏黎世生物医学信息学平台建设"],
+ fund:"充足：有 SNSF 资助的博士职位。",fundL:"hi",
+ pos:"<b>有过公开的博士职位：</b>精准肿瘤学 AI（和 Wicki 组联合）、SNSF 资助的医学文本处理、医疗 AI。发布日期没查到，要到 UZH 招聘网站确认是否还在招。",
+ rel:"中等：属于精准医疗，但是计算方向。如果你想从湿实验转向临床数据，这是很好的入口。",relL:"mid",
+ hook:"把 PGT-M 和基因诊断中的临床决策数据化，例如用 AI 辅助判断变异致病性或评估连锁分析的可靠性。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：有实际招聘，但要求编程和机器学习能力，你需要证明这方面的基础。"},
+{tier:"P",id:"wicki",name:"Andreas Wicki",aff:"苏黎世大学医院肿瘤内科",prog:"BioMed（已确认）",progOk:true,
+ dir:"精准肿瘤学、致癌信号通路。",
+ out:["和 Krauthammer 联合招收精准肿瘤学 AI 方向的博士生 <span class=\"v\">具体成果需查 PubMed</span>"],
+ fund:"不确定。",fundL:"na",
+ pos:"和 Krauthammer 联合发布过博士职位。",
+ rel:"中等：精准医疗，但是肿瘤方向，离遗传病较远。",relL:"mid",
+ hook:"肿瘤分子分型和遗传诊断在方法上相通。",
+ ts:"苏黎世大学医院，公立机构，符合要求。",
+ rate:"mid",rateTxt:"中：适合作为 Krauthammer 联合职位的另一位导师。"},
+{tier:"P",id:"ratsch",name:"Gunnar Rätsch",aff:"ETH 生物医学信息学实验室（BMI Lab），同时在苏黎世大学医院有课题组",prog:"成员待核实",progOk:false,
+ dir:"癌症基因组学、医学信息学和机器学习的交叉。组内有临床基因组学团队（André Kahles 负责）。",
+ out:["临床基因组学团队在招博士后（日期待核实）","在苏黎世大学医院设有课题组"],
+ fund:"充足（大组），具体资助没查到。",fundL:"mid",
+ pos:"只查到博士后职位，没有博士职位。",
+ rel:"中等：临床基因组学和精准医疗，但要求很强的计算机背景。",relL:"mid",
+ hook:"临床测序数据的分析流程和质控。",
+ ts:"ETH 需要办 Project Mobility。",
+ rate:"lo",rateTxt:"低：计算机方向竞争激烈。"},
+{tier:"P",id:"gapp",name:"Katharina Gapp",aff:"ETH Zurich",prog:"成员待核实",progOk:false,
+ dir:"表观遗传通过生殖细胞的跨代传递：精子 RNA 如何把父代的经历（例如应激）传给后代。",
+ out:["博士期间（Mansuy 组）发现小鼠精子 RNA 能把应激效应传给后代，后来在 ETH 建立自己的课题组","和 Kretschmer 合著 RNA 介导跨代传递的综述","ETH「表观遗传：对生物学和社会的影响」研讨会组织者之一（2025 年 8 月）","和 Cavazza 共同创立苏黎世生殖研究网络"],
+ fund:"不确定。",fundL:"na",
+ pos:"没查到。",
+ rel:"中等：生殖生物学，但偏表观遗传，离 PGT-M 的遗传诊断较远。",relL:"mid",
+ hook:"只在你对生殖生物学的基础研究感兴趣时考虑。",
+ ts:"ETH 需要办 Project Mobility。",
+ rate:"na",rateTxt:"未知：信息太少。"},
+{tier:"P",id:"reichenbach",name:"Janine Reichenbach",aff:"UZH 再生医学研究所",prog:"BioMed（已确认）",progOk:true,
+ dir:"基于病毒载体和基因编辑的单基因病治疗策略；UZH 再生医学研究所体细胞基因治疗分部主任，同时在苏黎世大学儿童医院任职。",
+ out:["ITINERARE 共同主任","再生医学研究所「基因和细胞治疗」课题组负责人"],
+ fund:"较充足：ITINERARE 资助。",fundL:"mid",
+ pos:"没查到。",
+ rel:"中等：单基因病的治疗方向。",relL:"mid",
+ hook:"基因编辑治疗单基因病时，需要精确鉴定患者基因型并评估编辑结果，这和你的分子诊断经验对口。",
+ ts:"UZH，公立机构，符合要求。",
+ rate:"na",rateTxt:"未知：信息太少。"}
+];
+var LINKS={
+ rauch:[["课题组主页","https://medgen.uzh.ch/en/research/rauch.html"],["Praeclare 研究所页面","https://www.medgen.uzh.ch/en/research/praeclare.html"],["必读：携带者筛查临床效用（2022）","https://www.nature.com/articles/s41525-022-00316-x"],["必读：纤毛病携带者筛查的挑战","https://pubmed.ncbi.nlm.nih.gov/36550190/"],["团队成员","https://medgen.uzh.ch/en/research/rauch/team.html"],["Praeclare 项目","https://www.praeclare.uzh.ch/en.html"],["UZH 人员页","https://whoiswho-umzh.uzh.ch/people/anita-rauch"]],
+ lienkamp:[["课题组主页","https://anatomy.uzh.ch/en/research/lienkamp.html"],["ETH Grant 博士课题新闻","https://www.anatomy.uzh.ch/en/news/slethfunding26.html"],["解剖研究所新闻","https://www.anatomy.uzh.ch/de/news.html"]],
+ devuyst:[["课题组主页","https://physiol.uzh.ch/en/research/departmentgroups/grdevuyst.html"],["研究项目","https://physiol.uzh.ch/en/research/departmentgroups/grdevuyst/ResearchProjects.html"],["开放职位","https://www.physiol.uzh.ch/en/research/institutegroups/grdevuyst/Open-positions.html"],["Zurich Kidney 成员页","https://www.zurich-kidney.uzh.ch/de/mitglieder/om/od.html"]],
+ bachmann:[["个人简历","https://medgen.uzh.ch/en/research/gagescu/CV.html"],["课题组新闻","https://www.mls.uzh.ch/en/research/bachmann/news.html"]],
+ corn:[["ETH 论文库个人页","https://www.research-collection.ethz.ch/entities/person/ba5791dd-75f1-421f-a306-0a11da884246"],["NOMIS 基金会简介","https://nomisfoundation.ch/people/jacob-corn"],["基因组生物学教席介绍","https://nomisfoundation.ch/projects/professorship-of-genome-biology-eth-zurich/"]],
+ schwank:[["课题组页面","https://www.pharma.uzh.ch/en/research/Translational-Genome-Editing.html"],["ITINERARE 个人页","https://www.itinerare.uzh.ch/en/About-us/Steering-Committee/Gerald-Schwank.html"],["组内招聘示例","https://jobs.uzh.ch/job-vacancies/research-associate-in-in-vivo-genome-editing/89cad800-c70b-46a2-9ab2-9da16b496dbb"]],
+ loffing:[["课题组主页","https://anatomy.uzh.ch/en/research/loffing.html"],["Zurich Kidney 成员页","https://www.zurich-kidney.uzh.ch/de/mitglieder/om/jlo.html"],["解剖研究所人员","https://anatomy.uzh.ch/en/aboutus/people.html"]],
+ baudis:[["个人主页","https://www.mls.uzh.ch/en/research/baudis/professor-baudis.html"],["UZH 人员页","https://whoiswho-umzh.uzh.ch/people/michael-baudis"]],
+ beerenwinkel:[["UZH 人员页","https://whoiswho-umzh.uzh.ch/people/niko-beerenwinkel"],["课题组 GitHub","https://github.com/cbg-ethz"],["博士职位（ISCB）","https://careers.iscb.org/jobs/view/6044"]],
+ robinson:[["课题组主页","https://www.mls.uzh.ch/en/research/robinson.html"],["实验室网站","https://robinsonlabuzh.github.io/people.html"],["招生说明","https://mls.uzh.ch/en/research/robinson/info.html"]],
+ matyas:[["PubMed 单位信息","https://www.pubmed.gov/28916731/"],["可能的中心网站（未核实）","https://www.genetikzentrum.ch"]],
+ berger:[["研究所并入通知（2025）","https://medgen.uzh.ch/en/news_events_pub/news/2025/medmolgen_integration.html"]],
+ cavazza:[["实验室主页","https://www.reproendo.uzh.ch/en/CavazzaLab.html"],["H2R 个人页","https://www.humanreproduction.uzh.ch/en/About-us/assistant_professors/Cavazza_Tommaso.html"],["为什么做胚胎研究","https://www.reproendo.uzh.ch/en/CavazzaLab/Why-Embryo-Research-.html"],["苏黎世生殖研究网络","https://www.humanreproduction.uzh.ch/en/Research-Areas/zuri_repro_network.html"]],
+ baumgartner:[["UZH 人员页","https://whoiswho-umzh.uzh.ch/people/matthias-baumgartner"],["ITINERARE 个人页","https://www.itinerare.uzh.ch/en/About-us/Directorate/Matthias-Baumgartner.html"],["瑞士罕见病登记库","https://www.itinerare.uzh.ch/en/Research/Swiss-Rare-Disease-Registry.html"]],
+ haeberle:[["儿童医院尿素循环障碍研究","https://www.kispi.uzh.ch/forschungszentrum/forschungsgebiete/stoffwechsel/harnstoffzyklusstoerungen"],["ITINERARE 个人页","https://www.itinerare.uzh.ch/en/About-us/Researchers/Participating-PIs/Johannes-H%C3%A4berle.html"],["转化研究中心","https://www.uzhfoundation.ch/en/donation/your-support/successfully-financed/urea-cycle-disorders-translational-center"]],
+ krauthammer:[["课题组主页","https://www.dqbm.uzh.ch/en/research/krauthammer.html"],["团队成员","https://www.dqbm.uzh.ch/en/research/krauthammer/Team.html"],["精准肿瘤学 AI 博士职位","https://jobs.uzh.ch/job-vacancies/ph-d-position-in-ai-for-precision-oncology/b1978fb5-f9bd-4579-9cc0-c92172d0ef79"],["SNSF 医学文本处理博士职位","https://jobs.uzh.ch/job-vacancies/snf-phd-position-in-medical-informatics-with-a-focus-on-natural-language-processing/3e55413d-7b9b-47e2-86d3-26c85ddc35d9"]],
+ wicki:[["课题组页面","https://usz.ch/en/?p=171376"],["个人简介","https://www.usz.ch/en/?p=61953"],["Tumor Profiler 中心","https://umzh.uzh.ch/en/research-center/tpc"]],
+ ratsch:[["苏黎世大学医院课题组","https://usz.ch/en/?p=130678"]],
+ mueller:[["个人主页","https://www.mls.uzh.ch/en/research/mueller/professor-mueller.html"],["实验室网站","https://themuellerlab.ch/contact"],["Google Scholar 个人页","https://scholar.google.ch/citations?user=zUsUG1cAAAAJ"]],
+ burkhardt:[["个人简介","https://usz.ch/en/?p=19676"],["研究组页面","https://usz.ch/?p=33104"]],
+ gapp:[["合著综述：RNA 介导的跨代传递","https://pmc.ncbi.nlm.nih.gov/articles/PMC9134061"]],
+ reichenbach:[["UZH 人员页","https://whoiswho-umzh.uzh.ch/people/janine-reichenbach"],["再生医学研究所研究页","https://www.irem.uzh.ch/en/research.html"],["基因治疗组","https://www.ipsc-research.uzh.ch/en/Research-groups/Gene-Therapy.html"]]
+};
+function pubmed(n){var w=n.split(" ");var last=w[w.length-1];return "https://pubmed.ncbi.nlm.nih.gov/?term="+encodeURIComponent(last+" "+w[0][0]+"[Author]")+"&sort=date"}
+function scholar(n){return "https://scholar.google.com/scholar?q="+encodeURIComponent('author:"'+n+'"')}
+function linkHtml(p){
+  var a=(LINKS[p.id]||[]).map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+'</a>'});
+  a.push('<a class="aux" href="'+pubmed(p.name)+'" target="_blank" rel="noopener">PubMed 最新论文</a>');
+  a.push('<a class="aux" href="'+scholar(p.name)+'" target="_blank" rel="noopener">Google Scholar</a>');
+  return '<div class="links">'+a.join("")+'</div>';
+}
+var TIERS=[
+ ["S","第一梯队：课题直接对口","PKD、遗传性肾病、生殖遗传和临床遗传，都和你的 PGT-M 背景直接相关。"],
+ ["P","新增：精准医疗、生殖医学和基因诊断","按你补充的方向新增：胚胎遗传、罕见病多组学诊断、单基因病转化研究、临床数据科学。"],
+ ["A","第二梯队：技术延伸","基因编辑、肾脏生理，你能带过去分型和分子检测的技能。"],
+ ["B","第三梯队：计算方向","适合你想转向生物信息学时考虑。"],
+ ["C","需要先核实","信息不足，或者可能不符合 ThinkSwiss 的要求。"]
+];
+function pill(l,t){var x=L[l]||L.na;return '<span class="pill '+x[1]+'">'+(t||x[0])+'</span>'}
+var sum=document.getElementById("sum");
+PIS.forEach(function(p){
+  var tr=document.createElement("tr");
+  var home=(LINKS[p.id]||[])[0];
+  tr.innerHTML='<td><a href="#'+p.id+'"><b>'+p.name+'</b></a>'+(home?'<a class="home" href="'+home[1]+'" target="_blank" rel="noopener">主页 ↗</a>':'')+'</td><td>'+p.aff.split("，")[0]+'</td><td>'+(p.progOk?p.prog:'<span class="v">'+p.prog+'</span>')+'</td><td>'+pill(p.relL)+'</td><td>'+pill(p.fundL,p.fundL==="na"?"未知":(p.fundL==="hi"?"充足":"较充足"))+'</td><td style="max-width:220px;font-size:13px">'+p.pos+'</td><td>'+pill(p.rate,L[p.rate][0])+'</td>';
+  sum.appendChild(tr);
+});
+var root=document.getElementById("tiers");
+TIERS.forEach(function(t){
+  var list=PIS.filter(function(p){return p.tier===t[0]});
+  var s=document.createElement("section");s.className="tier";
+  var h='<div class="tier-h"><h2 style="margin:0">'+t[1]+'</h2><p>'+t[2]+'</p></div>';
+  list.forEach(function(p){
+    h+='<article class="card" id="'+p.id+'"><div class="card-h"><h3>'+p.name+'</h3><span class="aff">'+p.aff+'</span><span class="badges">关联 '+pill(p.relL)+' 成功率 '+pill(p.rate)+'</span></div>'+
+    '<dl><dt>LSZGS 项目</dt><dd>'+(p.progOk?p.prog:p.prog+' <span class="v">需核实</span>')+'</dd>'+
+    '<dt>研究方向</dt><dd>'+p.dir+'</dd>'+
+    '<dt>近五年成果</dt><dd><ul>'+p.out.map(function(o){return '<li>'+o+'</li>'}).join("")+'</ul></dd>'+
+    '<dt>经费</dt><dd>'+pill(p.fundL,p.fundL==="na"?"未知":(p.fundL==="hi"?"充足":"较充足"))+' '+p.fund+'</dd>'+
+    '<dt>开放职位</dt><dd>'+p.pos+'</dd>'+
+    '<dt>和你的关联</dt><dd>'+p.rel+'</dd>'+
+    '<dt>ThinkSwiss</dt><dd>'+p.ts+'</dd>'+
+    '<dt>成功率</dt><dd>'+p.rateTxt+'</dd></dl>'+
+    '<div class="hook"><b>套磁切入点：</b>'+p.hook+'</div>'+linkHtml(p)+'</article>';
+  });
+  s.innerHTML=h;root.appendChild(s);
+});
+var SRC=[
+ ["LSZGS 博士项目列表","https://www.lifescience-graduateschool.uzh.ch/en/about-LSZGS/phd-programs.html"],
+ ["LSZGS 2020 年报（imMed 和 MTB 合并为 BioMed）","https://www.lifescience-graduateschool.uzh.ch/dam/jcr:52d6396f-cb11-4c4c-a73d-13874579d46b/LSZGS_Report_2020.pdf"],
+ ["BioMed 导师名单","https://www.phd-biomed.uzh.ch/en/organisation/biomed-research-groups.html"],
+ ["BioMed 成员条件","https://www.phd-biomed.uzh.ch/en/organisation/biomed-research-groups/how-to-become-a-member.html"],
+ ["BioMed 章程（12 月 1 日 / 7 月 1 日）","https://www.phd-biomed.uzh.ch/dam/jcr:ed463e84-21e0-4f95-bf60-a453f0d59cee/BioMed_regulations_26092022_webpage_workingversion.pdf"],
+ ["BioMed 申请页","https://www.phd-biomed.uzh.ch/en/application-guidelines/biomed-application.html"],
+ ["LSZGS 博士招收","https://www.lifescience-graduateschool.uzh.ch/en/PI/recruitment.html"],
+ ["Rauch 组","https://medgen.uzh.ch/en/research/rauch.html"],
+ ["Praeclare","https://www.praeclare.uzh.ch/en.html"],
+ ["UZH 携带者筛查新闻（2022）","https://news.uzh.ch/en/articles/media/2022/Genetic-Testing.html"],
+ ["Devuyst 组","https://physiol.uzh.ch/en/research/departmentgroups/grdevuyst.html"],
+ ["Devuyst 组开放职位","https://www.physiol.uzh.ch/en/research/institutegroups/grdevuyst/Open-positions.html"],
+ ["KDIGO 2025 ADPKD 指南","https://kdigo.org/wp-content/uploads/2025/01/KDIGO-2025-ADPKD-Guideline_Executive-Summary.pdf"],
+ ["Zurich Kidney 成员页","https://www.zurich-kidney.uzh.ch/de/mitglieder/om/od.html"],
+ ["UZH 第三方资助列表","https://uzh.ch/en/researchinnovation/ethics/transparency/grants/list.html"],
+ ["Lienkamp 组","https://anatomy.uzh.ch/en/research/lienkamp.html"],
+ ["Lienkamp ETH Grant","https://www.anatomy.uzh.ch/en/news/slethfunding26.html"],
+ ["爪蟾多囊肾模型（2021）","https://www.eurekalert.org/news-releases/933875"],
+ ["解剖研究所新闻","https://www.anatomy.uzh.ch/de/news.html"],
+ ["Jacob Corn（NOMIS）","https://nomisfoundation.ch/method-blocking-trex1-enzyme-boosts-crispr-gene-editing-efficiency-in-hard-to-edit-cells/"],
+ ["ETH ERC Advanced Grants 2025","https://ethz.ch/en/news-and-events/eth-news/news/2025/06/back-in-the-running-with-erc-grants.html"],
+ ["ETH ERC Consolidator Grants 2025","https://ethz.ch/en/news-and-events/eth-news/news/2025/12/four-researchers-awarded-prestigious-european-consolidator-grant.html"],
+ ["范可尼贫血碱基编辑","https://fanconi.org/scientist-spotlight-jacob-corn/"],
+ ["Schwank：先导编辑预测（2023）","https://www.news.uzh.ch/en/articles/media/2023/Genome-Editing.html"],
+ ["Schwank：原位测序（2025）","https://crisprmedicinenews.com/news/in-situ-sequencing-maps-in-vivo-editing"],
+ ["Schwank：ITINERARE 项目","https://www.itinerare.uzh.ch/en/Research/Correcting-genetic-diseases-by-base--and-prime-editing-.html"],
+ ["Bachmann-Gagescu 综述（2022）","https://www.frontiersin.org/articles/10.3389/fgene.2022.939527"],
+ ["Ciaudo（ETH 论文库）","https://www.research-collection.ethz.ch/entities/person/ced5bb86-b4df-474a-af15-ca14c8014d19"],
+ ["Beerenwinkel 博士职位（ISCB）","https://careers.iscb.org/jobs/view/6044"],
+ ["Robinson 组","https://mls.uzh.ch/en/research/robinson/info.html"],
+ ["Baudis","https://www.mls.uzh.ch/en/research/baudis/professor-baudis.html"],
+ ["Systems Biology 项目","https://www.lifescience-graduateschool.uzh.ch/en/about-LSZGS/phd-programs/Systems-Biology.html"],
+ ["MLS 博士项目","https://www.mls-phd.uzh.ch/en/Programme-Overview.html"],
+ ["Cavazza Lab","https://www.reproendo.uzh.ch/en/CavazzaLab.html"],
+ ["Cavazza（H2R 助理教授）","https://www.humanreproduction.uzh.ch/en/About-us/assistant_professors/Cavazza_Tommaso.html"],
+ ["苏黎世生殖研究网络","https://www.humanreproduction.uzh.ch/en/Research-Areas/zuri_repro_network.html"],
+ ["生殖内分泌科研究组","https://reproendo.uzh.ch/"],
+ ["H2R 重点研究项目","https://www.uzh.ch/en/researchinnovation/priorities/university/UFSP-humanreproduction.html"],
+ ["Leeners 简介","https://www.usz.ch/en/?p=3153"],
+ ["ITINERARE","https://www.uzh.ch/en/researchinnovation/priorities/university/UFSP-itinerare.html"],
+ ["Matthias Baumgartner","https://whoiswho-umzh.uzh.ch/people/matthias-baumgartner"],
+ ["瑞士罕见病登记库","https://www.itinerare.uzh.ch/en/Research/Swiss-Rare-Disease-Registry.html"],
+ ["Häberle（ITINERARE）","https://www.itinerare.uzh.ch/en/About-us/Researchers/Participating-PIs/Johannes-Häberle.html"],
+ ["尿素循环障碍转化中心","https://www.uzhfoundation.ch/en/donation/your-support/successfully-financed/urea-cycle-disorders-translational-center"],
+ ["Krauthammer 组","https://www.dqbm.uzh.ch/en/research/krauthammer.html"],
+ ["精准肿瘤学 AI 博士职位","https://jobs.uzh.ch/job-vacancies/ph-d-position-in-ai-for-precision-oncology/b1978fb5-f9bd-4579-9cc0-c92172d0ef79"],
+ ["SNSF 医学文本处理博士职位","https://jobs.uzh.ch/job-vacancies/snf-phd-position-in-medical-informatics-with-a-focus-on-natural-language-processing/3e55413d-7b9b-47e2-86d3-26c85ddc35d9"],
+ ["UZH 癌症数字助手新闻（2025）","https://news.uzh.ch/en/articles/news/2025/digital-assistant-for-cancer-treatment.html"],
+ ["Rätsch 课题组（苏黎世大学医院）","https://usz.ch/en/?p=130678"]
+];
+var su=document.getElementById("src");
+SRC.forEach(function(s){var li=document.createElement("li");li.innerHTML='<a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a>';su.appendChild(li)});
+})();
+</script>

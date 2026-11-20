@@ -1,0 +1,228 @@
+<title>LSZGS 申博路线图</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: key-date strip, then phase blocks with checklists; filter + progress on top */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --fg:#16201c; --muted:#5a6863; --line:#d8dfdb;
+  --accent:#0f6b5c; --accent-soft:#dcefea; --warn:#9c5700; --warn-soft:#fbefdc; --now:#c2410c;
+  --c-ts:#0f6b5c; --c-mail:#1f5fa8; --c-lab:#2f7d46; --c-lsz:#6b3fa0; --c-int:#b0312b; --c-adm:#5a6863;
+  --f-display:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;
+  --f-body:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#18201d; --fg:#e3eae7; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17; --now:#fb8c4c;
+  --c-ts:#4fbfa8; --c-mail:#6fa6e8; --c-lab:#6cc287; --c-lsz:#b493e0; --c-int:#ec7a72; --c-adm:#97a6a0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#18201d; --fg:#e3eae7; --muted:#97a6a0; --line:#2c3833;
+  --accent:#4fbfa8; --accent-soft:#1d3530; --warn:#f0a94a; --warn-soft:#3a2c17; --now:#fb8c4c;
+  --c-ts:#4fbfa8; --c-mail:#6fa6e8; --c-lab:#6cc287; --c-lsz:#b493e0; --c-int:#ec7a72; --c-adm:#97a6a0; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:32px}
+h1{font-family:var(--f-display);font-size:clamp(26px,4vw,36px);margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-size:19px;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:70ch}
+.warnbox{background:var(--warn-soft);color:var(--fg);border-radius:10px;padding:12px 16px;font-size:14px}
+.warnbox b{color:var(--warn)}
+/* key dates */
+.keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.key{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+.key .d{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--accent)}
+.key .t{font-size:13px;line-height:1.45;margin-top:2px}
+.key.past{opacity:.55}
+/* controls */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbtn{font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.fbtn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.fbtn:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.prog{flex:1 1 220px;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.prog .track{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog .fill{height:100%;background:var(--accent);width:0}
+/* phases */
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.phase.current{border-color:var(--now);box-shadow:0 0 0 1px var(--now)}
+.ph-head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ph-when{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.ph-now{font-size:12px;color:var(--now);font-weight:700}
+.ph-goal{color:var(--muted);font-size:14px;margin:0}
+.ph-count{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+ul.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.items li{border-top:1px solid var(--line)}
+ul.items label{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:9px 0;cursor:pointer}
+ul.items input{margin-top:5px;accent-color:var(--accent)}
+.it{display:flex;flex-direction:column;gap:2px;min-width:0}
+.it .row{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+.it .due{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.it .note{font-size:13px;color:var(--muted);line-height:1.5}
+.it .v{font-size:12px;color:var(--warn)}
+label:has(input:checked) .txt{color:var(--muted);text-decoration:line-through}
+.tag{font-family:var(--f-mono);font-size:11px;padding:1px 7px;border-radius:4px;color:var(--surface);white-space:nowrap}
+.g-ts{background:var(--c-ts)} .g-mail{background:var(--c-mail)} .g-lab{background:var(--c-lab)} .g-lsz{background:var(--c-lsz)} .g-int{background:var(--c-int)} .g-adm{background:var(--c-adm)}
+.branch{border-left:3px solid var(--warn);padding:2px 0 2px 14px;font-size:14px}
+.branch p{margin:4px 0}
+.foot{font-size:13px;color:var(--muted)}
+.foot a{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>LSZGS 申博路线图</h1>
+  <p class="sub">目标：通过 2027 年 5 月 1 日这一轮 LSZGS 申请，进入 ETH 或 UZH 读博。路径是 ThinkSwiss 奖学金资助的 5–7 月实验室访问，把东道主导师变成你在 LSZGS 的录取导师。</p>
+</header>
+
+<div class="warnbox"><b>最关键的一条：</b>LSZGS 的录取通常要由项目里的一位导师（group leader）给你提供职位。所以 <b>ThinkSwiss 的东道主导师必须是你要申请的那个 LSZGS 博士项目的成员</b>，而且 2027–2028 年有博士经费。套磁前先去项目官网的导师名单里核对。</div>
+
+<section>
+  <h2 style="margin-bottom:10px">关键日期</h2>
+  <div class="keys" id="keys"></div>
+</section>
+
+<div class="bar" role="group" aria-label="按类别筛选">
+  <button class="fbtn" data-f="all" aria-pressed="true">全部</button>
+  <button class="fbtn" data-f="mail" aria-pressed="false">套磁</button>
+  <button class="fbtn" data-f="ts" aria-pressed="false">ThinkSwiss</button>
+  <button class="fbtn" data-f="lab" aria-pressed="false">实验室访问</button>
+  <button class="fbtn" data-f="lsz" aria-pressed="false">LSZGS</button>
+  <button class="fbtn" data-f="int" aria-pressed="false">面试</button>
+  <button class="fbtn" data-f="adm" aria-pressed="false">行政手续</button>
+  <div class="prog"><div class="track"><div class="fill" id="fill"></div></div><span id="pct">0 / 0</span></div>
+</div>
+
+<div id="phases" style="display:flex;flex-direction:column;gap:16px"></div>
+
+<section class="phase" style="gap:12px">
+  <h2>如果某一步没走通</h2>
+  <div class="branch"><p><b>12 月 19 日前没有导师同意：</b>1 月初再发一轮邮件，同时把 UZH 的导师纳入名单，因为 UZH 的访问手续更简单。截止前 2 周还没拿到接收函，就放弃这一轮 ThinkSwiss，只申请 LSZGS，和导师远程保持联系。</p></div>
+  <div class="branch"><p><b>2 月 26 日没拿到奖学金：</b>和导师商量自费缩短访问（4–6 周），或者改成远程合作加 7 月到校面试时当面见。5 月 1 日照样提交 LSZGS 申请。</p></div>
+  <div class="branch"><p><b>LSZGS 没进入面试，或者面试没通过：</b>问导师能否走 Track 2（导师已经确定要你，直接加入项目），或者按 ETH / UZH 的流程直接录取。也可以申请 2027 年 11 月 1 日这一轮，2028 年初入学。</p></div>
+  <div class="branch"><p><b>导师没有博士经费：</b>到校面试期间请导师引荐项目内的其他导师，把 7 月的面试当作选导师的机会。</p></div>
+</section>
+
+<p class="foot">整理于 2026-11-20。日期来自 FAQ 原文和网络搜索摘要，标了 <span style="color:var(--warn)">需核实</span> 的要以官网为准。勾选状态只保存在你自己的浏览器里。参考：<a href="https://www.lifescience-graduateschool.uzh.ch/en/application/application-process.html" target="_blank" rel="noopener">LSZGS 申请流程</a> · <a href="https://ethz.ch/en/studies/non-degree-courses/project.html" target="_blank" rel="noopener">ETH Project Mobility</a> · <a href="https://www.schweiz-singapur.eda.admin.ch/en/thinkswiss-2026" target="_blank" rel="noopener">ThinkSwiss 2026–2027</a></p>
+</div>
+
+<script>
+(function(){
+var TAGS={ts:"ThinkSwiss",mail:"套磁",lab:"实验室访问",lsz:"LSZGS",int:"面试",adm:"行政手续"};
+var KEYS=[
+ ["2026-12-19","拿到导师口头同意（瑞士圣诞假期前）"],
+ ["2027-01-25","提交 ThinkSwiss 申请（自定的安全截止）"],
+ ["2027-01-31","ThinkSwiss 官方截止 · 如需签证，ETH Project Mobility 也在此前"],
+ ["2027-02-26","ThinkSwiss 公布结果"],
+ ["2027-03-15","确认接受奖学金"],
+ ["2027-05-01","LSZGS 截止（23:59 CEST）· 访问开始"],
+ ["2027-06-22","LSZGS 网络面试（6 月 22–25 日）"],
+ ["2027-07-13","LSZGS 到校面试（7 月 13–16 日）"],
+ ["2027-07-29","访问结束（从 5 月 1 日起算 90 天）"]
+];
+var PH=[
+{id:"p0",name:"准备：选项目和导师",from:"2026-11-20",to:"2026-11-30",goal:"先把 LSZGS 项目和导师名单对应起来，再开始套磁。",items:[
+ ["lsz","在 LSZGS 官网选 1–2 个目标博士项目（例如 Molecular Life Sciences、Systems Biology），记下每个项目的导师名单","11-24","不同项目的规则和截止日期可能不同。","需核实：可选项目数量"],
+ ["mail","从这些导师名单里筛出 10–15 位候选人，看他们近 3 年的论文、Open positions 页面和组里的博士生人数","11-27","重点看课题能否接上 PGT-M、单细胞、临床遗传或计算方向。"],
+ ["adm","发邮件给使馆，确认 ThinkSwiss 截止日期、时区，以及每所大学最多 2 个名额的限制是否还在","11-24"],
+ ["adm","向 NUS 确认学籍终止日期，确保覆盖 5 月到 7 月下旬","11-27","如果覆盖不到，访问期要缩短。"],
+ ["mail","更新 2 页 CV，写一份 250–300 词的研究计划模板","11-28","CV 里写具体数字：panel 有几个标记、验证了多少样本。"],
+ ["adm","告诉 NUS 导师你的计划，请对方推荐瑞士的合作者或帮忙引荐","11-28"]
+]},
+{id:"p1",name:"套磁",from:"2026-11-24",to:"2026-12-19",goal:"拿到至少一位 LSZGS 项目导师的口头同意，并确认对方 2027 年有博士名额。",items:[
+ ["mail","第一批：给 6–8 位导师发定制邮件，附 CV 和研究计划","11-30","邮件里同时说明两件事：申请 ThinkSwiss 来做 5–7 月的访问，以及打算 2027 年 5 月申请 LSZGS 读博。"],
+ ["mail","第二批：再发 4–6 位，包括 UZH 的备选导师","12-06"],
+ ["mail","7–10 天没回复就发一次简短跟进","12-10"],
+ ["int","准备视频面谈：5 分钟讲清楚你的 PGT-M 项目，再提一个和对方课题结合的 2–3 个月项目设想","12-12"],
+ ["mail","面谈时直接问清楚四件事：2027–2028 年有没有博士经费、是否是 LSZGS 项目成员、5–7 月本人是否在实验室、组里谁来带你","12-15"],
+ ["mail","确定一位导师，拿到口头同意","12-19","瑞士的圣诞假期大约从 12 月 20 日到 1 月 5 日，这期间基本没人回邮件。"]
+]},
+{id:"p2",name:"写材料（圣诞假期）",from:"2026-12-20",to:"2027-01-05",goal:"利用导师休假的这两周把所有材料写好。",items:[
+ ["ts","起草 cover letter：第 1 页研究计划（按月拆分里程碑），第 2 页动机、克服挑战的经历和大使角色","12-30","不超过 800 词，12 号字。"],
+ ["ts","替导师起草接收函：用学校抬头纸，写明项目内容和确切起止日期（例如 2027-05-01 至 2027-07-29）","12-30","导师改改就能签，可以省很多来回。"],
+ ["ts","请 NUS 导师写 ThinkSwiss 推荐信，并告诉对方 4 月还要为 LSZGS 再写一封","01-03"],
+ ["adm","准备成绩单：本科和 NUS 的都附上","01-05"]
+]},
+{id:"p3",name:"提交 ThinkSwiss",from:"2027-01-05",to:"2027-01-31",goal:"所有材料合并成一个 PDF 发出。",items:[
+ ["ts","请导师签署接收函","01-12"],
+ ["adm","如果东道主在 ETH：提交 Project Mobility 申请，带上导师签字的表格","01-15","最短 91 天和 ThinkSwiss 90 天上限有冲突，提交前要问清楚。","需核实"],
+ ["adm","如果东道主在 UZH：问清楚访问学者（guest）的注册流程","01-15"],
+ ["ts","把 cover letter、CV、成绩单、接收函和推荐信合并成一个 PDF，发到 Singapore@eda.admin.ch","01-25"],
+ ["mail","告诉导师你已经提交，感谢对方的支持","01-26"]
+]},
+{id:"p4",name:"等结果，出发前准备",from:"2027-02-01",to:"2027-04-30",goal:"办好出行手续，提前和导师把项目规划好，在 5 月 1 日前提交 LSZGS 申请。",items:[
+ ["ts","2 月 26 日查收结果，3 月 15 日前回复确认接受","03-15"],
+ ["adm","如果持中国护照：办申根签证（90 天以内）","03-20","按需准备接收函、保险证明和资金证明。"],
+ ["adm","买保险：医疗、意外、责任险（奖学金不包含）","03-25"],
+ ["adm","找住处：联系 ETH 或 UZH 的住房办公室，以及 WOKO、JUWO","03-31","苏黎世很难找房，越早越好。"],
+ ["lab","和导师开一次远程会议：确定项目目标、实验方案和每月里程碑，读组里近期的论文","03-31"],
+ ["lsz","在 LSZGS 平台注册账号，看清楚申请需要的材料","03-20"],
+ ["lsz","写研究陈述或动机信：用 PGT-M 经历讲你的问题意识，点明即将在某某组做的项目","04-15"],
+ ["lsz","邀请推荐人：NUS 导师、另一位 NUS 教授；问东道主导师能否写信或在评审时表态支持","04-05","推荐人数量以官网为准。","需核实"],
+ ["lsz","4 月 25 日前提交 LSZGS 申请，在导师偏好里填东道主导师","04-25","截止时间是 5 月 1 日 23:59 CEST。"],
+ ["adm","订机票，安排在 5 月 1 日前后到达","04-15"]
+]},
+{id:"p5",name:"访问前半段",from:"2027-05-01",to:"2027-06-21",goal:"尽快产出初步结果，让导师有具体的理由要你。",items:[
+ ["adm","到达后去学校国际办公室注册，开银行账户（奖学金在到达后 10 个工作日内发放）","05-08"],
+ ["lab","第一周：熟悉实验室，和带你的人确认第一个月的目标","05-07"],
+ ["lab","每周写一页进展记录（结果、问题、下周计划），在周会上汇报","每周"],
+ ["lab","5 月底拿出第一批数据","05-31"],
+ ["lab","6 月中旬在组会上做一次正式汇报","06-15"],
+ ["ts","记录访问经历（视频、照片、文字），完成大使义务","持续"],
+ ["lsz","查看 LSZGS 是否进入面试","06 月上旬","需核实：通知时间"]
+]},
+{id:"p6",name:"网络面试",from:"2027-06-15",to:"2027-06-30",goal:"在面试中把这几周的访问经历变成你最有力的证据。",items:[
+ ["int","准备研究陈述：NUS 的 PGT-M 项目加上访问期间的初步结果","06-19","面试形式以通知为准。"],
+ ["int","请导师或组里的博士后陪你模拟面试一次","06-20"],
+ ["int","参加 6 月 22–25 日的网络面试","06-25"],
+ ["mail","和导师当面谈：明确表示想读博，问对方是否打算在 7 月的到校面试中选你","06-26","这是整条路线上最关键的一次对话。"]
+]},
+{id:"p7",name:"到校面试，访问结束",from:"2027-07-01",to:"2027-07-31",goal:"拿到导师给的职位，带着推荐信离开。",items:[
+ ["int","参加 7 月 13–16 日的到校面试：和导师见面，也见 2–3 位备选导师","07-16","你人在苏黎世，比其他候选人更有优势。"],
+ ["lab","做一次最终汇报，整理好数据和实验记录交给组里","07-24"],
+ ["mail","请导师写一封推荐信，作为备选申请的材料","07-25"],
+ ["adm","访问结束（从 5 月 1 日起算 90 天到 7 月 29 日），离开申根区","07-29"],
+ ["adm","NUS 毕业，拿到学位证明","07 月"]
+]},
+{id:"p8",name:"入学准备",from:"2027-08-01",to:"2027-10-31",goal:"把录取变成合同和居留许可。",items:[
+ ["lsz","接受录取，和导师确定入学日期","08-15"],
+ ["adm","签雇佣合同，确认薪资档位","08-31"],
+ ["adm","在 ETH 或 UZH 注册博士生身份，提交学位证明","09 月"],
+ ["adm","申请瑞士居留许可（B 类）；如果持中国护照，还要办国家 D 类签证","09 月","超过 90 天的停留需要单独办理。"],
+ ["ts","给 ThinkSwiss 提交访问总结","08-31"]
+]}
+];
+var CK="lszgs-roadmap-v1",done={};
+try{done=JSON.parse(localStorage.getItem(CK)||"{}")}catch(e){done={}}
+function save(){try{localStorage.setItem(CK,JSON.stringify(done))}catch(e){}}
+var today=new Date();today.setHours(0,0,0,0);
+function d(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+var kb=document.getElementById("keys");
+KEYS.forEach(function(k){var el=document.createElement("div");el.className="key"+(d(k[0])<today?" past":"");el.innerHTML='<div class="d">'+k[0]+'</div><div class="t">'+k[1]+'</div>';kb.appendChild(el)});
+var root=document.getElementById("phases");
+PH.forEach(function(p){
+  var cur=today>=d(p.from)&&today<=d(p.to);
+  var s=document.createElement("section");s.className="phase"+(cur?" current":"");s.id=p.id;
+  var h='<div class="ph-head"><h2>'+p.name+'</h2><span class="ph-when">'+p.from+' → '+p.to+'</span>'+(cur?'<span class="ph-now">当前阶段</span>':'')+'<span class="ph-count" id="cnt-'+p.id+'"></span></div><p class="ph-goal">'+p.goal+'</p><ul class="items">';
+  p.items.forEach(function(it,i){
+    var id=p.id+"-"+i;
+    h+='<li data-g="'+it[0]+'"><label><input type="checkbox" id="'+id+'"'+(done[id]?" checked":"")+'><span class="it"><span class="row"><span class="tag g-'+it[0]+'">'+TAGS[it[0]]+'</span><span class="txt">'+it[1]+'</span></span>'+
+      '<span class="row"><span class="due">'+it[2]+'</span>'+(it[4]?'<span class="v">'+it[4]+'</span>':'')+'</span>'+(it[3]?'<span class="note">'+it[3]+'</span>':'')+'</span></label></li>';
+  });
+  s.innerHTML=h+'</ul>';root.appendChild(s);
+});
+function count(){
+  var all=root.querySelectorAll("input[type=checkbox]"),n=0;
+  all.forEach(function(c){if(c.checked)n++});
+  document.getElementById("pct").textContent=n+" / "+all.length;
+  document.getElementById("fill").style.width=(all.length?n/all.length*100:0)+"%";
+  PH.forEach(function(p){var cs=document.querySelectorAll("#"+p.id+" input"),k=0;cs.forEach(function(c){if(c.checked)k++});document.getElementById("cnt-"+p.id).textContent=k+" / "+cs.length});
+}
+root.addEventListener("change",function(e){if(e.target.type==="checkbox"){done[e.target.id]=e.target.checked;save();count()}});
+document.querySelectorAll(".fbtn").forEach(function(b){b.addEventListener("click",function(){
+  document.querySelectorAll(".fbtn").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});
+  var f=b.dataset.f;
+  root.querySelectorAll("li[data-g]").forEach(function(li){li.hidden=!(f==="all"||li.dataset.g===f)});
+  PH.forEach(function(p){var vis=document.querySelectorAll("#"+p.id+" li:not([hidden])").length;document.getElementById(p.id).hidden=vis===0});
+})});
+count();
+})();
+</script>
