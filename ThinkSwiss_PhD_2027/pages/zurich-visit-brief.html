@@ -46,6 +46,19 @@ h3{font-family:var(--f-display);font-size:17px;margin:0}
 .proj-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .proj-card .tagline{color:var(--muted);font-size:14.5px;margin-top:-6px}
 .proj-card ul{font-size:15px}
+.dirs{gap:8px}
+.dirs li.hl{background:var(--ours-soft);border-radius:8px;padding:8px 12px;margin-left:-12px}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--ours);color:var(--ours);margin-left:4px;white-space:nowrap}
+.cmp{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-top:10px}
+.cmp table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+.cmp th,.cmp td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp tr:last-child td{border-bottom:0}
+.cmp thead th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg)}
+.cmp td:first-child{font-weight:600;white-space:nowrap}
+.collab{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.collab>div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.collab p{font-size:14.5px}
+.collab .me{background:var(--accent-soft);border-radius:6px;padding:8px 10px;margin-top:4px}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .links a{font-size:13px;padding:4px 11px;border-radius:6px;border:1px solid var(--accent);text-decoration:none;white-space:nowrap}
 .links a:hover{background:var(--accent-soft)}
@@ -63,48 +76,71 @@ h3{font-family:var(--f-display);font-size:17px;margin:0}
 
 <section>
   <h2>The lab</h2>
-  <p><b>Institute of Medical Genetics, University of Zurich.</b> Director: Prof. Anita Rauch. The group finds new genes behind rare developmental disorders, studies how the variants cause disease, and works on better genetic testing before and during pregnancy. They use next-generation and long-read genome sequencing.</p>
-  <p class="links"><a href="https://medgen.uzh.ch/en/research/rauch.html" target="_blank" rel="noopener">Rauch group website</a> <a href="https://medgen.uzh.ch/en/research/rauch/team.html" target="_blank" rel="noopener">Team</a></p>
+  <p><b>Institute of Medical Genetics, University of Zurich.</b> Director: Prof. Anita Rauch. Both a research group and a clinical genetics service.</p>
+  <p class="links"><a href="https://medgen.uzh.ch/en/research/rauch.html" target="_blank" rel="noopener">Rauch group website</a> <a href="https://medgen.uzh.ch/en/research/rauch/team.html" target="_blank" rel="noopener">Team</a> <a href="https://www.medgen.uzh.ch/en/ueber-uns.html" target="_blank" rel="noopener">Institute</a></p>
+  <h3 style="margin-top:18px">Main research directions</h3>
+  <ol class="dirs">
+    <li><b>Finding new disease genes</b> for rare developmental disorders, intellectual disability and epilepsy. Their largest body of work, e.g. UNC13A (<i>Nature Genetics</i> 2025), EIF3A/EIF3B, SCN2A.</li>
+    <li><b>Deciding whether a variant causes disease</b>, including lab tests of variant function with collaborators, and the national SwissGenVar platform.</li>
+    <li class="hl"><b>Reproductive genetic testing</b>: screening couples before pregnancy and clarifying variants found during pregnancy (Praeclare). <span class="pill">Links to our work</span></li>
+    <li><b>Clinical genetics service</b>: diagnosis and counselling, including for infertility, family history and abnormal pregnancy findings.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Their reproductive genetic testing work</h2>
+  <ul>
+    <li><b>Carrier screening before pregnancy.</b> Exome-based screening of thousands of recessive genes. In their 2022 study, 44% of couples who were blood relatives and 5% of other couples had an at-risk result.</li>
+    <li><b>The problem of uncertain variants.</b> In 118 ciliopathy genes, 20% of healthy people carried a reportable variant, but 50% carried a variant of uncertain significance (2023). Uncertain variants make it hard to advise couples.</li>
+    <li><b>Clarifying variants found in pregnancy.</b> Deciding whether a variant in a fetus is truly harmful, e.g. testing Noonan syndrome variants in placental (chorionic villus) cells (2026).</li>
+    <li><b>Testing methods.</b> Genome versus exome sequencing; sequencing-based detection of alpha-thalassaemia variants.</li>
+  </ul>
 
   <div class="proj-card">
     <h3>Praeclare</h3>
-    <p class="tagline">Clarifying genetic variants for prenatal and reproductive medicine</p>
+    <p class="tagline">Clarifying genetic variants for personalised prenatal and reproductive medicine</p>
     <ul>
-      <li><b>What it is:</b> a Clinical Research Priority Programme of the UZH Faculty of Medicine.</li>
-      <li><b>Goal:</b> improve genetic testing for couples planning a pregnancy, by mapping which genes and variants cause developmental disorders and how harmful each variant is.</li>
-      <li><b>Who:</b> led by Prof. Rauch, with Prof. Ruxandra Bachmann-Gagescu (ciliopathies, same institute), Dr. Tilo Burkhardt (prenatal medicine, University Hospital Zurich) and Prof. Martin Müller (Department of Molecular Life Sciences).</li>
-      <li><b>Key result:</b> in their 2022 study, screening couples before pregnancy found a risk in 44% of couples who were blood relatives and in 5% of other couples. Many of these couples then consider PGT-M.</li>
-      <li><b>Status:</b> the programme's priority-funding period has ended, but the website says the research continues.</li>
+      <li>UZH clinical research priority programme, led by Prof. Rauch with Prof. Bachmann-Gagescu (ciliopathies), Dr. Burkhardt (prenatal medicine, University Hospital Zurich) and Prof. Müller (neuroscience).</li>
+      <li>The priority-funding period has ended; the research continues and still appears in 2025 papers.</li>
     </ul>
-    <p class="links"><a href="https://www.praeclare.uzh.ch/en.html" target="_blank" rel="noopener">praeclare.uzh.ch</a> <a href="https://www.medgen.uzh.ch/en/research/praeclare.html" target="_blank" rel="noopener">Praeclare at the institute</a> <a href="https://www.nature.com/articles/s41525-022-00316-x" target="_blank" rel="noopener">2022 carrier-screening paper</a></p>
+    <p class="links"><a href="https://www.praeclare.uzh.ch/en.html" target="_blank" rel="noopener">praeclare.uzh.ch</a> <a href="https://www.medgen.uzh.ch/en/research/praeclare.html" target="_blank" rel="noopener">Praeclare at the institute</a> <a href="https://www.nature.com/articles/s41525-022-00316-x" target="_blank" rel="noopener">2022 carrier screening</a> <a href="https://www.nature.com/articles/s41431-022-01267-8" target="_blank" rel="noopener">2023 ciliopathy screening</a></p>
   </div>
 
   <div class="proj-card">
     <h3>SwissGenVar</h3>
-    <p class="tagline">A national platform for clinical-grade interpretation of genetic variants</p>
+    <p class="tagline">National platform for clinical-grade interpretation of genetic variants</p>
     <ul>
-      <li><b>What it is:</b> a protected database of germline variants found by Swiss clinical genetics labs, linked to clinical data, with shared expert interpretation of whether each variant causes disease.</li>
-      <li><b>Who:</b> all five Swiss academic medical genetics institutions together with the Swiss Institute of Bioinformatics. The Zurich group is a lead partner.</li>
-      <li><b>Funding:</b> the Swiss Personalized Health Network (SPHN), as an infrastructure project.</li>
-      <li><b>How it works:</b> labs upload variant files (VCF); the platform adds public annotations automatically and runs on Switzerland's secure BioMedIT infrastructure.</li>
-      <li><b>Access:</b> at launch it was open to the partner institutions only.</li>
-      <li><b>Main paper:</b> Journal of Personalized Medicine, 2024.</li>
+      <li>A protected database of variants from Swiss clinical genetics labs, linked to clinical data, with shared expert interpretation.</li>
+      <li>All five Swiss academic medical genetics institutions and the Swiss Institute of Bioinformatics; funded by the Swiss Personalized Health Network. Open to partner institutions only at launch.</li>
     </ul>
     <p class="links"><a href="https://www.medgen.uzh.ch/en/research/rauch/swissgenvar.html" target="_blank" rel="noopener">SwissGenVar at the institute</a> <a href="https://sphn.ch/network/projects-old/infrastructure-development-projects/project-page-swissgenvar/" target="_blank" rel="noopener">SPHN project page</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11204794/" target="_blank" rel="noopener">2024 paper</a></p>
   </div>
 
-  <p class="foot" style="margin-top:12px"><b>Why both matter to us:</b> Praeclare finds couples at risk; SwissGenVar decides whether their variant causes disease. Both happen before a couple can be offered PGT-M, which is where our work begins.</p>
+  <h3 style="margin-top:22px">How their work differs from ours</h3>
+  <div class="cmp">
+    <table>
+      <thead><tr><th></th><th>Rauch group</th><th>Chong group</th></tr></thead>
+      <tbody>
+        <tr><td>Stage</td><td>Before pregnancy and during pregnancy</td><td>Embryo, before transfer</td></tr>
+        <tr><td>Question</td><td>Is this couple at risk? Does this variant cause disease?</td><td>Did this embryo inherit the variant?</td></tr>
+        <tr><td>Sample</td><td>Parents' blood; placental or amniotic cells</td><td>One or a few cells from an embryo biopsy</td></tr>
+        <tr><td>Scope</td><td>Thousands of genes at once</td><td>One family, one gene, a tailored test</td></tr>
+        <tr><td>Methods</td><td>Exome, genome and long-read sequencing; functional tests</td><td>Direct mutation PCR (repeat expansions, inversions, duplicated regions); multiplex STR haplotyping; capillary electrophoresis</td></tr>
+        <tr><td>Main difficulty</td><td>Too many uncertain variants</td><td>Very little DNA; allele dropout</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot" style="margin-top:10px">Their answer is our starting point: PGT-M can only begin once the couple's variant is confirmed. Summary of the Zurich side is based on their published work.</p>
 </section>
 
 <section>
-  <h2>Why it fits</h2>
-  <div class="pipe">
-    <div class="step z"><b>ZURICH</b>Find at-risk couples</div>
-    <div class="step z"><b>ZURICH</b>Confirm the variant causes disease</div>
-    <div class="step n"><b>NUS</b>Design the STR panel</div>
-    <div class="step n"><b>NUS</b>Test the embryos</div>
+  <h2>Where we could work together</h2>
+  <div class="collab">
+    <div><h3>1. From a confirmed variant to a PGT-M test</h3><p>Couples flagged by their screening need a PGT-M test for that gene.</p><p class="me"><b>My role:</b> connect their variant classification to Panel Studio, so a confirmed variant leads straight to an STR panel design.</p></div>
+    <div><h3>2. Fast panels for new genes</h3><p>Recessive and inherited genes that have no ready-made PGT-M test.</p><p class="me"><b>My role:</b> design panels for genes they choose with Panel Studio, test a few markers in Zurich, and complete validation at NUS.</p></div>
+    <div><h3>3. Which markers work in which population</h3><p>A marker that is informative in Asian families may not be in European ones.</p><p class="me"><b>My role:</b> compare STR markers in European and East Asian data, starting with PKD1/PKD2 and possibly our other panels. A joint methods paper.</p></div>
+    <div><h3>4. A full pathway for at-risk families</h3><p>Screening, variant confirmation, PGT-M, transfer and confirmation in pregnancy, with each centre's clinical partners and within local regulations.</p><p class="me"><b>My role:</b> the link between the two groups, possibly through a PhD in Zurich.</p></div>
   </div>
-  <p>They do the first half of the PGT-M pathway, we do the second half. A couple can only have PGT-M once their variant is confirmed, so the two halves belong together.</p>
 </section>
 
 <section>
